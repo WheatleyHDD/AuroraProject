@@ -24,7 +24,8 @@ public partial class Player : CharacterBody3D
 
     // Get the gravity from the project settings to be synced with RigidBody nodes.
     public float Gravity = ProjectSettings.GetSetting("physics/3d/default_gravity").AsSingle();
-
+    public Vector3 Direction;
+    
     private Vector2 _lookVector;
 
     public override void _Ready()
@@ -73,8 +74,8 @@ public partial class Player : CharacterBody3D
         }
         */
 
-        Vector3 direction = (Transform.Basis * new Vector3(inputDir.X, 0, inputDir.Y)).Normalized();
-        velocity = velocity.Lerp(direction * Speed, Acceleration * (float)delta);
+        Direction = (Transform.Basis * new Vector3(inputDir.X, 0, inputDir.Y)).Normalized();
+        velocity = velocity.Lerp(Direction * Speed, Acceleration * (float)delta);
         Velocity = velocity + gravVec;
 
         MoveAndSlide();
