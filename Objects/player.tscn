@@ -1,12 +1,16 @@
-[gd_scene load_steps=15 format=3 uid="uid://dyxwr4jja75ty"]
+[gd_scene load_steps=18 format=3 uid="uid://dyxwr4jja75ty"]
 
 [ext_resource type="Script" path="res://Scripts/Player.cs" id="1_pb5qk"]
 [ext_resource type="Script" path="res://Scripts/CameraInterpolate.cs" id="2_3s1gh"]
 [ext_resource type="Script" path="res://Scripts/CubeCreator.cs" id="3_dkdx3"]
 [ext_resource type="PackedScene" uid="uid://bno7bhmcmbdae" path="res://Objects/cubik.tscn" id="4_rl2yq"]
 [ext_resource type="Script" path="res://Scripts/debug_log.gd" id="5_clq1d"]
+[ext_resource type="Script" path="res://Scripts/CubePickup.cs" id="5_rro7c"]
 
-[sub_resource type="CapsuleShape3D" id="CapsuleShape3D_7mwa7"]
+[sub_resource type="CapsuleShape3D" id="CapsuleShape3D_vhp7r"]
+
+[sub_resource type="SphereShape3D" id="SphereShape3D_uwksm"]
+radius = 0.05
 
 [sub_resource type="LabelSettings" id="LabelSettings_0qxxc"]
 font_size = 8
@@ -54,10 +58,8 @@ func _process(delta: float) -> void:
 				$AnimationPlayer.play(\"flashing\")
 "
 
-[sub_resource type="Animation" id="Animation_4bsxd"]
-resource_name = "flashing"
-length = 0.5
-step = 0.1
+[sub_resource type="Animation" id="Animation_upp7l"]
+length = 0.001
 tracks/0/type = "value"
 tracks/0/imported = false
 tracks/0/enabled = true
@@ -65,10 +67,10 @@ tracks/0/path = NodePath(".:visible")
 tracks/0/interp = 1
 tracks/0/loop_wrap = true
 tracks/0/keys = {
-"times": PackedFloat32Array(0, 0.5),
-"transitions": PackedFloat32Array(1, 1),
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
 "update": 1,
-"values": [true, false]
+"values": [false]
 }
 tracks/1/type = "value"
 tracks/1/imported = false
@@ -77,10 +79,10 @@ tracks/1/path = NodePath(".:modulate")
 tracks/1/interp = 1
 tracks/1/loop_wrap = true
 tracks/1/keys = {
-"times": PackedFloat32Array(0, 0.1, 0.2, 0.3, 0.4, 0.5),
-"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1),
-"update": 1,
-"values": [Color(1, 1, 1, 1), Color(1, 1, 1, 0), Color(1, 1, 1, 1), Color(1, 1, 1, 0), Color(1, 1, 1, 1), Color(1, 1, 1, 0)]
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Color(1, 1, 1, 0)]
 }
 
 [sub_resource type="Animation" id="Animation_ni5ve"]
@@ -112,8 +114,10 @@ tracks/1/keys = {
 "values": [Color(1, 1, 1, 0), Color(1, 1, 1, 1)]
 }
 
-[sub_resource type="Animation" id="Animation_upp7l"]
-length = 0.001
+[sub_resource type="Animation" id="Animation_4bsxd"]
+resource_name = "flashing"
+length = 0.5
+step = 0.1
 tracks/0/type = "value"
 tracks/0/imported = false
 tracks/0/enabled = true
@@ -121,10 +125,10 @@ tracks/0/path = NodePath(".:visible")
 tracks/0/interp = 1
 tracks/0/loop_wrap = true
 tracks/0/keys = {
-"times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(1),
+"times": PackedFloat32Array(0, 0.5),
+"transitions": PackedFloat32Array(1, 1),
 "update": 1,
-"values": [false]
+"values": [true, false]
 }
 tracks/1/type = "value"
 tracks/1/imported = false
@@ -133,10 +137,10 @@ tracks/1/path = NodePath(".:modulate")
 tracks/1/interp = 1
 tracks/1/loop_wrap = true
 tracks/1/keys = {
-"times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(1),
-"update": 0,
-"values": [Color(1, 1, 1, 0)]
+"times": PackedFloat32Array(0, 0.1, 0.2, 0.3, 0.4, 0.5),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1),
+"update": 1,
+"values": [Color(1, 1, 1, 1), Color(1, 1, 1, 0), Color(1, 1, 1, 1), Color(1, 1, 1, 0), Color(1, 1, 1, 1), Color(1, 1, 1, 0)]
 }
 
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_ux1cn"]
@@ -146,13 +150,22 @@ _data = {
 "flashing": SubResource("Animation_4bsxd")
 }
 
-[node name="Player" type="CharacterBody3D" node_paths=PackedStringArray("Head", "_foot")]
+[sub_resource type="LabelSettings" id="LabelSettings_w03h6"]
+font_size = 12
+shadow_size = 5
+shadow_color = Color(0, 0, 0, 0.65098)
+shadow_offset = Vector2(0, 0)
+
+[node name="Player" type="CharacterBody3D" node_paths=PackedStringArray("Head", "_foot") groups=["player"]]
+collision_layer = 17
+collision_mask = 17
+platform_floor_layers = 0
 script = ExtResource("1_pb5qk")
 Head = NodePath("Head")
 _foot = NodePath("RayCast3D")
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="."]
-shape = SubResource("CapsuleShape3D_7mwa7")
+shape = SubResource("CapsuleShape3D_vhp7r")
 
 [node name="RayCast3D" type="RayCast3D" parent="."]
 target_position = Vector3(0, -1.03, 0)
@@ -169,6 +182,40 @@ script = ExtResource("2_3s1gh")
 target_position = Vector3(0, 0, -2)
 script = ExtResource("3_dkdx3")
 _cubeResource = ExtResource("4_rl2yq")
+
+[node name="CubePickup" type="Node3D" parent="Head" node_paths=PackedStringArray("_pickuper", "_joint")]
+script = ExtResource("5_rro7c")
+_pickuper = NodePath("RayCast3D")
+_joint = NodePath("SpringArm3D")
+
+[node name="SpringArm3D" type="Generic6DOFJoint3D" parent="Head/CubePickup"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -2)
+node_a = NodePath("../StaticBody3D")
+linear_limit_x/softness = 0.05
+linear_limit_x/restitution = 1.0
+linear_limit_x/damping = 2.0
+linear_limit_y/softness = 0.05
+linear_limit_y/restitution = 1.0
+linear_limit_y/damping = 2.0
+linear_limit_z/softness = 0.05
+linear_limit_z/restitution = 1.0
+linear_limit_z/damping = 2.0
+linear_spring_x/stiffness = 3.0
+linear_spring_x/damping = 1.175
+linear_spring_y/stiffness = 3.0
+linear_spring_y/damping = 1.695
+linear_spring_z/stiffness = 3.0
+linear_spring_z/damping = 1.47
+
+[node name="StaticBody3D" type="StaticBody3D" parent="Head/CubePickup"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -2)
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Head/CubePickup/StaticBody3D"]
+shape = SubResource("SphereShape3D_uwksm")
+disabled = true
+
+[node name="RayCast3D" type="RayCast3D" parent="Head/CubePickup"]
+target_position = Vector3(0, 0, -2)
 
 [node name="UI" type="CanvasLayer" parent="."]
 
@@ -208,3 +255,14 @@ script = SubResource("GDScript_bcooq")
 libraries = {
 "": SubResource("AnimationLibrary_ux1cn")
 }
+
+[node name="Label" type="Label" parent="UI"]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+text = ">+<"
+label_settings = SubResource("LabelSettings_w03h6")
+horizontal_alignment = 1
+vertical_alignment = 1

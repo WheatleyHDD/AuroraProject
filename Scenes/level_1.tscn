@@ -1,0 +1,167 @@
+[gd_scene load_steps=8 format=3 uid="uid://p5wt3lhtsvpx"]
+
+[ext_resource type="PackedScene" uid="uid://dyxwr4jja75ty" path="res://Objects/player.tscn" id="1_0g125"]
+[ext_resource type="Texture2D" uid="uid://c60wskyqya8fp" path="res://Textures/prototype_textures/Light/texture_12.png" id="2_od8vr"]
+[ext_resource type="PackedScene" uid="uid://c53drlaaxk863" path="res://Objects/door.tscn" id="3_yc2f6"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_vj0d7"]
+albedo_texture = ExtResource("2_od8vr")
+uv1_triplanar = true
+
+[sub_resource type="Animation" id="Animation_brgb1"]
+resource_name = "start"
+length = 3.0
+step = 0.1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("SpotLight3D:visible")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.5),
+"transitions": PackedFloat32Array(1, 1),
+"update": 1,
+"values": [false, true]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("SpotLight3D2:visible")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 1.5),
+"transitions": PackedFloat32Array(1, 1),
+"update": 1,
+"values": [false, true]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("Global;Light:visible")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0, 3),
+"transitions": PackedFloat32Array(1, 1),
+"update": 1,
+"values": [false, true]
+}
+
+[sub_resource type="Animation" id="Animation_bcnl1"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("SpotLight3D:visible")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [false]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("SpotLight3D2:visible")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [true]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("Global;Light:visible")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [false]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_x2er4"]
+_data = {
+"RESET": SubResource("Animation_bcnl1"),
+"start": SubResource("Animation_brgb1")
+}
+
+[node name="Level1" type="Node3D"]
+
+[node name="Player" parent="." instance=ExtResource("1_0g125")]
+transform = Transform3D(-4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, 0.005, 0.5, 0)
+
+[node name="CSGCombiner3D" type="CSGCombiner3D" parent="."]
+use_collision = true
+
+[node name="room" type="CSGBox3D" parent="CSGCombiner3D"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2.5, 1.5, 0)
+flip_faces = true
+size = Vector3(8, 4, 5)
+material = SubResource("StandardMaterial3D_vj0d7")
+
+[node name="door" type="CSGBox3D" parent="CSGCombiner3D"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 6.6, 0.55, 0)
+flip_faces = true
+size = Vector3(0.2, 2.1, 1.2)
+material = SubResource("StandardMaterial3D_vj0d7")
+
+[node name="room2" type="CSGBox3D" parent="CSGCombiner3D"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 9.19336, 1.5, 2)
+flip_faces = true
+size = Vector3(5, 4, 9)
+material = SubResource("StandardMaterial3D_vj0d7")
+
+[node name="door2" type="CSGBox3D" parent="CSGCombiner3D"]
+transform = Transform3D(-4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, 9.5, 0.55, 6.6)
+flip_faces = true
+size = Vector3(0.2, 2.1, 1.1)
+material = SubResource("StandardMaterial3D_vj0d7")
+
+[node name="SpotLight3D" type="SpotLight3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, -4.37114e-08, 1, 0, -1, -4.37114e-08, 2, 3.39292, 0)
+visible = false
+light_energy = 1.5
+spot_range = 6.495
+spot_angle = 30.0
+
+[node name="SpotLight3D2" type="SpotLight3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, -4.37114e-08, 1, 0, -1, -4.37114e-08, 6, 3.39292, 0)
+light_energy = 1.5
+spot_range = 6.495
+spot_angle = 30.0
+
+[node name="Global;Light" type="Node3D" parent="."]
+visible = false
+
+[node name="OmniLight3D" type="OmniLight3D" parent="Global;Light"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 3, 3.22806, 0)
+light_energy = 1.5
+omni_range = 10.0
+
+[node name="OmniLight3D2" type="OmniLight3D" parent="Global;Light"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 9, 3.22806, 0)
+light_energy = 1.5
+omni_range = 10.0
+
+[node name="OmniLight3D3" type="OmniLight3D" parent="Global;Light"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 9, 3.22806, 4)
+light_energy = 1.5
+omni_range = 10.0
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+libraries = {
+"": SubResource("AnimationLibrary_x2er4")
+}
+autoplay = "start"
+
+[node name="Door" parent="." instance=ExtResource("3_yc2f6")]
+transform = Transform3D(0.55, 0, 0, 0, 0.7, 0, 0, 0, 0.6, 6.6, -0.5, 0)

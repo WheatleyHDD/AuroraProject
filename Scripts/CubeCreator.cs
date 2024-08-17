@@ -66,12 +66,12 @@ public partial class CubeCreator : RayCast3D
 		
 		if (Input.IsActionJustReleased("create_cube_min") && col.Scale.X > 0.1f)
 		{
-			CubeCreating.Mass -= i * 4; 
+			CubeCreating.Mass -= i * 5; 
 			col.Scale -= (new Vector3(i, i, i));
 			mesh.Scale -= (new Vector3(i, i, i));
-		} else if (Input.IsActionJustReleased("create_cube_max") && col.Scale.X < 1.5f)
+		} else if (Input.IsActionJustReleased("create_cube_max") && col.Scale.X < 1.75f)
 		{
-			CubeCreating.Mass += i * 4;
+			CubeCreating.Mass += i * 5;
 			col.Scale += (new Vector3(i, i, i));
 			mesh.Scale += (new Vector3(i, i, i));
 		}
