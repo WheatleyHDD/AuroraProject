@@ -1,4 +1,4 @@
-[gd_scene load_steps=8 format=3 uid="uid://dyxwr4jja75ty"]
+[gd_scene load_steps=15 format=3 uid="uid://dyxwr4jja75ty"]
 
 [ext_resource type="Script" path="res://Scripts/Player.cs" id="1_pb5qk"]
 [ext_resource type="Script" path="res://Scripts/CameraInterpolate.cs" id="2_3s1gh"]
@@ -10,6 +10,141 @@
 
 [sub_resource type="LabelSettings" id="LabelSettings_0qxxc"]
 font_size = 8
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_ki7w3"]
+bg_color = Color(0.6, 0.6, 0.6, 0)
+border_width_left = 3
+border_width_top = 3
+border_width_right = 3
+border_width_bottom = 3
+border_color = Color(1, 1, 1, 0.705882)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_i0svf"]
+bg_color = Color(1, 1, 1, 0.705882)
+border_width_left = 6
+border_width_top = 6
+border_width_right = 6
+border_width_bottom = 6
+border_color = Color(0.8, 0.8, 0.8, 0)
+
+[sub_resource type="GDScript" id="GDScript_bcooq"]
+script/source = "extends ProgressBar
+
+@onready var initial_time = $\"../../Head/CubeCreator\".TimeUse
+var last_time: int
+
+# Called when the node enters the scene tree for the first time.
+func _ready() -> void:
+	pass # Replace with function body.
+
+
+# Called every frame. 'delta' is the elapsed time since the previous frame.
+func _process(delta: float) -> void:
+	value = abs($\"../../Head/CubeCreator\".TimeUse - initial_time)
+	
+	if Input.is_action_just_pressed(\"create_cube\"):
+		if not visible:
+			$AnimationPlayer.play(\"appear\")
+	
+	if not $AnimationPlayer.is_playing():
+		if visible:
+			if last_time != value:
+				last_time = value
+			else:
+				$AnimationPlayer.play(\"flashing\")
+"
+
+[sub_resource type="Animation" id="Animation_4bsxd"]
+resource_name = "flashing"
+length = 0.5
+step = 0.1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:visible")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.5),
+"transitions": PackedFloat32Array(1, 1),
+"update": 1,
+"values": [true, false]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath(".:modulate")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 0.1, 0.2, 0.3, 0.4, 0.5),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1),
+"update": 1,
+"values": [Color(1, 1, 1, 1), Color(1, 1, 1, 0), Color(1, 1, 1, 1), Color(1, 1, 1, 0), Color(1, 1, 1, 1), Color(1, 1, 1, 0)]
+}
+
+[sub_resource type="Animation" id="Animation_ni5ve"]
+resource_name = "appear"
+length = 0.05
+step = 0.1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:visible")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [true]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath(".:modulate")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 0.05),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Color(1, 1, 1, 0), Color(1, 1, 1, 1)]
+}
+
+[sub_resource type="Animation" id="Animation_upp7l"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:visible")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [false]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath(".:modulate")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Color(1, 1, 1, 0)]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_ux1cn"]
+_data = {
+"RESET": SubResource("Animation_upp7l"),
+"appear": SubResource("Animation_ni5ve"),
+"flashing": SubResource("Animation_4bsxd")
+}
 
 [node name="Player" type="CharacterBody3D" node_paths=PackedStringArray("Head", "_foot")]
 script = ExtResource("1_pb5qk")
@@ -47,3 +182,29 @@ label_settings = SubResource("LabelSettings_0qxxc")
 script = ExtResource("5_clq1d")
 player = NodePath("../..")
 cube_creator = NodePath("../../Head/CubeCreator")
+
+[node name="UseTime" type="ProgressBar" parent="UI"]
+visible = false
+modulate = Color(1, 1, 1, 0)
+anchors_preset = -1
+anchor_left = 0.256
+anchor_top = 0.9
+anchor_right = 0.742
+anchor_bottom = 0.961
+offset_left = 0.159988
+offset_right = 0.119965
+offset_bottom = 0.039978
+grow_horizontal = 2
+grow_vertical = 0
+theme_override_styles/background = SubResource("StyleBoxFlat_ki7w3")
+theme_override_styles/fill = SubResource("StyleBoxFlat_i0svf")
+max_value = 300.0
+step = 1.0
+value = 300.0
+show_percentage = false
+script = SubResource("GDScript_bcooq")
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="UI/UseTime"]
+libraries = {
+"": SubResource("AnimationLibrary_ux1cn")
+}

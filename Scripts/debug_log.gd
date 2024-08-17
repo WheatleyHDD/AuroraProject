@@ -7,7 +7,7 @@ func _process(delta: float) -> void:
 	var info = ""
 	if cube_creator.CubeCreating:
 		info = "    + Rotation: " + str(cube_creator.CubeCreating.rotation_degrees) + "\n" +\
-		"    + Position: " + str(cube_creator.CubeCreating.position) + "\n"
+			   "    + Position: " + str(cube_creator.CubeCreating.position) + "\n"
 	
 	text = \
 	"Cube Creator:\n" +\
