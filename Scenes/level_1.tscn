@@ -1,15 +1,11 @@
-[gd_scene load_steps=12 format=3 uid="uid://p5wt3lhtsvpx"]
+[gd_scene load_steps=11 format=3 uid="uid://p5wt3lhtsvpx"]
 
 [ext_resource type="PackedScene" uid="uid://dyxwr4jja75ty" path="res://Objects/player.tscn" id="1_0g125"]
-[ext_resource type="Texture2D" uid="uid://c60wskyqya8fp" path="res://Textures/prototype_textures/Light/texture_12.png" id="2_od8vr"]
+[ext_resource type="Material" uid="uid://cgx0vkhfondcs" path="res://Materials/levelwall.tres" id="2_5dtax"]
 [ext_resource type="PackedScene" uid="uid://dwxaiju8iop4k" path="res://Objects/elevator_room.tscn" id="3_o7mej"]
 [ext_resource type="PackedScene" uid="uid://c53drlaaxk863" path="res://Objects/door.tscn" id="3_yc2f6"]
 [ext_resource type="PackedScene" uid="uid://kklst46iuosr" path="res://Objects/lamp.tscn" id="4_3reyg"]
 [ext_resource type="PackedScene" uid="uid://dl2m2i6l0s7lj" path="res://Objects/button.tscn" id="5_xadf7"]
-
-[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_vj0d7"]
-albedo_texture = ExtResource("2_od8vr")
-uv1_triplanar = true
 
 [sub_resource type="Animation" id="Animation_bcnl1"]
 length = 0.001
@@ -136,31 +132,31 @@ use_collision = true
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2.5, 1.5, 0)
 flip_faces = true
 size = Vector3(8, 4, 5)
-material = SubResource("StandardMaterial3D_vj0d7")
+material = ExtResource("2_5dtax")
 
 [node name="door" type="CSGBox3D" parent="CSGCombiner3D"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 12.709, 0.55, 0)
 flip_faces = true
 size = Vector3(12.418, 2.1, 1.2)
-material = SubResource("StandardMaterial3D_vj0d7")
+material = ExtResource("2_5dtax")
 
 [node name="room2" type="CSGBox3D" parent="CSGCombiner3D"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 21.1934, 2.5, 2)
 flip_faces = true
 size = Vector3(5, 6, 9)
-material = SubResource("StandardMaterial3D_vj0d7")
+material = ExtResource("2_5dtax")
 
 [node name="door2" type="CSGBox3D" parent="CSGCombiner3D"]
 transform = Transform3D(-4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, 21.2, 3.55, 6.6)
 flip_faces = true
 size = Vector3(0.2, 2.1, 1.2)
-material = SubResource("StandardMaterial3D_vj0d7")
+material = ExtResource("2_5dtax")
 
 [node name="room3" type="CSGBox3D" parent="CSGCombiner3D"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 21.193, 4.5, 11.2)
 flip_faces = true
 size = Vector3(5, 4, 9)
-material = SubResource("StandardMaterial3D_vj0d7")
+material = ExtResource("2_5dtax")
 
 [node name="ElevatorRoom" parent="CSGCombiner3D" instance=ExtResource("3_o7mej")]
 
@@ -168,7 +164,7 @@ material = SubResource("StandardMaterial3D_vj0d7")
 transform = Transform3D(-4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, 21.2, 3.55, 15.8)
 flip_faces = true
 size = Vector3(0.2, 2.1, 1.2)
-material = SubResource("StandardMaterial3D_vj0d7")
+material = ExtResource("2_5dtax")
 
 [node name="SpotLight3D" type="SpotLight3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, -4.37114e-08, 1, 0, -1, -4.37114e-08, 2, 3.39292, 0)

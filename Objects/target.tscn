@@ -1,0 +1,32 @@
+[gd_scene load_steps=6 format=3 uid="uid://bm5yfhh6ewxl2"]
+
+[ext_resource type="Script" path="res://Scripts/target.gd" id="1_gvinv"]
+[ext_resource type="PackedScene" uid="uid://cogwo3vjt00xw" path="res://Models/Target/target.blend" id="1_pgcav"]
+[ext_resource type="Texture2D" uid="uid://c3f0xs1rrfi5r" path="res://Models/Target/target.png" id="2_8d6lc"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_w2l31"]
+albedo_texture = ExtResource("2_8d6lc")
+
+[sub_resource type="CylinderShape3D" id="CylinderShape3D_l77e1"]
+height = 0.0888263
+radius = 0.409455
+
+[node name="Target" type="Node3D"]
+script = ExtResource("1_gvinv")
+
+[node name="target" parent="." instance=ExtResource("1_pgcav")]
+
+[node name="Cylinder" parent="target" index="0"]
+surface_material_override/0 = SubResource("StandardMaterial3D_w2l31")
+
+[node name="Area3D" type="Area3D" parent="."]
+collision_layer = 32
+collision_mask = 32
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Area3D"]
+transform = Transform3D(-4.37114e-08, 1, 0, -1, -4.37114e-08, 0, 0, 0, 1, 0.0443649, 0, 0)
+shape = SubResource("CylinderShape3D_l77e1")
+
+[connection signal="body_entered" from="Area3D" to="." method="_on_area_3d_body_entered"]
+
+[editable path="target"]

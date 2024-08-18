@@ -1,4 +1,4 @@
-[gd_scene load_steps=18 format=3 uid="uid://dyxwr4jja75ty"]
+[gd_scene load_steps=21 format=3 uid="uid://dyxwr4jja75ty"]
 
 [ext_resource type="Script" path="res://Scripts/Player.cs" id="1_pb5qk"]
 [ext_resource type="Script" path="res://Scripts/CameraInterpolate.cs" id="2_3s1gh"]
@@ -6,6 +6,7 @@
 [ext_resource type="PackedScene" uid="uid://bno7bhmcmbdae" path="res://Objects/cubik.tscn" id="4_rl2yq"]
 [ext_resource type="Script" path="res://Scripts/debug_log.gd" id="5_clq1d"]
 [ext_resource type="Script" path="res://Scripts/CubePickup.cs" id="5_rro7c"]
+[ext_resource type="Shader" path="res://Shaders/vignette.gdshader" id="7_umllf"]
 
 [sub_resource type="CapsuleShape3D" id="CapsuleShape3D_vhp7r"]
 
@@ -156,6 +157,30 @@ shadow_size = 5
 shadow_color = Color(0, 0, 0, 0.65098)
 shadow_offset = Vector2(0, 0)
 
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_ayb2o"]
+shader = ExtResource("7_umllf")
+shader_parameter/alpha = 0.0
+shader_parameter/inner_radius = 0.0
+shader_parameter/outer_radius = 1.0
+
+[sub_resource type="GDScript" id="GDScript_6j8yi"]
+script/source = "extends ColorRect
+
+
+# Called when the node enters the scene tree for the first time.
+func _ready() -> void:
+	pass # Replace with function body.
+
+
+# Called every frame. 'delta' is the elapsed time since the previous frame.
+func _process(delta: float) -> void:
+	var alpha: float = material.get(\"shader_parameter/alpha\")
+	if $\"../../Head/CubeCreator\".CubeCreating:
+		material.set(\"shader_parameter/alpha\", lerp(alpha, 0.5, delta*10))
+	else:
+		material.set(\"shader_parameter/alpha\", lerp(alpha, 0.0, delta*10))
+"
+
 [node name="Player" type="CharacterBody3D" node_paths=PackedStringArray("Head", "_foot") groups=["player"]]
 collision_layer = 17
 collision_mask = 17
@@ -266,3 +291,12 @@ text = ">+<"
 label_settings = SubResource("LabelSettings_w03h6")
 horizontal_alignment = 1
 vertical_alignment = 1
+
+[node name="Vignette" type="ColorRect" parent="UI"]
+material = SubResource("ShaderMaterial_ayb2o")
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = SubResource("GDScript_6j8yi")
