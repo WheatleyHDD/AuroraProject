@@ -1,0 +1,14 @@
+[gd_scene load_steps=3 format=3 uid="uid://ih6h8cb23e23"]
+
+[ext_resource type="PackedScene" uid="uid://b5ebke27toq5i" path="res://Objects/elevator_room_start.tscn" id="1_kej8l"]
+[ext_resource type="PackedScene" uid="uid://c53drlaaxk863" path="res://Objects/door.tscn" id="2_olcgs"]
+
+[node name="Level2" type="Node3D"]
+
+[node name="CSGCombiner3D" type="CSGCombiner3D" parent="."]
+use_collision = true
+
+[node name="ElevatorRoom" parent="CSGCombiner3D" instance=ExtResource("1_kej8l")]
+
+[node name="Door" parent="." instance=ExtResource("2_olcgs")]
+transform = Transform3D(-2.40413e-08, 0, -0.6, 0, 0.7, 0, 0.55, 0, -2.62268e-08, 0, -2, -3.1)

@@ -35,6 +35,11 @@ public partial class CubeCreator : RayCast3D
 		
 		if (Input.IsActionJustPressed("create_cube"))
 		{
+			if (TimeUse < 300)
+			{
+				return;
+			}
+			
 			CubeCreating = _cubeResource.Instantiate<RigidBody3D>();
 			CubeCreating.GetNode<CollisionShape3D>("CollisionShape3D").Disabled = true;
 			GetTree().CurrentScene.AddChild(CubeCreating);

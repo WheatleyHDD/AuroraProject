@@ -1,54 +1,15 @@
-[gd_scene load_steps=9 format=3 uid="uid://p5wt3lhtsvpx"]
+[gd_scene load_steps=12 format=3 uid="uid://p5wt3lhtsvpx"]
 
 [ext_resource type="PackedScene" uid="uid://dyxwr4jja75ty" path="res://Objects/player.tscn" id="1_0g125"]
 [ext_resource type="Texture2D" uid="uid://c60wskyqya8fp" path="res://Textures/prototype_textures/Light/texture_12.png" id="2_od8vr"]
+[ext_resource type="PackedScene" uid="uid://dwxaiju8iop4k" path="res://Objects/elevator_room.tscn" id="3_o7mej"]
 [ext_resource type="PackedScene" uid="uid://c53drlaaxk863" path="res://Objects/door.tscn" id="3_yc2f6"]
 [ext_resource type="PackedScene" uid="uid://kklst46iuosr" path="res://Objects/lamp.tscn" id="4_3reyg"]
+[ext_resource type="PackedScene" uid="uid://dl2m2i6l0s7lj" path="res://Objects/button.tscn" id="5_xadf7"]
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_vj0d7"]
 albedo_texture = ExtResource("2_od8vr")
 uv1_triplanar = true
-
-[sub_resource type="Animation" id="Animation_brgb1"]
-resource_name = "start"
-length = 3.0
-step = 0.1
-tracks/0/type = "value"
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/path = NodePath("SpotLight3D:visible")
-tracks/0/interp = 1
-tracks/0/loop_wrap = true
-tracks/0/keys = {
-"times": PackedFloat32Array(0, 0.5),
-"transitions": PackedFloat32Array(1, 1),
-"update": 1,
-"values": [false, true]
-}
-tracks/1/type = "value"
-tracks/1/imported = false
-tracks/1/enabled = true
-tracks/1/path = NodePath("SpotLight3D2:visible")
-tracks/1/interp = 1
-tracks/1/loop_wrap = true
-tracks/1/keys = {
-"times": PackedFloat32Array(0, 1.5),
-"transitions": PackedFloat32Array(1, 1),
-"update": 1,
-"values": [false, true]
-}
-tracks/2/type = "value"
-tracks/2/imported = false
-tracks/2/enabled = true
-tracks/2/path = NodePath("GlobalLight:visible")
-tracks/2/interp = 1
-tracks/2/loop_wrap = true
-tracks/2/keys = {
-"times": PackedFloat32Array(0, 3),
-"transitions": PackedFloat32Array(1, 1),
-"update": 1,
-"values": [false, true]
-}
 
 [sub_resource type="Animation" id="Animation_bcnl1"]
 length = 0.001
@@ -88,12 +49,80 @@ tracks/2/keys = {
 "update": 1,
 "values": [false]
 }
+tracks/3/type = "value"
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/path = NodePath("GlobalLight/Lamp4/OmniLight3D:visible")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [false]
+}
+
+[sub_resource type="Animation" id="Animation_brgb1"]
+resource_name = "start"
+length = 3.0
+step = 0.1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("SpotLight3D:visible")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.5),
+"transitions": PackedFloat32Array(1, 1),
+"update": 1,
+"values": [false, true]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("SpotLight3D2:visible")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 1.5),
+"transitions": PackedFloat32Array(1, 1),
+"update": 1,
+"values": [false, true]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("GlobalLight:visible")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0, 1.5),
+"transitions": PackedFloat32Array(1, 1),
+"update": 1,
+"values": [false, true]
+}
+tracks/3/type = "value"
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/path = NodePath("GlobalLight/Lamp4/OmniLight3D:visible")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/keys = {
+"times": PackedFloat32Array(0, 3),
+"transitions": PackedFloat32Array(1, 1),
+"update": 1,
+"values": [false, true]
+}
 
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_x2er4"]
 _data = {
 "RESET": SubResource("Animation_bcnl1"),
 "start": SubResource("Animation_brgb1")
 }
+
+[sub_resource type="Environment" id="Environment_matm2"]
+background_mode = 1
 
 [node name="Level1" type="Node3D"]
 
@@ -127,6 +156,20 @@ flip_faces = true
 size = Vector3(0.2, 2.1, 1.2)
 material = SubResource("StandardMaterial3D_vj0d7")
 
+[node name="room3" type="CSGBox3D" parent="CSGCombiner3D"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 21.193, 4.5, 11.2)
+flip_faces = true
+size = Vector3(5, 4, 9)
+material = SubResource("StandardMaterial3D_vj0d7")
+
+[node name="ElevatorRoom" parent="CSGCombiner3D" instance=ExtResource("3_o7mej")]
+
+[node name="door3" type="CSGBox3D" parent="CSGCombiner3D"]
+transform = Transform3D(-4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, 21.2, 3.55, 15.8)
+flip_faces = true
+size = Vector3(0.2, 2.1, 1.2)
+material = SubResource("StandardMaterial3D_vj0d7")
+
 [node name="SpotLight3D" type="SpotLight3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, -4.37114e-08, 1, 0, -1, -4.37114e-08, 2, 3.39292, 0)
 visible = false
@@ -140,38 +183,38 @@ light_energy = 1.5
 spot_range = 6.495
 spot_angle = 30.0
 
+[node name="Lamp7" parent="." instance=ExtResource("4_3reyg")]
+transform = Transform3D(1, 0, 5.96046e-08, 0, 1, 0, -5.96046e-08, 0, 1, 18.7, 2, 0.05)
+
+[node name="Lamp8" parent="." instance=ExtResource("4_3reyg")]
+transform = Transform3D(-1.03316e-07, 0, 1, 0, 1, 0, -1, 0, -1.03316e-07, 21.205, 4.89, 6.5)
+
+[node name="Lamp9" parent="." instance=ExtResource("4_3reyg")]
+transform = Transform3D(-1, 0, -1.47027e-07, 0, 1, 0, 1.47027e-07, 0, -1, 23.7, 1.89, 4.5)
+
+[node name="Lamp10" parent="." instance=ExtResource("4_3reyg")]
+transform = Transform3D(-1, 0, -1.47027e-07, 0, 1, 0, 1.47027e-07, 0, -1, 23.7, 1.89, -0.5)
+
+[node name="Lamp11" parent="." instance=ExtResource("4_3reyg")]
+transform = Transform3D(1.58933e-08, 0, -1, 0, 1, 0, 1, 0, 1.58933e-08, 21.205, 4.89, 6.69776)
+
+[node name="Lamp12" parent="." instance=ExtResource("4_3reyg")]
+transform = Transform3D(-1.03316e-07, 0, 1, 0, 1, 0, -1, 0, -1.03316e-07, 21.205, 4.89, 15.7087)
+
 [node name="GlobalLight" type="Node3D" parent="."]
 visible = false
 
-[node name="Lamp" parent="GlobalLight" instance=ExtResource("4_3reyg")]
-transform = Transform3D(-4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, 0.466585, 1.32663, -2.5)
-
-[node name="Lamp2" parent="GlobalLight" instance=ExtResource("4_3reyg")]
-transform = Transform3D(-4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, 4.46659, 1.32663, -2.5)
-
-[node name="Lamp3" parent="GlobalLight" instance=ExtResource("4_3reyg")]
-transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, 4.46659, 1.32663, 2.5)
-
 [node name="Lamp4" parent="GlobalLight" instance=ExtResource("4_3reyg")]
-transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, 0.466585, 1.32663, 2.5)
+transform = Transform3D(-1, 0, 8.74228e-08, 0, 1, 0, -8.74228e-08, 0, -1, 6.49882, 1.92295, 0)
+
+[node name="OmniLight3D" parent="GlobalLight/Lamp4" index="1"]
+visible = false
 
 [node name="Lamp5" parent="GlobalLight" instance=ExtResource("4_3reyg")]
 transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, 9.46659, 0.995257, 0.5)
 
 [node name="Lamp6" parent="GlobalLight" instance=ExtResource("4_3reyg")]
 transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, 15.4666, 0.995257, 0.5)
-
-[node name="Lamp7" parent="GlobalLight" instance=ExtResource("4_3reyg")]
-transform = Transform3D(1, 0, 5.96046e-08, 0, 1, 0, -5.96046e-08, 0, 1, 18.7, 2, 0.05)
-
-[node name="Lamp8" parent="GlobalLight" instance=ExtResource("4_3reyg")]
-transform = Transform3D(-1.03316e-07, 0, 1, 0, 1, 0, -1, 0, -1.03316e-07, 21.205, 4.89, 6.5)
-
-[node name="Lamp9" parent="GlobalLight" instance=ExtResource("4_3reyg")]
-transform = Transform3D(-1, 0, -1.47027e-07, 0, 1, 0, 1.47027e-07, 0, -1, 23.7, 1.89, 4.5)
-
-[node name="Lamp10" parent="GlobalLight" instance=ExtResource("4_3reyg")]
-transform = Transform3D(-1, 0, -1.47027e-07, 0, 1, 0, 1.47027e-07, 0, -1, 23.7, 1.89, -0.5)
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]
 libraries = {
@@ -187,3 +230,17 @@ transform = Transform3D(0.55, 0, 0, 0, 0.7, 0, 0, 0, 0.6, 18.6, -0.5, 0)
 
 [node name="Door2" parent="." instance=ExtResource("3_yc2f6")]
 transform = Transform3D(-2.40413e-08, 0, -0.6, 0, 0.7, 0, 0.55, 0, -2.62268e-08, 21.2, 2.5, 6.6)
+
+[node name="Door4" parent="." instance=ExtResource("3_yc2f6")]
+transform = Transform3D(-2.40413e-08, 0, -0.6, 0, 0.7, 0, 0.55, 0, -2.62268e-08, 21.2, 2.5, 15.8)
+door_type = 1
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="."]
+environment = SubResource("Environment_matm2")
+
+[node name="Button" parent="." node_paths=PackedStringArray("door") instance=ExtResource("5_xadf7")]
+transform = Transform3D(0.6, 0, 0, 0, 0.6, 0, 0, 0, 0.6, 22.6162, 2.5, 9.48364)
+door = NodePath("../Door4")
+
+[editable path="GlobalLight/Lamp4"]
+[editable path="GlobalLight/Lamp4/lamp"]

@@ -17,7 +17,8 @@ surface_material_override/0 = SubResource("StandardMaterial3D_s4pcw")
 cast_shadow = 0
 
 [node name="OmniLight3D" type="OmniLight3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.138812, 0, 0)
-omni_range = 8.0
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.14136, 0, 0)
+light_energy = 1.1
+omni_range = 10.0
 
 [editable path="lamp"]
