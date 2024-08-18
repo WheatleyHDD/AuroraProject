@@ -1,10 +1,11 @@
-[gd_scene load_steps=11 format=3 uid="uid://p5wt3lhtsvpx"]
+[gd_scene load_steps=12 format=3 uid="uid://p5wt3lhtsvpx"]
 
 [ext_resource type="PackedScene" uid="uid://dyxwr4jja75ty" path="res://Objects/player.tscn" id="1_0g125"]
 [ext_resource type="Material" uid="uid://cgx0vkhfondcs" path="res://Materials/levelwall.tres" id="2_5dtax"]
 [ext_resource type="PackedScene" uid="uid://dwxaiju8iop4k" path="res://Objects/elevator_room.tscn" id="3_o7mej"]
 [ext_resource type="PackedScene" uid="uid://c53drlaaxk863" path="res://Objects/door.tscn" id="3_yc2f6"]
 [ext_resource type="PackedScene" uid="uid://kklst46iuosr" path="res://Objects/lamp.tscn" id="4_3reyg"]
+[ext_resource type="PackedScene" uid="uid://ih6h8cb23e23" path="res://Scenes/level_2.tscn" id="4_fnyv8"]
 [ext_resource type="PackedScene" uid="uid://dl2m2i6l0s7lj" path="res://Objects/button.tscn" id="5_xadf7"]
 
 [sub_resource type="Animation" id="Animation_bcnl1"]
@@ -159,6 +160,7 @@ size = Vector3(5, 4, 9)
 material = ExtResource("2_5dtax")
 
 [node name="ElevatorRoom" parent="CSGCombiner3D" instance=ExtResource("3_o7mej")]
+next_level = ExtResource("4_fnyv8")
 
 [node name="door3" type="CSGBox3D" parent="CSGCombiner3D"]
 transform = Transform3D(-4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, 21.2, 3.55, 15.8)

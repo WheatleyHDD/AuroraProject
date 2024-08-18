@@ -1,4 +1,6 @@
-[gd_scene load_steps=4 format=3 uid="uid://bno7bhmcmbdae"]
+[gd_scene load_steps=6 format=3 uid="uid://bno7bhmcmbdae"]
+
+[ext_resource type="Texture2D" uid="uid://c5sbix8d17oim" path="res://Textures/prototype_textures/Purple/texture_10.png" id="1_xe53s"]
 
 [sub_resource type="GDScript" id="GDScript_y2u87"]
 script/source = "extends RigidBody3D
@@ -17,6 +19,10 @@ func _on_timer_timeout() -> void:
 
 [sub_resource type="BoxMesh" id="BoxMesh_32cn1"]
 
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_tahgo"]
+albedo_texture = ExtResource("1_xe53s")
+uv1_triplanar = true
+
 [sub_resource type="BoxShape3D" id="BoxShape3D_12ry4"]
 
 [node name="cubik" type="RigidBody3D" groups=["Pickupable"]]
@@ -31,6 +37,7 @@ script = SubResource("GDScript_y2u87")
 [node name="MeshInstance3D" type="MeshInstance3D" parent="."]
 transform = Transform3D(0.8, 0, 0, 0, 0.8, 0, 0, 0, 0.8, 0, 0, 0)
 mesh = SubResource("BoxMesh_32cn1")
+surface_material_override/0 = SubResource("StandardMaterial3D_tahgo")
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="."]
 transform = Transform3D(0.8, 0, 0, 0, 0.8, 0, 0, 0, 0.8, 0, 0, 0)
