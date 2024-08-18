@@ -1,0 +1,23 @@
+[gd_scene load_steps=3 format=3 uid="uid://kklst46iuosr"]
+
+[ext_resource type="PackedScene" uid="uid://bf1gykb8g1rpf" path="res://Models/Lamp/lamp.blend" id="1_haqei"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_s4pcw"]
+shading_mode = 0
+
+[node name="Lamp" type="Node3D"]
+
+[node name="lamp" parent="." instance=ExtResource("1_haqei")]
+transform = Transform3D(0.3, 0, 0, 0, 0.3, 0, 0, 0, 0.3, 0, 0, 0)
+
+[node name="Cube_001" parent="lamp" index="1"]
+surface_material_override/0 = SubResource("StandardMaterial3D_s4pcw")
+
+[node name="BézierCurve" parent="lamp" index="2"]
+cast_shadow = 0
+
+[node name="OmniLight3D" type="OmniLight3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.138812, 0, 0)
+omni_range = 8.0
+
+[editable path="lamp"]
