@@ -27,17 +27,20 @@ func _physics_process(delta: float) -> void:
 		0:
 			_open_always()
 
-
 func _open_always():
 	for c in $Area3D.get_overlapping_bodies():
 		if c.is_in_group("player"):
-			if state == 0:
-				player = c
-				state = 1
-				state_changing = true
+			send_open_state()
 			return
 	# Закрываем
-	if state == 1:
-		player = null
-		state = 0
-		state_changing = true
+	send_close_state()
+
+func send_open_state():
+	if state == 1: return
+	state = 1
+	state_changing = true
+
+func send_close_state():
+	if state == 0: return
+	state = 0
+	state_changing = true

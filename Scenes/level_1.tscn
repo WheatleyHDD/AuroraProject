@@ -1,8 +1,9 @@
-[gd_scene load_steps=8 format=3 uid="uid://p5wt3lhtsvpx"]
+[gd_scene load_steps=9 format=3 uid="uid://p5wt3lhtsvpx"]
 
 [ext_resource type="PackedScene" uid="uid://dyxwr4jja75ty" path="res://Objects/player.tscn" id="1_0g125"]
 [ext_resource type="Texture2D" uid="uid://c60wskyqya8fp" path="res://Textures/prototype_textures/Light/texture_12.png" id="2_od8vr"]
 [ext_resource type="PackedScene" uid="uid://c53drlaaxk863" path="res://Objects/door.tscn" id="3_yc2f6"]
+[ext_resource type="PackedScene" uid="uid://dl2m2i6l0s7lj" path="res://Objects/button.tscn" id="4_uh0ve"]
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_vj0d7"]
 albedo_texture = ExtResource("2_od8vr")
@@ -39,7 +40,7 @@ tracks/1/keys = {
 tracks/2/type = "value"
 tracks/2/imported = false
 tracks/2/enabled = true
-tracks/2/path = NodePath("Global;Light:visible")
+tracks/2/path = NodePath("GlobalLight:visible")
 tracks/2/interp = 1
 tracks/2/loop_wrap = true
 tracks/2/keys = {
@@ -78,7 +79,7 @@ tracks/1/keys = {
 tracks/2/type = "value"
 tracks/2/imported = false
 tracks/2/enabled = true
-tracks/2/path = NodePath("Global;Light:visible")
+tracks/2/path = NodePath("GlobalLight:visible")
 tracks/2/interp = 1
 tracks/2/loop_wrap = true
 tracks/2/keys = {
@@ -121,9 +122,9 @@ size = Vector3(5, 4, 9)
 material = SubResource("StandardMaterial3D_vj0d7")
 
 [node name="door2" type="CSGBox3D" parent="CSGCombiner3D"]
-transform = Transform3D(-4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, 9.5, 0.55, 6.6)
+transform = Transform3D(-4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, 9.2, 0.55, 6.6)
 flip_faces = true
-size = Vector3(0.2, 2.1, 1.1)
+size = Vector3(0.2, 2.1, 1.2)
 material = SubResource("StandardMaterial3D_vj0d7")
 
 [node name="SpotLight3D" type="SpotLight3D" parent="."]
@@ -139,20 +140,20 @@ light_energy = 1.5
 spot_range = 6.495
 spot_angle = 30.0
 
-[node name="Global;Light" type="Node3D" parent="."]
+[node name="GlobalLight" type="Node3D" parent="."]
 visible = false
 
-[node name="OmniLight3D" type="OmniLight3D" parent="Global;Light"]
+[node name="OmniLight3D" type="OmniLight3D" parent="GlobalLight"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 3, 3.22806, 0)
 light_energy = 1.5
 omni_range = 10.0
 
-[node name="OmniLight3D2" type="OmniLight3D" parent="Global;Light"]
+[node name="OmniLight3D2" type="OmniLight3D" parent="GlobalLight"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 9, 3.22806, 0)
 light_energy = 1.5
 omni_range = 10.0
 
-[node name="OmniLight3D3" type="OmniLight3D" parent="Global;Light"]
+[node name="OmniLight3D3" type="OmniLight3D" parent="GlobalLight"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 9, 3.22806, 4)
 light_energy = 1.5
 omni_range = 10.0
@@ -165,3 +166,11 @@ autoplay = "start"
 
 [node name="Door" parent="." instance=ExtResource("3_yc2f6")]
 transform = Transform3D(0.55, 0, 0, 0, 0.7, 0, 0, 0, 0.6, 6.6, -0.5, 0)
+
+[node name="Door2" parent="." instance=ExtResource("3_yc2f6")]
+transform = Transform3D(-2.40413e-08, 0, -0.6, 0, 0.7, 0, 0.55, 0, -2.62268e-08, 9.2, -0.5, 6.6)
+door_type = 1
+
+[node name="Button" parent="." node_paths=PackedStringArray("door") instance=ExtResource("4_uh0ve")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 10.0453, -0.5, -0.333663)
+door = NodePath("../Door2")
