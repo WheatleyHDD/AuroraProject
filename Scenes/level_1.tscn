@@ -1,4 +1,4 @@
-[gd_scene load_steps=34 format=3 uid="uid://p5wt3lhtsvpx"]
+[gd_scene load_steps=35 format=3 uid="uid://p5wt3lhtsvpx"]
 
 [ext_resource type="PackedScene" uid="uid://dyxwr4jja75ty" path="res://Objects/player.tscn" id="1_0g125"]
 [ext_resource type="PackedScene" uid="uid://yeaj74kycs2x" path="res://Objects/level_manager.tscn" id="1_5hs4o"]
@@ -8,6 +8,7 @@
 [ext_resource type="PackedScene" uid="uid://kklst46iuosr" path="res://Objects/lamp.tscn" id="4_3reyg"]
 [ext_resource type="PackedScene" uid="uid://ih6h8cb23e23" path="res://Scenes/level_2.tscn" id="4_fnyv8"]
 [ext_resource type="PackedScene" uid="uid://dl2m2i6l0s7lj" path="res://Objects/button.tscn" id="5_xadf7"]
+[ext_resource type="AudioStream" uid="uid://6ikylqsteh0h" path="res://Sounds/spotlight.wav" id="7_2l3pd"]
 [ext_resource type="FontFile" uid="uid://bbbco1t2dr1km" path="res://Fonts/PerfectDOSVGA437.ttf" id="9_kcgiv"]
 [ext_resource type="Texture2D" uid="uid://jilo3wo42iyd" path="res://Textures/Controls/W.png" id="10_h21ih"]
 [ext_resource type="Texture2D" uid="uid://bskq44vt4ikl1" path="res://Textures/Controls/A.png" id="11_wsfmy"]
@@ -93,6 +94,30 @@ tracks/3/keys = {
 "update": 1,
 "values": [false]
 }
+tracks/4/type = "value"
+tracks/4/imported = false
+tracks/4/enabled = true
+tracks/4/path = NodePath("SpotLight3D/AudioStreamPlayer3D:playing")
+tracks/4/interp = 1
+tracks/4/loop_wrap = true
+tracks/4/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [false]
+}
+tracks/5/type = "value"
+tracks/5/imported = false
+tracks/5/enabled = true
+tracks/5/path = NodePath("SpotLight3D2/AudioStreamPlayer3D:playing")
+tracks/5/interp = 1
+tracks/5/loop_wrap = true
+tracks/5/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [false]
+}
 
 [sub_resource type="Animation" id="Animation_brgb1"]
 resource_name = "start"
@@ -145,6 +170,30 @@ tracks/3/keys = {
 "transitions": PackedFloat32Array(1, 1),
 "update": 1,
 "values": [false, true]
+}
+tracks/4/type = "value"
+tracks/4/imported = false
+tracks/4/enabled = true
+tracks/4/path = NodePath("SpotLight3D/AudioStreamPlayer3D:playing")
+tracks/4/interp = 1
+tracks/4/loop_wrap = true
+tracks/4/keys = {
+"times": PackedFloat32Array(0.5, 3),
+"transitions": PackedFloat32Array(1, 1),
+"update": 1,
+"values": [true, true]
+}
+tracks/5/type = "value"
+tracks/5/imported = false
+tracks/5/enabled = true
+tracks/5/path = NodePath("SpotLight3D2/AudioStreamPlayer3D:playing")
+tracks/5/interp = 1
+tracks/5/loop_wrap = true
+tracks/5/keys = {
+"times": PackedFloat32Array(1.5),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [true]
 }
 
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_x2er4"]
@@ -313,11 +362,21 @@ light_energy = 1.5
 spot_range = 6.495
 spot_angle = 30.0
 
+[node name="AudioStreamPlayer3D" type="AudioStreamPlayer3D" parent="SpotLight3D"]
+stream = ExtResource("7_2l3pd")
+bus = &"Sounds"
+attenuation_filter_cutoff_hz = 20500.0
+
 [node name="SpotLight3D2" type="SpotLight3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, -4.37114e-08, 1, 0, -1, -4.37114e-08, 6, 3.39292, 0)
 light_energy = 1.5
 spot_range = 6.495
 spot_angle = 30.0
+
+[node name="AudioStreamPlayer3D" type="AudioStreamPlayer3D" parent="SpotLight3D2"]
+stream = ExtResource("7_2l3pd")
+bus = &"Sounds"
+attenuation_filter_cutoff_hz = 20500.0
 
 [node name="Lamp11" parent="." instance=ExtResource("4_3reyg")]
 transform = Transform3D(1.58933e-08, 0, -1, 0, 1, 0, 1, 0, 1.58933e-08, 21.205, 4.89, 6.69776)
