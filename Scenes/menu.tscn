@@ -1,0 +1,47 @@
+[gd_scene load_steps=2 format=3 uid="uid://b65mllkqej66n"]
+
+[ext_resource type="Script" path="res://Scripts/menu.gd" id="1_q0nw3"]
+
+[node name="Menu" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_q0nw3")
+
+[node name="Buttons" type="VBoxContainer" parent="."]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.044
+anchor_top = 0.461
+anchor_right = 0.303
+anchor_bottom = 0.936
+offset_left = -0.160002
+offset_top = 0.0399933
+offset_right = 0.0800018
+offset_bottom = 0.039978
+
+[node name="NewGame" type="Button" parent="Buttons"]
+layout_mode = 2
+text = "New Game"
+
+[node name="Continue" type="Button" parent="Buttons"]
+layout_mode = 2
+text = "Continue"
+
+[node name="Settings" type="Button" parent="Buttons"]
+layout_mode = 2
+text = "Settings"
+
+[node name="About" type="Button" parent="Buttons"]
+layout_mode = 2
+text = "About"
+
+[node name="Exit" type="Button" parent="Buttons"]
+layout_mode = 2
+text = "Exit"
+
+[connection signal="pressed" from="Buttons/NewGame" to="." method="_on_new_game_pressed"]
+[connection signal="pressed" from="Buttons/Exit" to="." method="_on_exit_pressed"]
