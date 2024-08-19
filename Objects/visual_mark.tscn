@@ -4,10 +4,10 @@
 [ext_resource type="Script" path="res://Scripts/visual_mark.gd" id="2_8yrll"]
 [ext_resource type="Texture2D" uid="uid://do803r2v1jie6" path="res://Textures/svg_green_check.svg" id="3_w6vsp"]
 
-[node name="visual_mark" type="Decal"]
-transform = Transform3D(1, 0, 0, 0, -4.37114e-08, -1, 0, 1, -4.37114e-08, -0.997373, 1.49799, -6.21066)
-size = Vector3(0.6, 0.1, 0.6)
-texture_albedo = ExtResource("1_45bwe")
+[node name="visual_mark" type="Sprite3D"]
+pixel_size = 0.001
+double_sided = false
+texture = ExtResource("1_45bwe")
 script = ExtResource("2_8yrll")
 red = ExtResource("1_45bwe")
 green = ExtResource("3_w6vsp")

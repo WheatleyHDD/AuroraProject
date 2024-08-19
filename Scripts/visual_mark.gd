@@ -1,4 +1,4 @@
-extends Decal
+extends Sprite3D
 
 @export var red: Texture2D
 @export var green: Texture2D
@@ -6,9 +6,9 @@ extends Decal
 var value = false
 
 func send_open_state():
-	texture_albedo = green
+	texture = green
 	value = true
 
 func send_close_state():
-	texture_albedo = red
+	texture = red
 	value = false

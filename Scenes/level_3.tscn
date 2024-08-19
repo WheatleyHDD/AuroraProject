@@ -1,4 +1,4 @@
-[gd_scene load_steps=9 format=3 uid="uid://dvv74tehghny0"]
+[gd_scene load_steps=12 format=3 uid="uid://dvv74tehghny0"]
 
 [ext_resource type="PackedScene" uid="uid://yeaj74kycs2x" path="res://Objects/level_manager.tscn" id="1_q0mi7"]
 [ext_resource type="PackedScene" uid="uid://b5ebke27toq5i" path="res://Objects/elevator_room_start.tscn" id="1_r60sx"]
@@ -6,8 +6,11 @@
 [ext_resource type="PackedScene" uid="uid://chpdh7i6wuq76" path="res://Objects/door_hole.tscn" id="2_qlc2k"]
 [ext_resource type="Material" uid="uid://cgx0vkhfondcs" path="res://Materials/levelwall.tres" id="3_wtctu"]
 [ext_resource type="PackedScene" uid="uid://c53drlaaxk863" path="res://Objects/door.tscn" id="4_btw0u"]
+[ext_resource type="PackedScene" uid="uid://dwxaiju8iop4k" path="res://Objects/elevator_room.tscn" id="6_jvu2i"]
 [ext_resource type="PackedScene" uid="uid://bm5yfhh6ewxl2" path="res://Objects/target.tscn" id="7_ekiu6"]
 [ext_resource type="PackedScene" uid="uid://c3tehj3vo73bh" path="res://Objects/visual_mark.tscn" id="8_q8ult"]
+[ext_resource type="PackedScene" uid="uid://kklst46iuosr" path="res://Objects/lamp.tscn" id="9_moilb"]
+[ext_resource type="PackedScene" uid="uid://dl2m2i6l0s7lj" path="res://Objects/button.tscn" id="10_2dvik"]
 
 [node name="Level3" type="Node3D"]
 
@@ -28,6 +31,10 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.006, -0.95, -3.101)
 
 [node name="door2" parent="CSGCombiner3D" instance=ExtResource("2_qlc2k")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.006, -0.95, -6.31728)
+
+[node name="door3" parent="CSGCombiner3D" instance=ExtResource("2_qlc2k")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.006, 4.75955, -21.415)
+size = Vector3(1.2, 2.1, 2)
 
 [node name="CSGBox3D" type="CSGBox3D" parent="CSGCombiner3D"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.5, -4.71184)
@@ -55,6 +62,38 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 6.67337, -0.5, -4.95112)
 flip_faces = true
 size = Vector3(0.5, 2, 2)
 
+[node name="CSGBox3D6" type="CSGBox3D" parent="CSGCombiner3D"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2.5, -13.425)
+flip_faces = true
+size = Vector3(11, 9, 14)
+material = ExtResource("3_wtctu")
+
+[node name="ElevatorRoom" parent="CSGCombiner3D" instance=ExtResource("6_jvu2i")]
+transform = Transform3D(-1, 0, 8.9407e-08, 0, 1, 0, -8.9407e-08, 0, -1, 0, 5.71, -25.405)
+
+[node name="CSGCombiner3D2" type="CSGCombiner3D" parent="."]
+use_collision = true
+
+[node name="CSGBox3D7" type="CSGBox3D" parent="CSGCombiner3D2"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 4.5, 2, -10.5)
+size = Vector3(2, 1, 4)
+material = ExtResource("3_wtctu")
+
+[node name="CSGBox3D8" type="CSGBox3D" parent="CSGCombiner3D2"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -4.5, 2, -10.5)
+size = Vector3(2, 1, 4)
+material = ExtResource("3_wtctu")
+
+[node name="CSGBox3D9" type="CSGBox3D" parent="CSGCombiner3D2"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 3.5, -19)
+size = Vector3(3, 1, 3)
+material = ExtResource("3_wtctu")
+
+[node name="CSGBox3D10" type="CSGBox3D" parent="CSGCombiner3D2"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 8, -10.425)
+size = Vector3(11, 2, 8)
+material = ExtResource("3_wtctu")
+
 [node name="Door" parent="." instance=ExtResource("4_btw0u")]
 transform = Transform3D(-4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, 0, 0, -3.105)
 
@@ -62,6 +101,11 @@ transform = Transform3D(-4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, 0, 0, 
 transform = Transform3D(-4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, 0, 0, -6.32)
 door_type = 3
 waiting_for = [NodePath("../visual_mark"), NodePath("../visual_mark2")]
+
+[node name="Door3" parent="." node_paths=PackedStringArray("waiting_for") instance=ExtResource("4_btw0u")]
+transform = Transform3D(-4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, 0, 5.71285, -20.5297)
+door_type = 3
+waiting_for = [NodePath("../visual_mark3"), NodePath("../visual_mark4"), NodePath("../visual_mark5")]
 
 [node name="Target" parent="." node_paths=PackedStringArray("door") instance=ExtResource("7_ekiu6")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -6.96065, 1.30949, -4.89598)
@@ -72,6 +116,60 @@ transform = Transform3D(-1, 0, 8.74228e-08, 0, 1, 0, -8.74228e-08, 0, -1, 6.9207
 door = NodePath("../visual_mark2")
 
 [node name="visual_mark" parent="." instance=ExtResource("8_q8ult")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1.00044, 1.49983, -6.21)
 
 [node name="visual_mark2" parent="." instance=ExtResource("8_q8ult")]
-transform = Transform3D(1, 0, 0, 0, -4.37114e-08, -1, 0, 1, -4.37114e-08, 1.00263, 1.49799, -6.21066)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.999894, 1.49958, -6.21)
+
+[node name="visual_mark3" parent="." instance=ExtResource("8_q8ult")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1, 8.5, -20.42)
+
+[node name="visual_mark4" parent="." instance=ExtResource("8_q8ult")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 8.5, -20.42)
+
+[node name="visual_mark5" parent="." instance=ExtResource("8_q8ult")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1, 8.5, -20.42)
+
+[node name="Lights" type="Node3D" parent="."]
+
+[node name="Lamp" parent="Lights" instance=ExtResource("9_moilb")]
+transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, 0, 2.49157, -6.41839)
+
+[node name="Lamp2" parent="Lights" instance=ExtResource("9_moilb")]
+transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, 4, 2.49157, -6.41839)
+
+[node name="Lamp3" parent="Lights" instance=ExtResource("9_moilb")]
+transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, -4, 2.49157, -6.41839)
+
+[node name="Lamp4" parent="Lights" instance=ExtResource("9_moilb")]
+transform = Transform3D(-4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, -3, 7.49157, -20.4184)
+
+[node name="Lamp5" parent="Lights" instance=ExtResource("9_moilb")]
+transform = Transform3D(-4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, 3, 7.49157, -20.4184)
+
+[node name="Lamp6" parent="Lights" instance=ExtResource("9_moilb")]
+transform = Transform3D(-4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, 0, 2.49157, -20.4184)
+
+[node name="Lamp7" parent="Lights" instance=ExtResource("9_moilb")]
+transform = Transform3D(-4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, 4, 2.49157, -20.4184)
+
+[node name="Lamp8" parent="Lights" instance=ExtResource("9_moilb")]
+transform = Transform3D(-4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, -4, 2.49157, -20.4184)
+
+[node name="Lamp9" parent="Lights" instance=ExtResource("9_moilb")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -5.50021, 3.49157, -11.4184)
+
+[node name="Lamp10" parent="Lights" instance=ExtResource("9_moilb")]
+transform = Transform3D(-1, 0, -8.74228e-08, 0, 1, 0, 8.74228e-08, 0, -1, 5.49979, 3.49157, -9.41839)
+
+[node name="Button" parent="." node_paths=PackedStringArray("door") instance=ExtResource("10_2dvik")]
+transform = Transform3D(0.7, 0, 0, 0, 0.7, 0, 0, 0, 0.7, -4.5, 2.5, -11.5)
+door = NodePath("../visual_mark3")
+
+[node name="Button2" parent="." node_paths=PackedStringArray("door") instance=ExtResource("10_2dvik")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 4.5, 2.5, -9.5)
+door = NodePath("../visual_mark4")
+
+[node name="Button3" parent="." node_paths=PackedStringArray("door") instance=ExtResource("10_2dvik")]
+transform = Transform3D(1.75, 0, 0, 0, 1.75, 0, 0, 0, 1.75, 3, 0, -19)
+door = NodePath("../visual_mark5")

@@ -1,4 +1,4 @@
-[gd_scene load_steps=11 format=3 uid="uid://ih6h8cb23e23"]
+[gd_scene load_steps=12 format=3 uid="uid://ih6h8cb23e23"]
 
 [ext_resource type="PackedScene" uid="uid://dyxwr4jja75ty" path="res://Objects/player.tscn" id="1_5b158"]
 [ext_resource type="PackedScene" uid="uid://yeaj74kycs2x" path="res://Objects/level_manager.tscn" id="1_5tb2t"]
@@ -8,6 +8,7 @@
 [ext_resource type="PackedScene" uid="uid://dwxaiju8iop4k" path="res://Objects/elevator_room.tscn" id="3_815rp"]
 [ext_resource type="PackedScene" uid="uid://dl2m2i6l0s7lj" path="res://Objects/button.tscn" id="4_kln2y"]
 [ext_resource type="PackedScene" uid="uid://chpdh7i6wuq76" path="res://Objects/door_hole.tscn" id="4_y8eoj"]
+[ext_resource type="PackedScene" uid="uid://dvv74tehghny0" path="res://Scenes/level_3.tscn" id="5_dcvbf"]
 [ext_resource type="PackedScene" uid="uid://kklst46iuosr" path="res://Objects/lamp.tscn" id="5_pqvqb"]
 [ext_resource type="PackedScene" uid="uid://bm5yfhh6ewxl2" path="res://Objects/target.tscn" id="7_ei468"]
 
@@ -26,6 +27,7 @@ use_collision = true
 
 [node name="ElevatorRoom" parent="CSGCombiner3D" instance=ExtResource("3_815rp")]
 transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, 13.6792, 3, -12)
+next_level = ExtResource("5_dcvbf")
 
 [node name="door1" parent="CSGCombiner3D" instance=ExtResource("4_y8eoj")]
 
