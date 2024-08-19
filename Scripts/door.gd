@@ -18,8 +18,10 @@ func _process(delta: float) -> void:
 		if state == 0:
 			state_changing = false
 			$AnimationPlayer.play("close")
+			$AudioStreamPlayer3D.play()
 		if state == 1:
 			state_changing = false
+			$AudioStreamPlayer3D.play()
 			$AnimationPlayer.play("open")
 
 

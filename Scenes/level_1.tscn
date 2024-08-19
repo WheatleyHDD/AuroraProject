@@ -1,4 +1,4 @@
-[gd_scene load_steps=13 format=3 uid="uid://p5wt3lhtsvpx"]
+[gd_scene load_steps=17 format=3 uid="uid://p5wt3lhtsvpx"]
 
 [ext_resource type="PackedScene" uid="uid://dyxwr4jja75ty" path="res://Objects/player.tscn" id="1_0g125"]
 [ext_resource type="PackedScene" uid="uid://yeaj74kycs2x" path="res://Objects/level_manager.tscn" id="1_5hs4o"]
@@ -8,6 +8,30 @@
 [ext_resource type="PackedScene" uid="uid://kklst46iuosr" path="res://Objects/lamp.tscn" id="4_3reyg"]
 [ext_resource type="PackedScene" uid="uid://ih6h8cb23e23" path="res://Scenes/level_2.tscn" id="4_fnyv8"]
 [ext_resource type="PackedScene" uid="uid://dl2m2i6l0s7lj" path="res://Objects/button.tscn" id="5_xadf7"]
+
+[sub_resource type="GDScript" id="GDScript_5ehtb"]
+script/source = "extends Node3D
+
+
+
+func _on_animation_player_animation_finished(anim_name: StringName) -> void:
+	$\"/root/VoiceOver\".play_voice(\"speaker_0\")
+
+
+func _on_trigger_1_body_entered(body: Node3D) -> void:
+	$Trigger1.queue_free()
+	$\"/root/VoiceOver\".play_voice(\"speaker_1\")
+
+
+func _on_trigger_2_body_entered(body: Node3D) -> void:
+	$Trigger2.queue_free()
+	$\"/root/VoiceOver\".play_voice(\"speaker_2\")
+
+
+func _on_trigger_3_body_entered(body: Node3D) -> void:
+	$Trigger3.queue_free()
+	$\"/root/VoiceOver\".play_voice(\"speaker_3\")
+"
 
 [sub_resource type="Animation" id="Animation_bcnl1"]
 length = 0.001
@@ -122,7 +146,17 @@ _data = {
 [sub_resource type="Environment" id="Environment_matm2"]
 background_mode = 1
 
+[sub_resource type="BoxShape3D" id="BoxShape3D_s4e3b"]
+size = Vector3(0.685, 3.17, 1.915)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_tfgc8"]
+size = Vector3(5, 3.17, 5)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_mfrpn"]
+size = Vector3(5, 3.17, 5)
+
 [node name="Level1" type="Node3D"]
+script = SubResource("GDScript_5ehtb")
 
 [node name="LevelManager" parent="." instance=ExtResource("1_5hs4o")]
 CubesPossible = 6
@@ -243,6 +277,35 @@ environment = SubResource("Environment_matm2")
 [node name="Button" parent="." node_paths=PackedStringArray("door") instance=ExtResource("5_xadf7")]
 transform = Transform3D(0.575, 0, 0, 0, 0.575, 0, 0, 0, 0.575, 22.6162, 2.5, 9.48364)
 door = NodePath("../Door4")
+
+[node name="Trigger1" type="Area3D" parent="."]
+collision_layer = 512
+collision_mask = 512
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Trigger1"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 10.5594, 0.460437, 0)
+shape = SubResource("BoxShape3D_s4e3b")
+
+[node name="Trigger2" type="Area3D" parent="."]
+collision_layer = 512
+collision_mask = 512
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Trigger2"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 21.7169, 1.46044, 0.5425)
+shape = SubResource("BoxShape3D_tfgc8")
+
+[node name="Trigger3" type="Area3D" parent="."]
+collision_layer = 512
+collision_mask = 512
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Trigger3"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 21.7169, 4.20426, 9.49671)
+shape = SubResource("BoxShape3D_mfrpn")
+
+[connection signal="animation_finished" from="AnimationPlayer" to="." method="_on_animation_player_animation_finished"]
+[connection signal="body_entered" from="Trigger1" to="." method="_on_trigger_1_body_entered"]
+[connection signal="body_entered" from="Trigger2" to="." method="_on_trigger_2_body_entered"]
+[connection signal="body_entered" from="Trigger3" to="." method="_on_trigger_3_body_entered"]
 
 [editable path="GlobalLight/Lamp4"]
 [editable path="GlobalLight/Lamp4/lamp"]

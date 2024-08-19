@@ -1,4 +1,4 @@
-[gd_scene load_steps=12 format=3 uid="uid://dvv74tehghny0"]
+[gd_scene load_steps=14 format=3 uid="uid://dvv74tehghny0"]
 
 [ext_resource type="PackedScene" uid="uid://yeaj74kycs2x" path="res://Objects/level_manager.tscn" id="1_q0mi7"]
 [ext_resource type="PackedScene" uid="uid://b5ebke27toq5i" path="res://Objects/elevator_room_start.tscn" id="1_r60sx"]
@@ -12,10 +12,28 @@
 [ext_resource type="PackedScene" uid="uid://kklst46iuosr" path="res://Objects/lamp.tscn" id="9_moilb"]
 [ext_resource type="PackedScene" uid="uid://dl2m2i6l0s7lj" path="res://Objects/button.tscn" id="10_2dvik"]
 
+[sub_resource type="GDScript" id="GDScript_fcjpm"]
+script/source = "extends Node3D
+
+
+func _on_trigger_1_body_entered(body: Node3D) -> void:
+	$\"/root/VoiceOver\".play_voice(\"speaker_6\")
+	$Trigger1.queue_free()
+
+
+func _on_trigger_2_body_entered(body: Node3D) -> void:
+	$\"/root/VoiceOver\".play_voice(\"speaker_7\")
+	$Trigger2.queue_free()
+"
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_qtxy8"]
+size = Vector3(3, 3, 2)
+
 [node name="Level3" type="Node3D"]
+script = SubResource("GDScript_fcjpm")
 
 [node name="LevelManager" parent="." instance=ExtResource("1_q0mi7")]
-CubesPossible = 10
+CubesPossible = 12
 
 [node name="Player" parent="." instance=ExtResource("2_alox8")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0.32526)
@@ -173,3 +191,22 @@ door = NodePath("../visual_mark4")
 [node name="Button3" parent="." node_paths=PackedStringArray("door") instance=ExtResource("10_2dvik")]
 transform = Transform3D(1.75, 0, 0, 0, 1.75, 0, 0, 0, 1.75, 3, 0, -19)
 door = NodePath("../visual_mark5")
+
+[node name="Trigger1" type="Area3D" parent="."]
+collision_layer = 512
+collision_mask = 512
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Trigger1"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, -4.5)
+shape = SubResource("BoxShape3D_qtxy8")
+
+[node name="Trigger2" type="Area3D" parent="."]
+collision_layer = 512
+collision_mask = 512
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Trigger2"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, -7.5)
+shape = SubResource("BoxShape3D_qtxy8")
+
+[connection signal="body_entered" from="Trigger1" to="." method="_on_trigger_1_body_entered"]
+[connection signal="body_entered" from="Trigger2" to="." method="_on_trigger_2_body_entered"]

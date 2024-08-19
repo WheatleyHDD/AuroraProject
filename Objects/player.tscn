@@ -1,10 +1,12 @@
-[gd_scene load_steps=28 format=3 uid="uid://dyxwr4jja75ty"]
+[gd_scene load_steps=30 format=3 uid="uid://dyxwr4jja75ty"]
 
 [ext_resource type="Script" path="res://Scripts/Player.cs" id="1_pb5qk"]
 [ext_resource type="Script" path="res://Scripts/CameraInterpolate.cs" id="2_3s1gh"]
 [ext_resource type="Script" path="res://Scripts/CubeCreator.cs" id="3_dkdx3"]
 [ext_resource type="PackedScene" uid="uid://bno7bhmcmbdae" path="res://Objects/cubik.tscn" id="4_rl2yq"]
 [ext_resource type="Script" path="res://Scripts/debug_log.gd" id="5_clq1d"]
+[ext_resource type="AudioStream" uid="uid://bvxhe2klufoe0" path="res://Sounds/creating_end.wav" id="5_dsktc"]
+[ext_resource type="AudioStream" uid="uid://b47pbk82j2gme" path="res://Sounds/creating_start.wav" id="5_lrtiw"]
 [ext_resource type="Script" path="res://Scripts/CubePickup.cs" id="5_rro7c"]
 [ext_resource type="Shader" path="res://Shaders/vignette.gdshader" id="7_umllf"]
 [ext_resource type="Texture2D" uid="uid://cgrgwjoxc1ne2" path="res://Textures/prototype_textures/Purple/texture_09.png" id="8_tnt38"]
@@ -228,8 +230,8 @@ func _process(delta: float) -> void:
 "
 
 [node name="Player" type="CharacterBody3D" node_paths=PackedStringArray("Head", "_foot") groups=["player"]]
-collision_layer = 17
-collision_mask = 17
+collision_layer = 529
+collision_mask = 529
 platform_floor_layers = 0
 script = ExtResource("1_pb5qk")
 Head = NodePath("Head")
@@ -249,11 +251,23 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.5, 0)
 [node name="Camera3D" type="Camera3D" parent="Head/CameraContainer"]
 script = ExtResource("2_3s1gh")
 
-[node name="CubeCreator" type="RayCast3D" parent="Head"]
+[node name="CubeCreator" type="RayCast3D" parent="Head" node_paths=PackedStringArray("_startSound", "_endSound")]
 target_position = Vector3(0, 0, -2)
 collision_mask = 2
 script = ExtResource("3_dkdx3")
 _cubeResource = ExtResource("4_rl2yq")
+_startSound = NodePath("Start")
+_endSound = NodePath("End")
+
+[node name="Start" type="AudioStreamPlayer" parent="Head/CubeCreator"]
+stream = ExtResource("5_lrtiw")
+volume_db = -6.0
+bus = &"Sounds"
+
+[node name="End" type="AudioStreamPlayer" parent="Head/CubeCreator"]
+stream = ExtResource("5_dsktc")
+volume_db = -6.0
+bus = &"Sounds"
 
 [node name="CubePickup" type="Node3D" parent="Head" node_paths=PackedStringArray("_pickuper", "_joint")]
 script = ExtResource("5_rro7c")

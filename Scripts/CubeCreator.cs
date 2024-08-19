@@ -6,6 +6,9 @@ public partial class CubeCreator : RayCast3D
 	public int TimeUse { get; private set; } = 300;
 	
 	[Export] private PackedScene _cubeResource;
+	[Export] private AudioStreamPlayer _startSound;
+	[Export] private AudioStreamPlayer _endSound;
+	
 	public RigidBody3D CubeCreating;
 
 	private LevelManager _lvlMngr;
@@ -22,8 +25,6 @@ public partial class CubeCreator : RayCast3D
 	// Called every frame. 'delta' is the elapsed time since the previous frame.
 	public override void _Process(double delta)
 	{
-		if (_lvlMngr != null && _lvlMngr.CubesPossible == 0) return;
-		
 		if (CubeCreating != null)
 		{
 			TimeUse = Mathf.Max(TimeUse-1, 0);
@@ -41,7 +42,7 @@ public partial class CubeCreator : RayCast3D
 		
 		if (Input.IsActionJustPressed("create_cube"))
 		{
-			if (TimeUse < 300)
+			if (TimeUse < 300 || (_lvlMngr != null && _lvlMngr.CubesPossible == 0))
 			{
 				return;
 			}
@@ -50,6 +51,7 @@ public partial class CubeCreator : RayCast3D
 			CubeCreating.GetNode<CollisionShape3D>("CollisionShape3D").Disabled = true;
 			GetTree().CurrentScene.AddChild(CubeCreating);
 			Engine.SetTimeScale(0.1);
+			_startSound.Play();
 			if (_lvlMngr != null) _lvlMngr.CubesPossible -= 1;
 		}
 		
@@ -68,6 +70,7 @@ public partial class CubeCreator : RayCast3D
 		
 		CubeCreating = null;
 		Engine.SetTimeScale(1.0);
+		_endSound.Play();
 	}
 
 	private void ChangeScale()
