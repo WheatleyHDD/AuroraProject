@@ -1,6 +1,86 @@
-[gd_scene load_steps=2 format=3 uid="uid://b65mllkqej66n"]
+[gd_scene load_steps=12 format=3 uid="uid://b65mllkqej66n"]
 
 [ext_resource type="Script" path="res://Scripts/menu.gd" id="1_q0nw3"]
+[ext_resource type="PackedScene" uid="uid://ck45cn315tm7m" path="res://Models/Pin/thumb_tack_2.0.glb" id="2_8lkve"]
+[ext_resource type="PackedScene" uid="uid://d3r5ppqr6gag" path="res://Models/Pinboard/source/Pinboard+Pin.fbx" id="2_judre"]
+[ext_resource type="Texture2D" uid="uid://c0achxtu41g0c" path="res://Textures/aurora_polaroid.png" id="4_mduku"]
+
+[sub_resource type="Environment" id="Environment_tskpg"]
+background_mode = 1
+
+[sub_resource type="Animation" id="Animation_rpab0"]
+resource_name = "fading"
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:color")
+tracks/0/interp = 2
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 1),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Color(0, 0, 0, 1), Color(0, 0, 0, 0)]
+}
+
+[sub_resource type="Animation" id="Animation_637v5"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:color")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Color(0, 0, 0, 1)]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_b0wjm"]
+_data = {
+"RESET": SubResource("Animation_637v5"),
+"fading": SubResource("Animation_rpab0")
+}
+
+[sub_resource type="Animation" id="Animation_xg8ax"]
+resource_name = "start"
+length = 0.3
+step = 0.1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Buttons:position")
+tracks/0/interp = 2
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.3),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Vector2(28, 378), Vector2(28, 166)]
+}
+
+[sub_resource type="Animation" id="Animation_c88sk"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Buttons:position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(28, 378)]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_g0oqj"]
+_data = {
+"RESET": SubResource("Animation_c88sk"),
+"start": SubResource("Animation_xg8ax")
+}
 
 [node name="Menu" type="Control"]
 layout_mode = 3
@@ -11,6 +91,52 @@ grow_horizontal = 2
 grow_vertical = 2
 script = ExtResource("1_q0nw3")
 
+[node name="Background" type="SubViewportContainer" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="SubViewport" type="SubViewport" parent="Background"]
+size = Vector2i(640, 360)
+
+[node name="Sketchfab_Scene" parent="Background/SubViewport" instance=ExtResource("2_8lkve")]
+transform = Transform3D(0.0149399, 0.0343594, 0.0140083, -0.0366824, 0.01595, 0, -0.00558579, -0.0128464, 0.0374669, -1.82, 3.73338, -4.09115)
+
+[node name="Pinboard+Pin" parent="Background/SubViewport" instance=ExtResource("2_judre")]
+
+[node name="Camera3D" type="Camera3D" parent="Background/SubViewport"]
+transform = Transform3D(-0.139173, 0, 0.990268, 0, 1, 0, -0.990268, 0, -0.139173, -1.275, 3.515, -3.73)
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="Background/SubViewport"]
+environment = SubResource("Environment_tskpg")
+
+[node name="Sprite3D" type="Sprite3D" parent="Background/SubViewport"]
+transform = Transform3D(-1.74846e-09, 0, 0.04, 0.00515667, 0.0396662, 2.25405e-10, -0.0396662, 0.00515667, -1.73387e-09, -1.868, 3.50062, -3.95669)
+shaded = true
+double_sided = false
+texture = ExtResource("4_mduku")
+
+[node name="OmniLight3D" type="OmniLight3D" parent="Background/SubViewport"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.471156, 4.65734, -5.70456)
+
+[node name="fade" type="ColorRect" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0, 0, 0, 1)
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="fade"]
+libraries = {
+"": SubResource("AnimationLibrary_b0wjm")
+}
+autoplay = "fading"
+
 [node name="Buttons" type="VBoxContainer" parent="."]
 layout_mode = 1
 anchors_preset = -1
@@ -18,10 +144,10 @@ anchor_left = 0.044
 anchor_top = 0.461
 anchor_right = 0.303
 anchor_bottom = 0.936
-offset_left = -0.160002
-offset_top = 0.0399933
+offset_left = -0.16
+offset_top = 212.04
 offset_right = 0.0800018
-offset_bottom = 0.039978
+offset_bottom = 212.04
 
 [node name="NewGame" type="Button" parent="Buttons"]
 layout_mode = 2
@@ -42,6 +168,12 @@ text = "About"
 [node name="Exit" type="Button" parent="Buttons"]
 layout_mode = 2
 text = "Exit"
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+libraries = {
+"": SubResource("AnimationLibrary_g0oqj")
+}
+autoplay = "start"
 
 [connection signal="pressed" from="Buttons/NewGame" to="." method="_on_new_game_pressed"]
 [connection signal="pressed" from="Buttons/Exit" to="." method="_on_exit_pressed"]

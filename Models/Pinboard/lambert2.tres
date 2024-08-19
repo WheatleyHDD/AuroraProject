@@ -1,0 +1,13 @@
+[gd_resource type="StandardMaterial3D" load_steps=3 format=3 uid="uid://ctdy00mtepduf"]
+
+[ext_resource type="Texture2D" uid="uid://dhg50vc22jqpp" path="res://Models/Pinboard/textures/Pinboard_Texture.png" id="1_8l1rp"]
+[ext_resource type="Texture2D" uid="uid://i11ek8suejc6" path="res://Models/Pinboard/textures/Pinboard_Metallic.png" id="2_2fdka"]
+
+[resource]
+resource_name = "lambert2"
+vertex_color_use_as_albedo = true
+albedo_color = Color(0.665185, 0.665185, 0.665185, 1)
+albedo_texture = ExtResource("1_8l1rp")
+metallic = 1.0
+metallic_texture = ExtResource("2_2fdka")
+emission_enabled = true
