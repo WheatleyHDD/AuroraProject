@@ -1,6 +1,8 @@
 extends Node3D
 
-@export_enum("Always", "Pressed", "One-time") var door_type = 0
+@export_enum("Always", "Pressed", "One-time", "Waiting For") var door_type = 0
+@export var waiting_for: Array[Node3D]
+
 var player
 
 var state: int = 0
@@ -26,6 +28,8 @@ func _physics_process(delta: float) -> void:
 	match door_type:
 		0:
 			_open_always()
+		3:
+			_waiting()
 
 func _open_always():
 	for c in $Area3D.get_overlapping_bodies():
@@ -34,6 +38,14 @@ func _open_always():
 			return
 	# Закрываем
 	send_close_state()
+
+func _waiting():
+	for c in waiting_for:
+		if not c.value:
+			send_close_state()
+			return
+	# Открываем
+	send_open_state()
 
 func send_open_state():
 	if state == 1: return

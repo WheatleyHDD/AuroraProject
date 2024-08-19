@@ -1,21 +1,77 @@
-[gd_scene load_steps=4 format=3 uid="uid://dvv74tehghny0"]
+[gd_scene load_steps=9 format=3 uid="uid://dvv74tehghny0"]
 
+[ext_resource type="PackedScene" uid="uid://yeaj74kycs2x" path="res://Objects/level_manager.tscn" id="1_q0mi7"]
 [ext_resource type="PackedScene" uid="uid://b5ebke27toq5i" path="res://Objects/elevator_room_start.tscn" id="1_r60sx"]
+[ext_resource type="PackedScene" uid="uid://dyxwr4jja75ty" path="res://Objects/player.tscn" id="2_alox8"]
 [ext_resource type="PackedScene" uid="uid://chpdh7i6wuq76" path="res://Objects/door_hole.tscn" id="2_qlc2k"]
 [ext_resource type="Material" uid="uid://cgx0vkhfondcs" path="res://Materials/levelwall.tres" id="3_wtctu"]
+[ext_resource type="PackedScene" uid="uid://c53drlaaxk863" path="res://Objects/door.tscn" id="4_btw0u"]
+[ext_resource type="PackedScene" uid="uid://bm5yfhh6ewxl2" path="res://Objects/target.tscn" id="7_ekiu6"]
+[ext_resource type="PackedScene" uid="uid://c3tehj3vo73bh" path="res://Objects/visual_mark.tscn" id="8_q8ult"]
 
 [node name="Level3" type="Node3D"]
 
+[node name="LevelManager" parent="." instance=ExtResource("1_q0mi7")]
+CubesPossible = 10
+
+[node name="Player" parent="." instance=ExtResource("2_alox8")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0.32526)
+
 [node name="CSGCombiner3D" type="CSGCombiner3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2, 0)
+use_collision = true
 
 [node name="ElevatorRoomStart" parent="CSGCombiner3D" instance=ExtResource("1_r60sx")]
 
 [node name="door1" parent="CSGCombiner3D" instance=ExtResource("2_qlc2k")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.006, -0.95, -3.101)
 
+[node name="door2" parent="CSGCombiner3D" instance=ExtResource("2_qlc2k")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.006, -0.95, -6.31728)
+
 [node name="CSGBox3D" type="CSGBox3D" parent="CSGCombiner3D"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -7.71184)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.5, -4.71184)
 flip_faces = true
-size = Vector3(7, 4, 9)
+size = Vector3(5, 3, 3)
 material = ExtResource("3_wtctu")
+
+[node name="CSGBox3D2" type="CSGBox3D" parent="CSGCombiner3D"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -4.6346, -0.633961, -4.87527)
+flip_faces = true
+size = Vector3(4.3479, 0.25, 0.25)
+
+[node name="CSGBox3D3" type="CSGBox3D" parent="CSGCombiner3D"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 4.63664, -0.633961, -4.87527)
+flip_faces = true
+size = Vector3(4.3479, 0.25, 0.25)
+
+[node name="CSGBox3D4" type="CSGBox3D" parent="CSGCombiner3D"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -6.78111, -0.5, -4.95112)
+flip_faces = true
+size = Vector3(0.5, 2, 2)
+
+[node name="CSGBox3D5" type="CSGBox3D" parent="CSGCombiner3D"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 6.67337, -0.5, -4.95112)
+flip_faces = true
+size = Vector3(0.5, 2, 2)
+
+[node name="Door" parent="." instance=ExtResource("4_btw0u")]
+transform = Transform3D(-4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, 0, 0, -3.105)
+
+[node name="Door2" parent="." node_paths=PackedStringArray("waiting_for") instance=ExtResource("4_btw0u")]
+transform = Transform3D(-4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, 0, 0, -6.32)
+door_type = 3
+waiting_for = [NodePath("../visual_mark"), NodePath("../visual_mark2")]
+
+[node name="Target" parent="." node_paths=PackedStringArray("door") instance=ExtResource("7_ekiu6")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -6.96065, 1.30949, -4.89598)
+door = NodePath("../visual_mark")
+
+[node name="Target2" parent="." node_paths=PackedStringArray("door") instance=ExtResource("7_ekiu6")]
+transform = Transform3D(-1, 0, 8.74228e-08, 0, 1, 0, -8.74228e-08, 0, -1, 6.92071, 1.30949, -4.89598)
+door = NodePath("../visual_mark2")
+
+[node name="visual_mark" parent="." instance=ExtResource("8_q8ult")]
+
+[node name="visual_mark2" parent="." instance=ExtResource("8_q8ult")]
+transform = Transform3D(1, 0, 0, 0, -4.37114e-08, -1, 0, 1, -4.37114e-08, 1.00263, 1.49799, -6.21066)

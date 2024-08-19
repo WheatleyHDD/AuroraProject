@@ -14,7 +14,7 @@
 [node name="Level2" type="Node3D"]
 
 [node name="LevelManager" parent="." instance=ExtResource("1_5tb2t")]
-CubesPossible = 9
+CubesPossible = 7
 
 [node name="Player" parent="." instance=ExtResource("1_5b158")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.671508, 0)
