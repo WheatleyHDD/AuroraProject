@@ -205,32 +205,27 @@ script = ExtResource("2_3s1gh")
 
 [node name="CubeCreator" type="RayCast3D" parent="Head"]
 target_position = Vector3(0, 0, -2)
+collision_mask = 2
 script = ExtResource("3_dkdx3")
 _cubeResource = ExtResource("4_rl2yq")
 
 [node name="CubePickup" type="Node3D" parent="Head" node_paths=PackedStringArray("_pickuper", "_joint")]
 script = ExtResource("5_rro7c")
 _pickuper = NodePath("RayCast3D")
-_joint = NodePath("SpringArm3D")
+_joint = NodePath("JoltGeneric6DOFJoint3D")
 
-[node name="SpringArm3D" type="Generic6DOFJoint3D" parent="Head/CubePickup"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -2)
+[node name="JoltGeneric6DOFJoint3D" type="JoltGeneric6DOFJoint3D" parent="Head/CubePickup"]
+linear_spring_x/enabled = true
+linear_spring_x/frequency = 30.0
+linear_spring_x/damping = 30.0
+linear_spring_y/enabled = true
+linear_spring_y/frequency = 30.0
+linear_spring_y/damping = 30.0
+linear_spring_z/enabled = true
+linear_spring_z/frequency = 30.0
+linear_spring_z/damping = 30.0
 node_a = NodePath("../StaticBody3D")
-linear_limit_x/softness = 0.05
-linear_limit_x/restitution = 1.0
-linear_limit_x/damping = 2.0
-linear_limit_y/softness = 0.05
-linear_limit_y/restitution = 1.0
-linear_limit_y/damping = 2.0
-linear_limit_z/softness = 0.05
-linear_limit_z/restitution = 1.0
-linear_limit_z/damping = 2.0
-linear_spring_x/stiffness = 3.0
-linear_spring_x/damping = 1.175
-linear_spring_y/stiffness = 3.0
-linear_spring_y/damping = 1.695
-linear_spring_z/stiffness = 3.0
-linear_spring_z/damping = 1.47
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -1.99655)
 
 [node name="StaticBody3D" type="StaticBody3D" parent="Head/CubePickup"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -2)
@@ -241,6 +236,7 @@ disabled = true
 
 [node name="RayCast3D" type="RayCast3D" parent="Head/CubePickup"]
 target_position = Vector3(0, 0, -2)
+collision_mask = 32
 
 [node name="UI" type="CanvasLayer" parent="."]
 

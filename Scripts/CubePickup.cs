@@ -4,7 +4,7 @@ using System;
 public partial class CubePickup : Node3D
 {
 	[Export] private RayCast3D _pickuper;
-	[Export] private Generic6DofJoint3D _joint;
+	[Export] private Node3D _joint;
 	
 	// Called when the node enters the scene tree for the first time.
 	public override void _Ready()
@@ -19,12 +19,12 @@ public partial class CubePickup : Node3D
 			if (!_pickuper.IsColliding()) return;
 			if (!((Node3D)_pickuper.GetCollider()).IsInGroup("Pickupable")) return;
 			
-			_joint.NodeB = (_pickuper.GetCollider() as RigidBody3D)?.GetPath();
+			_joint.Set("node_b", (_pickuper.GetCollider() as RigidBody3D)?.GetPath());
 		}
 
 		if (Input.IsActionJustReleased("pickup"))
 		{
-			_joint.NodeB = null;
+			_joint.Set("node_b", "");
 		}
 	}
 }
