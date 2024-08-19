@@ -1,4 +1,4 @@
-[gd_scene load_steps=30 format=3 uid="uid://dyxwr4jja75ty"]
+[gd_scene load_steps=35 format=3 uid="uid://dyxwr4jja75ty"]
 
 [ext_resource type="Script" path="res://Scripts/Player.cs" id="1_pb5qk"]
 [ext_resource type="Script" path="res://Scripts/CameraInterpolate.cs" id="2_3s1gh"]
@@ -9,8 +9,12 @@
 [ext_resource type="AudioStream" uid="uid://b47pbk82j2gme" path="res://Sounds/creating_start.wav" id="5_lrtiw"]
 [ext_resource type="Script" path="res://Scripts/CubePickup.cs" id="5_rro7c"]
 [ext_resource type="Shader" path="res://Shaders/vignette.gdshader" id="7_umllf"]
+[ext_resource type="AudioStream" uid="uid://b3odoq5skwggk" path="res://Sounds/Player/jump.wav" id="8_2gb06"]
 [ext_resource type="Texture2D" uid="uid://cgrgwjoxc1ne2" path="res://Textures/prototype_textures/Purple/texture_09.png" id="8_tnt38"]
+[ext_resource type="AudioStream" uid="uid://ds7mk48o2fiyd" path="res://Sounds/Player/land.wav" id="9_qj07l"]
 [ext_resource type="FontFile" uid="uid://bbbco1t2dr1km" path="res://Fonts/PerfectDOSVGA437.ttf" id="9_tlf67"]
+[ext_resource type="AudioStream" uid="uid://xwlw2bghctcw" path="res://Sounds/Player/walk1.wav" id="10_duxtr"]
+[ext_resource type="AudioStream" uid="uid://cmiaijdj7bwgu" path="res://Sounds/Player/walk2.wav" id="11_h3m5o"]
 
 [sub_resource type="CapsuleShape3D" id="CapsuleShape3D_vhp7r"]
 radius = 0.4
@@ -18,6 +22,12 @@ height = 1.9
 
 [sub_resource type="SphereShape3D" id="SphereShape3D_uwksm"]
 radius = 0.05
+
+[sub_resource type="AudioStreamPlaylist" id="AudioStreamPlaylist_vyhlm"]
+loop = false
+stream_count = 2
+stream_0 = ExtResource("10_duxtr")
+stream_1 = ExtResource("11_h3m5o")
 
 [sub_resource type="LabelSettings" id="LabelSettings_0qxxc"]
 font_size = 8
@@ -229,13 +239,17 @@ func _process(delta: float) -> void:
 		text = str(lvl_mngr.CubesPossible)
 "
 
-[node name="Player" type="CharacterBody3D" node_paths=PackedStringArray("Head", "_foot") groups=["player"]]
+[node name="Player" type="CharacterBody3D" node_paths=PackedStringArray("Head", "_foot", "_footstep", "_jump", "_land", "_footstepDelay") groups=["player"]]
 collision_layer = 529
 collision_mask = 529
 platform_floor_layers = 0
 script = ExtResource("1_pb5qk")
 Head = NodePath("Head")
 _foot = NodePath("RayCast3D")
+_footstep = NodePath("Footstep")
+_jump = NodePath("Jump")
+_land = NodePath("Land")
+_footstepDelay = NodePath("walkDelay")
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="."]
 shape = SubResource("CapsuleShape3D_vhp7r")
@@ -297,6 +311,36 @@ disabled = true
 [node name="RayCast3D" type="RayCast3D" parent="Head/CubePickup"]
 target_position = Vector3(0, 0, -2)
 collision_mask = 32
+
+[node name="Jump" type="AudioStreamPlayer3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.51101, 0)
+stream = ExtResource("8_2gb06")
+volume_db = -12.0
+max_db = -12.0
+max_polyphony = 4
+bus = &"Sounds"
+attenuation_filter_cutoff_hz = 20500.0
+
+[node name="Land" type="AudioStreamPlayer3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.749088, 0)
+stream = ExtResource("9_qj07l")
+volume_db = -6.0
+max_db = -6.0
+max_polyphony = 4
+bus = &"Sounds"
+attenuation_filter_cutoff_hz = 20500.0
+
+[node name="Footstep" type="AudioStreamPlayer3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.749088, 0)
+stream = SubResource("AudioStreamPlaylist_vyhlm")
+volume_db = -6.0
+max_db = -6.0
+bus = &"Sounds"
+attenuation_filter_cutoff_hz = 20500.0
+
+[node name="walkDelay" type="Timer" parent="."]
+wait_time = 0.3
+one_shot = true
 
 [node name="UI" type="CanvasLayer" parent="."]
 

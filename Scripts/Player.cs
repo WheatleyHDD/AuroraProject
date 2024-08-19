@@ -11,14 +11,12 @@ public partial class Player : CharacterBody3D
 	[ExportGroup("Main Setups")]
 	[Export()] public Node3D Head;
 	[Export()] private RayCast3D _foot;
-
-	/*
+	
 	[ExportGroup("Sounds")]
 	[Export()] private AudioStreamPlayer3D _footstep;
 	[Export()] private AudioStreamPlayer3D _jump;
 	[Export()] private AudioStreamPlayer3D _land;
 	[Export()] private Timer _footstepDelay;
-	*/
 
 	bool _landSoundPlayed = true;
 
@@ -45,9 +43,9 @@ public partial class Player : CharacterBody3D
 
 		if ((_foot.IsColliding() || IsOnFloor()) && !_landSoundPlayed && velocity.Y <= 0)
 		{
-			Input.StartJoyVibration(0, 0.85f, 0f, 0.1f);
+			//Input.StartJoyVibration(0, 0.85f, 0f, 0.1f);
 			_landSoundPlayed = true;
-			//_land.Play();
+			_land.Play();
 		}
 
 		Vector2 inputDir = new Vector2(0, 0);
@@ -55,7 +53,7 @@ public partial class Player : CharacterBody3D
 		// прыжок
 		if (Input.IsActionJustPressed("move_jump") && (_foot.IsColliding() || IsOnFloor()))
 		{
-			//_jump.Play();
+			_jump.Play();
 			gravVec = Vector3.Up * JumpVelocity;
 
 			var t = GetTree().CreateTween();
@@ -66,13 +64,11 @@ public partial class Player : CharacterBody3D
 		// движение вроде
 		inputDir = Input.GetVector("move_left", "move_right", "move_forward", "move_backward");
 		
-		/*
-		if (inputDir != Vector2.Zero && grav_vec.Y == 0f && !_footstep.Playing && _footstepDelay.IsStopped())
+		if (inputDir != Vector2.Zero && gravVec.Y == 0f && !_footstep.Playing && _footstepDelay.IsStopped())
 		{
 			_footstep.Play();
 			_footstepDelay.Start();
 		}
-		*/
 
 		Direction = (Transform.Basis * new Vector3(inputDir.X, 0, inputDir.Y)).Normalized();
 		velocity = velocity.Lerp(Direction * Speed, Acceleration * (float)delta);

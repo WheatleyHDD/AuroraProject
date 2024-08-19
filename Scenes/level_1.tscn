@@ -1,4 +1,4 @@
-[gd_scene load_steps=17 format=3 uid="uid://p5wt3lhtsvpx"]
+[gd_scene load_steps=34 format=3 uid="uid://p5wt3lhtsvpx"]
 
 [ext_resource type="PackedScene" uid="uid://dyxwr4jja75ty" path="res://Objects/player.tscn" id="1_0g125"]
 [ext_resource type="PackedScene" uid="uid://yeaj74kycs2x" path="res://Objects/level_manager.tscn" id="1_5hs4o"]
@@ -8,6 +8,14 @@
 [ext_resource type="PackedScene" uid="uid://kklst46iuosr" path="res://Objects/lamp.tscn" id="4_3reyg"]
 [ext_resource type="PackedScene" uid="uid://ih6h8cb23e23" path="res://Scenes/level_2.tscn" id="4_fnyv8"]
 [ext_resource type="PackedScene" uid="uid://dl2m2i6l0s7lj" path="res://Objects/button.tscn" id="5_xadf7"]
+[ext_resource type="FontFile" uid="uid://bbbco1t2dr1km" path="res://Fonts/PerfectDOSVGA437.ttf" id="9_kcgiv"]
+[ext_resource type="Texture2D" uid="uid://jilo3wo42iyd" path="res://Textures/Controls/W.png" id="10_h21ih"]
+[ext_resource type="Texture2D" uid="uid://bskq44vt4ikl1" path="res://Textures/Controls/A.png" id="11_wsfmy"]
+[ext_resource type="Texture2D" uid="uid://6ivusrwwrgkg" path="res://Textures/Controls/S.png" id="12_3iyog"]
+[ext_resource type="Texture2D" uid="uid://bbnrdcgtc21nn" path="res://Textures/Controls/D.png" id="13_sl5i2"]
+[ext_resource type="Texture2D" uid="uid://c75i74r18v0ri" path="res://Textures/Controls/LMB.png" id="14_judj8"]
+[ext_resource type="Texture2D" uid="uid://bk8yycs67qrgs" path="res://Textures/Controls/MMB.png" id="15_lj3n3"]
+[ext_resource type="Texture2D" uid="uid://c7l6sis6ncnqi" path="res://Textures/Controls/RMB.png" id="16_gwe66"]
 
 [sub_resource type="GDScript" id="GDScript_5ehtb"]
 script/source = "extends Node3D
@@ -16,6 +24,7 @@ script/source = "extends Node3D
 
 func _on_animation_player_animation_finished(anim_name: StringName) -> void:
 	$\"/root/VoiceOver\".play_voice(\"speaker_0\")
+	$Tutorials/Tutorial1/AnimationPlayer.play(\"fade\")
 
 
 func _on_trigger_1_body_entered(body: Node3D) -> void:
@@ -25,6 +34,7 @@ func _on_trigger_1_body_entered(body: Node3D) -> void:
 
 func _on_trigger_2_body_entered(body: Node3D) -> void:
 	$Trigger2.queue_free()
+	$Tutorials/Tutorial2/AnimationPlayer.play(\"fade\")
 	$\"/root/VoiceOver\".play_voice(\"speaker_2\")
 
 
@@ -154,6 +164,96 @@ size = Vector3(5, 3.17, 5)
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_mfrpn"]
 size = Vector3(5, 3.17, 5)
+
+[sub_resource type="LabelSettings" id="LabelSettings_3hfkd"]
+font = ExtResource("9_kcgiv")
+font_size = 24
+
+[sub_resource type="LabelSettings" id="LabelSettings_syq7f"]
+font = ExtResource("9_kcgiv")
+font_size = 32
+
+[sub_resource type="Animation" id="Animation_7f0y2"]
+resource_name = "fade"
+length = 3.0
+step = 0.1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:modulate")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.5, 2.5, 3),
+"transitions": PackedFloat32Array(1, 1, 1, 1),
+"update": 0,
+"values": [Color(1, 1, 1, 0), Color(1, 1, 1, 1), Color(1, 1, 1, 1), Color(1, 1, 1, 0)]
+}
+
+[sub_resource type="Animation" id="Animation_c8y7l"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:modulate")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Color(1, 1, 1, 0)]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_nole3"]
+_data = {
+"RESET": SubResource("Animation_c8y7l"),
+"fade": SubResource("Animation_7f0y2")
+}
+
+[sub_resource type="LabelSettings" id="LabelSettings_nq7xt"]
+font = ExtResource("9_kcgiv")
+shadow_size = 6
+shadow_color = Color(0, 0, 0, 0.682353)
+shadow_offset = Vector2(0, 0)
+
+[sub_resource type="Animation" id="Animation_k35h2"]
+resource_name = "fade"
+length = 4.0
+step = 0.1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:modulate")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.5, 3.5, 4),
+"transitions": PackedFloat32Array(1, 1, 1, 1),
+"update": 0,
+"values": [Color(1, 1, 1, 0), Color(1, 1, 1, 1), Color(1, 1, 1, 1), Color(1, 1, 1, 0)]
+}
+
+[sub_resource type="Animation" id="Animation_nrng2"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:modulate")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Color(1, 1, 1, 0)]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_yoqxf"]
+_data = {
+"RESET": SubResource("Animation_nrng2"),
+"fade": SubResource("Animation_k35h2")
+}
 
 [node name="Level1" type="Node3D"]
 script = SubResource("GDScript_5ehtb")
@@ -301,6 +401,142 @@ collision_mask = 512
 [node name="CollisionShape3D" type="CollisionShape3D" parent="Trigger3"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 21.7169, 4.20426, 9.49671)
 shape = SubResource("BoxShape3D_mfrpn")
+
+[node name="Tutorials" type="CanvasLayer" parent="."]
+
+[node name="Tutorial1" type="Control" parent="Tutorials"]
+modulate = Color(1, 1, 1, 0)
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="VBoxContainer" type="VBoxContainer" parent="Tutorials/Tutorial1"]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.275
+anchor_top = 0.144
+anchor_right = 0.725
+anchor_bottom = 0.311
+offset_top = 0.159996
+offset_bottom = 0.0399933
+metadata/_edit_group_ = true
+
+[node name="Label" type="Label" parent="Tutorials/Tutorial1/VBoxContainer"]
+layout_mode = 2
+text = "Movement"
+label_settings = SubResource("LabelSettings_3hfkd")
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="HBoxContainer" type="HBoxContainer" parent="Tutorials/Tutorial1/VBoxContainer"]
+layout_mode = 2
+
+[node name="W" type="TextureRect" parent="Tutorials/Tutorial1/VBoxContainer/HBoxContainer"]
+custom_minimum_size = Vector2(32, 32)
+layout_mode = 2
+texture = ExtResource("10_h21ih")
+expand_mode = 1
+
+[node name="A" type="TextureRect" parent="Tutorials/Tutorial1/VBoxContainer/HBoxContainer"]
+custom_minimum_size = Vector2(32, 32)
+layout_mode = 2
+texture = ExtResource("11_wsfmy")
+expand_mode = 1
+
+[node name="S" type="TextureRect" parent="Tutorials/Tutorial1/VBoxContainer/HBoxContainer"]
+custom_minimum_size = Vector2(32, 32)
+layout_mode = 2
+texture = ExtResource("12_3iyog")
+expand_mode = 1
+
+[node name="D" type="TextureRect" parent="Tutorials/Tutorial1/VBoxContainer/HBoxContainer"]
+custom_minimum_size = Vector2(32, 32)
+layout_mode = 2
+texture = ExtResource("13_sl5i2")
+expand_mode = 1
+
+[node name="Label" type="Label" parent="Tutorials/Tutorial1/VBoxContainer/HBoxContainer"]
+layout_mode = 2
+text = " + Mouse"
+label_settings = SubResource("LabelSettings_syq7f")
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="Tutorials/Tutorial1"]
+libraries = {
+"": SubResource("AnimationLibrary_nole3")
+}
+
+[node name="Tutorial2" type="Control" parent="Tutorials"]
+modulate = Color(1, 1, 1, 0)
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="HBoxContainer" type="HBoxContainer" parent="Tutorials/Tutorial2"]
+layout_mode = 2
+anchor_top = 0.144
+anchor_right = 1.0
+anchor_bottom = 0.353
+offset_top = 0.159996
+offset_bottom = -0.0800018
+theme_override_constants/separation = 120
+alignment = 1
+metadata/_edit_group_ = true
+
+[node name="VBoxContainer" type="VBoxContainer" parent="Tutorials/Tutorial2/HBoxContainer"]
+layout_mode = 2
+
+[node name="TextureRect" type="TextureRect" parent="Tutorials/Tutorial2/HBoxContainer/VBoxContainer"]
+custom_minimum_size = Vector2(48, 48)
+layout_mode = 2
+texture = ExtResource("14_judj8")
+expand_mode = 1
+stretch_mode = 5
+
+[node name="Label" type="Label" parent="Tutorials/Tutorial2/HBoxContainer/VBoxContainer"]
+layout_mode = 2
+text = "Create Cube"
+label_settings = SubResource("LabelSettings_nq7xt")
+
+[node name="VBoxContainer2" type="VBoxContainer" parent="Tutorials/Tutorial2/HBoxContainer"]
+layout_mode = 2
+
+[node name="TextureRect" type="TextureRect" parent="Tutorials/Tutorial2/HBoxContainer/VBoxContainer2"]
+custom_minimum_size = Vector2(48, 48)
+layout_mode = 2
+texture = ExtResource("15_lj3n3")
+expand_mode = 1
+stretch_mode = 5
+
+[node name="Label" type="Label" parent="Tutorials/Tutorial2/HBoxContainer/VBoxContainer2"]
+layout_mode = 2
+text = "Change Size"
+label_settings = SubResource("LabelSettings_nq7xt")
+
+[node name="VBoxContainer3" type="VBoxContainer" parent="Tutorials/Tutorial2/HBoxContainer"]
+layout_mode = 2
+
+[node name="TextureRect" type="TextureRect" parent="Tutorials/Tutorial2/HBoxContainer/VBoxContainer3"]
+custom_minimum_size = Vector2(48, 48)
+layout_mode = 2
+texture = ExtResource("16_gwe66")
+expand_mode = 1
+stretch_mode = 5
+
+[node name="Label" type="Label" parent="Tutorials/Tutorial2/HBoxContainer/VBoxContainer3"]
+layout_mode = 2
+text = "Drag Cube"
+label_settings = SubResource("LabelSettings_nq7xt")
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="Tutorials/Tutorial2"]
+libraries = {
+"": SubResource("AnimationLibrary_yoqxf")
+}
 
 [connection signal="animation_finished" from="AnimationPlayer" to="." method="_on_animation_player_animation_finished"]
 [connection signal="body_entered" from="Trigger1" to="." method="_on_trigger_1_body_entered"]
