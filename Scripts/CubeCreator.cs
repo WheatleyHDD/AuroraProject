@@ -50,6 +50,7 @@ public partial class CubeCreator : RayCast3D
 			CubeCreating.GetNode<CollisionShape3D>("CollisionShape3D").Disabled = true;
 			GetTree().CurrentScene.AddChild(CubeCreating);
 			Engine.SetTimeScale(0.1);
+			if (_lvlMngr != null) _lvlMngr.CubesPossible -= 1;
 		}
 		
 		if (Input.IsActionJustReleased("create_cube"))
@@ -67,7 +68,6 @@ public partial class CubeCreator : RayCast3D
 		
 		CubeCreating = null;
 		Engine.SetTimeScale(1.0);
-		if (_lvlMngr != null) _lvlMngr.CubesPossible -= 1;
 	}
 
 	private void ChangeScale()
