@@ -1,0 +1,9 @@
+[gd_scene load_steps=2 format=3 uid="uid://chpdh7i6wuq76"]
+
+[ext_resource type="Material" uid="uid://cgx0vkhfondcs" path="res://Materials/levelwall.tres" id="1_quhbb"]
+
+[node name="door1" type="CSGBox3D"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.006495, -0.96021, -3.10097)
+flip_faces = true
+size = Vector3(1.2, 2.1, 0.225)
+material = ExtResource("1_quhbb")

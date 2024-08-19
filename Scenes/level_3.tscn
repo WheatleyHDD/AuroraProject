@@ -1,0 +1,21 @@
+[gd_scene load_steps=4 format=3 uid="uid://dvv74tehghny0"]
+
+[ext_resource type="PackedScene" uid="uid://b5ebke27toq5i" path="res://Objects/elevator_room_start.tscn" id="1_r60sx"]
+[ext_resource type="PackedScene" uid="uid://chpdh7i6wuq76" path="res://Objects/door_hole.tscn" id="2_qlc2k"]
+[ext_resource type="Material" uid="uid://cgx0vkhfondcs" path="res://Materials/levelwall.tres" id="3_wtctu"]
+
+[node name="Level3" type="Node3D"]
+
+[node name="CSGCombiner3D" type="CSGCombiner3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2, 0)
+
+[node name="ElevatorRoomStart" parent="CSGCombiner3D" instance=ExtResource("1_r60sx")]
+
+[node name="door1" parent="CSGCombiner3D" instance=ExtResource("2_qlc2k")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.006, -0.95, -3.101)
+
+[node name="CSGBox3D" type="CSGBox3D" parent="CSGCombiner3D"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -7.71184)
+flip_faces = true
+size = Vector3(7, 4, 9)
+material = ExtResource("3_wtctu")

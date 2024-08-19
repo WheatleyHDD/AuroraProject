@@ -7,10 +7,14 @@ public partial class CubeCreator : RayCast3D
 	
 	[Export] private PackedScene _cubeResource;
 	public RigidBody3D CubeCreating;
+
+	private LevelManager _lvlMngr;
 	
 	// Called when the node enters the scene tree for the first time.
 	public override void _Ready()
 	{
+		if (GetTree().GetNodesInGroup("LevelManager").Count > 0)
+			_lvlMngr = GetTree().GetNodesInGroup("LevelManager")[0] as LevelManager;
 		CubeCreating = _cubeResource.Instantiate<RigidBody3D>();
 		CubeCreating = null;
 	}
@@ -18,6 +22,8 @@ public partial class CubeCreator : RayCast3D
 	// Called every frame. 'delta' is the elapsed time since the previous frame.
 	public override void _Process(double delta)
 	{
+		if (_lvlMngr != null && _lvlMngr.CubesPossible == 0) return;
+		
 		if (CubeCreating != null)
 		{
 			TimeUse = Mathf.Max(TimeUse-1, 0);
@@ -61,6 +67,7 @@ public partial class CubeCreator : RayCast3D
 		
 		CubeCreating = null;
 		Engine.SetTimeScale(1.0);
+		if (_lvlMngr != null) _lvlMngr.CubesPossible -= 1;
 	}
 
 	private void ChangeScale()
