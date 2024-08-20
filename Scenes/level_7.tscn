@@ -1,8 +1,30 @@
-[gd_scene load_steps=6 format=3 uid="uid://bh4jqmloi577t"]
+[gd_scene load_steps=16 format=3 uid="uid://bh4jqmloi577t"]
 
+[ext_resource type="PackedScene" uid="uid://dyxwr4jja75ty" path="res://Objects/player.tscn" id="1_24hv3"]
 [ext_resource type="PackedScene" uid="uid://b5ebke27toq5i" path="res://Objects/elevator_room_start.tscn" id="1_pwr5p"]
 [ext_resource type="PackedScene" uid="uid://chpdh7i6wuq76" path="res://Objects/door_hole.tscn" id="2_j2oyc"]
 [ext_resource type="Material" uid="uid://cgx0vkhfondcs" path="res://Materials/levelwall.tres" id="3_ittpi"]
+[ext_resource type="PackedScene" uid="uid://dwxaiju8iop4k" path="res://Objects/elevator_room.tscn" id="4_j87et"]
+[ext_resource type="PackedScene" uid="uid://c53drlaaxk863" path="res://Objects/door.tscn" id="5_cpihb"]
+[ext_resource type="PackedScene" uid="uid://dl2m2i6l0s7lj" path="res://Objects/button.tscn" id="6_bdc81"]
+[ext_resource type="PackedScene" uid="uid://bm5yfhh6ewxl2" path="res://Objects/target.tscn" id="7_678t7"]
+[ext_resource type="PackedScene" uid="uid://c3tehj3vo73bh" path="res://Objects/visual_mark.tscn" id="8_516pt"]
+[ext_resource type="PackedScene" uid="uid://kklst46iuosr" path="res://Objects/lamp.tscn" id="9_jqu4k"]
+[ext_resource type="PackedScene" uid="uid://dsa23145gv4b" path="res://Objects/enemy_melee_boss.tscn" id="10_gt208"]
+
+[sub_resource type="GDScript" id="GDScript_kdawt"]
+script/source = "extends Node3D
+
+
+func _on_trigger_1_body_entered(body: Node3D) -> void:
+	$\"/root/VoiceOver\".play_voice(\"melissa_6\")
+	$Trigger1.queue_free()
+
+
+func _on_trigger_2_body_entered(body: Node3D) -> void:
+	$\"/root/VoiceOver\".play_voice(\"speaker_10\")
+	get_tree().change_scene_to_file(\"res://Scenes/end.tscn\")
+"
 
 [sub_resource type="Environment" id="Environment_8jxaf"]
 background_mode = 1
@@ -10,8 +32,17 @@ background_color = Color(0.625597, 0.625597, 0.625597, 1)
 background_energy_multiplier = 0.5
 
 [sub_resource type="NavigationMesh" id="NavigationMesh_lhskr"]
+vertices = PackedVector3Array(-7.75, 0.5, -33.2385, -7.75, 0.5, -11.4885, 8, 0.5, -11.4885, 8, 0.5, -33.2385, 2.25, 0.5, -0.738472, 1.75, 0.5, -0.488472, 1.5, 0.5, 2.01153, 2.5, 0.5, 2.26153, -1.75, 0.5, -1.73847, -2.25, 0.5, -2.48847, -2.25, 0.5, 2.26153, -1.5, 0.5, 2.01153, 2, 0.5, -1.98847, 2.5, 0.5, -2.48847, -0.75, -5.5, -0.988472, -0.75, -5.5, 1.01153, 0.75, -5.5, 1.01153, 0.75, -5.5, -0.988472, -0.25, 0.25, -0.738472, -0.25, 0.25, 0.761528, 0.25, 0.25, 0.761528, 0.25, 0.25, -0.738472)
+polygons = [PackedInt32Array(3, 2, 0), PackedInt32Array(0, 2, 1), PackedInt32Array(5, 4, 6), PackedInt32Array(6, 4, 7), PackedInt32Array(11, 10, 8), PackedInt32Array(8, 10, 9), PackedInt32Array(12, 8, 13), PackedInt32Array(13, 8, 9), PackedInt32Array(11, 6, 10), PackedInt32Array(10, 6, 7), PackedInt32Array(13, 4, 12), PackedInt32Array(13, 7, 4), PackedInt32Array(17, 16, 14), PackedInt32Array(14, 16, 15), PackedInt32Array(21, 20, 18), PackedInt32Array(18, 20, 19)]
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_w4rsi"]
+size = Vector3(1, 3, 1)
 
 [node name="Level7" type="Node3D"]
+script = SubResource("GDScript_kdawt")
+
+[node name="Player" parent="." instance=ExtResource("1_24hv3")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.966298, 0)
 
 [node name="WorldEnvironment" type="WorldEnvironment" parent="."]
 environment = SubResource("Environment_8jxaf")
@@ -28,8 +59,11 @@ collision_mask = 3
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2, 0)
 
 [node name="door1" parent="NavigationRegion3D/CSGCombiner3D" instance=ExtResource("2_j2oyc")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.006495, 1.03979, -26.4885)
-size = Vector3(1.2, 2.1, 47)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.006495, 1.03979, -44.4885)
+size = Vector3(1.2, 2.1, 83)
+
+[node name="ElevatorRoom" parent="NavigationRegion3D/CSGCombiner3D" instance=ExtResource("4_j87et")]
+transform = Transform3D(-1, 0, -8.74228e-08, 0, 1, 0, 8.74228e-08, 0, -1, 0.193, 1.975, -88.197)
 
 [node name="CSGBox3D" type="CSGBox3D" parent="NavigationRegion3D/CSGCombiner3D"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 3, -22.4555)
@@ -39,3 +73,114 @@ material = ExtResource("3_ittpi")
 
 [node name="OmniLight3D" type="OmniLight3D" parent="NavigationRegion3D/CSGCombiner3D/CSGBox3D"]
 omni_range = 59.3059
+
+[node name="Door" parent="." instance=ExtResource("5_cpihb")]
+transform = Transform3D(-4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, 0, 0, -3.09587)
+
+[node name="Door2" parent="." instance=ExtResource("5_cpihb")]
+transform = Transform3D(-4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, 0, 0, -10.8571)
+
+[node name="Door3" parent="." node_paths=PackedStringArray("waiting_for") instance=ExtResource("5_cpihb")]
+transform = Transform3D(-4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, 0, 0, -34.037)
+door_type = 3
+waiting_for = [NodePath("../visual_mark"), NodePath("../visual_mark2"), NodePath("../visual_mark3"), NodePath("../visual_mark4"), NodePath("../visual_mark5"), NodePath("../visual_mark6")]
+
+[node name="Button" parent="." node_paths=PackedStringArray("door") instance=ExtResource("6_bdc81")]
+transform = Transform3D(1.5, 0, 0, 0, 1.5, 0, 0, 0, 1.5, -6, 0, -31)
+door = NodePath("../visual_mark2")
+
+[node name="Button2" parent="." node_paths=PackedStringArray("door") instance=ExtResource("6_bdc81")]
+transform = Transform3D(0.5, 0, 0, 0, 0.5, 0, 0, 0, 0.5, 6, 0, -31)
+door = NodePath("../visual_mark5")
+
+[node name="Button3" parent="." node_paths=PackedStringArray("door") instance=ExtResource("6_bdc81")]
+transform = Transform3D(0.8, 0, 0, 0, 0.8, 0, 0, 0, 0.8, 6, 0, -14)
+door = NodePath("../visual_mark4")
+
+[node name="Button4" parent="." node_paths=PackedStringArray("door") instance=ExtResource("6_bdc81")]
+transform = Transform3D(1.4, 0, 0, 0, 1.4, 0, 0, 0, 1.4, -6, 0, -14)
+door = NodePath("../visual_mark")
+
+[node name="Target" parent="." node_paths=PackedStringArray("door") instance=ExtResource("7_678t7")]
+transform = Transform3D(-4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, -4, 4, -33.9527)
+door = NodePath("../visual_mark3")
+
+[node name="Target2" parent="." node_paths=PackedStringArray("door") instance=ExtResource("7_678t7")]
+transform = Transform3D(-4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, 4, 4, -33.9527)
+door = NodePath("../visual_mark6")
+
+[node name="visual_mark" parent="." instance=ExtResource("8_516pt")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1, 0.396352, -33.9451)
+
+[node name="visual_mark2" parent="." instance=ExtResource("8_516pt")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1, 1.18969, -33.9451)
+
+[node name="visual_mark3" parent="." instance=ExtResource("8_516pt")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1, 1.97132, -33.9451)
+
+[node name="visual_mark4" parent="." instance=ExtResource("8_516pt")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.993831, 0.396352, -33.9451)
+
+[node name="visual_mark5" parent="." instance=ExtResource("8_516pt")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.993831, 1.18969, -33.9451)
+
+[node name="visual_mark6" parent="." instance=ExtResource("8_516pt")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.993831, 1.97132, -33.9451)
+
+[node name="Lamp" parent="." instance=ExtResource("9_jqu4k")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -8, 3, -31)
+
+[node name="Lamp4" parent="." instance=ExtResource("9_jqu4k")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -8, 3, -14)
+
+[node name="Lamp6" parent="." instance=ExtResource("9_jqu4k")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -8, 3, -23)
+
+[node name="Lamp7" parent="." instance=ExtResource("9_jqu4k")]
+transform = Transform3D(-4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, -4, 5, -33.9553)
+
+[node name="Lamp8" parent="." instance=ExtResource("9_jqu4k")]
+transform = Transform3D(-4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, 4, 5, -33.9553)
+
+[node name="Lamp9" parent="." instance=ExtResource("9_jqu4k")]
+transform = Transform3D(-4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, 0, 2.68048, -33.9553)
+
+[node name="Lamp10" parent="." instance=ExtResource("9_jqu4k")]
+transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, 0, 2.68048, -10.955)
+
+[node name="Lamp2" parent="." instance=ExtResource("9_jqu4k")]
+transform = Transform3D(-1, 0, 0, 0, 1, 0, 0, 0, -1, 8.50339, 3, -31)
+
+[node name="Lamp3" parent="." instance=ExtResource("9_jqu4k")]
+transform = Transform3D(-1, 0, 0, 0, 1, 0, 0, 0, -1, 8.50339, 3, -14)
+
+[node name="Lamp5" parent="." instance=ExtResource("9_jqu4k")]
+transform = Transform3D(-1, 0, 0, 0, 1, 0, 0, 0, -1, 8.50339, 3, -23)
+
+[node name="EnemyMelee" parent="." instance=ExtResource("10_gt208")]
+transform = Transform3D(-0.965926, 0, -0.258819, 0, 1, 0, 0.258819, 0, -0.965926, -6, 1, -28)
+
+[node name="EnemyMelee3" parent="." instance=ExtResource("10_gt208")]
+transform = Transform3D(-1, 0, -5.96046e-08, 0, 1, 0, 5.96046e-08, 0, -1, 0, 1, -25)
+
+[node name="EnemyMelee2" parent="." instance=ExtResource("10_gt208")]
+transform = Transform3D(-0.965926, 0, 0.258819, 0, 1, 0, -0.258819, 0, -0.965926, 5, 1, -28)
+
+[node name="Trigger1" type="Area3D" parent="."]
+collision_layer = 512
+collision_mask = 512
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Trigger1"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, -36)
+shape = SubResource("BoxShape3D_w4rsi")
+
+[node name="Trigger2" type="Area3D" parent="."]
+collision_layer = 512
+collision_mask = 512
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Trigger2"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, -83)
+shape = SubResource("BoxShape3D_w4rsi")
+
+[connection signal="body_entered" from="Trigger1" to="." method="_on_trigger_1_body_entered"]
+[connection signal="body_entered" from="Trigger2" to="." method="_on_trigger_2_body_entered"]

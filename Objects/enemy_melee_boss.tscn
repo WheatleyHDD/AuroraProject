@@ -1,0 +1,243 @@
+[gd_scene load_steps=17 format=3 uid="uid://dsa23145gv4b"]
+
+[ext_resource type="Script" path="res://Scripts/EnemyMelee.cs" id="1_7svos"]
+[ext_resource type="PackedScene" uid="uid://b3401qnadctre" path="res://Objects/enemy_dead_body.tscn" id="2_ij0jx"]
+[ext_resource type="Script" path="res://Scripts/HealthSystem.cs" id="3_v6nay"]
+
+[sub_resource type="CapsuleMesh" id="CapsuleMesh_uut2h"]
+
+[sub_resource type="BoxMesh" id="BoxMesh_a7xgh"]
+size = Vector3(0.7, 0.2, 0.2)
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_tg3l8"]
+albedo_color = Color(0, 0, 0, 1)
+
+[sub_resource type="BoxMesh" id="BoxMesh_mrts3"]
+size = Vector3(0.1, 0.85, 0.1)
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_okj5b"]
+albedo_color = Color(1, 0, 0, 1)
+
+[sub_resource type="CapsuleShape3D" id="CapsuleShape3D_kw7mc"]
+radius = 0.614734
+height = 2.48706
+
+[sub_resource type="Animation" id="Animation_0ivjc"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Model/Node3D/Stick:position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector3(-0.515498, 0.107843, 0.388321)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("Model/Node3D/Stick:rotation")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector3(0.66874, 0.203226, 0)]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("Model:rotation")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector3(0, 0, 0)]
+}
+tracks/3/type = "value"
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/path = NodePath("HurtArea/CollisionShape3D:disabled")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [true]
+}
+
+[sub_resource type="Animation" id="Animation_virtx"]
+resource_name = "attack"
+length = 0.7
+step = 0.1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Model/Node3D/Stick:position")
+tracks/0/interp = 2
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.2, 0.3, 0.7),
+"transitions": PackedFloat32Array(1, 1, 1, 1),
+"update": 0,
+"values": [Vector3(-0.515498, 0.107843, 0.388321), Vector3(-0.704771, 0.107843, 0.546309), Vector3(0.0757087, -0.0283467, 0.684649), Vector3(-0.515498, 0.107843, 0.388321)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("Model/Node3D/Stick:rotation")
+tracks/1/interp = 2
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 0.2, 0.3, 0.7),
+"transitions": PackedFloat32Array(1, 1, 1, 1),
+"update": 0,
+"values": [Vector3(0.66874, 0.203226, 0), Vector3(0.853186, -0.643109, -0.0740589), Vector3(0.988899, -0.284503, -0.902988), Vector3(0.66874, 0.203226, 0)]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("HurtArea/CollisionShape3D:disabled")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0, 0.2, 0.5),
+"transitions": PackedFloat32Array(1, 1, 1),
+"update": 1,
+"values": [true, false, true]
+}
+
+[sub_resource type="Animation" id="Animation_wyfdi"]
+resource_name = "hurt"
+length = 0.5
+step = 0.1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Model:rotation")
+tracks/0/interp = 2
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.2, 0.5),
+"transitions": PackedFloat32Array(1, 1, 1),
+"update": 0,
+"values": [Vector3(0, 0, 0), Vector3(-0.349066, 0, 0), Vector3(0, 0, 0)]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_71cgx"]
+_data = {
+"RESET": SubResource("Animation_0ivjc"),
+"attack": SubResource("Animation_virtx"),
+"hurt": SubResource("Animation_wyfdi")
+}
+
+[sub_resource type="GDScript" id="GDScript_wjux4"]
+script/source = "extends Area3D
+
+
+func _on_body_entered(body: Node3D) -> void:
+	if not body.is_in_group(\"cube\"): return
+	
+	var rb: RigidBody3D = body
+	var speed = rb.linear_velocity.length()
+	if rb.throwed and speed > 5:
+		$\"../\".Damage(rb.mass * speed, rb.linear_velocity.normalized())
+"
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_5ocwy"]
+size = Vector3(1.64021, 2.54285, 1.69588)
+
+[sub_resource type="CylinderShape3D" id="CylinderShape3D_vdyo7"]
+height = 1.88552
+radius = 0.8
+
+[node name="EnemyMelee" type="CharacterBody3D" node_paths=PackedStringArray("_hurtArea", "_animationPlayer", "_navAgent", "EyesRaycast", "_waitTimer", "Health")]
+platform_floor_layers = 0
+script = ExtResource("1_7svos")
+_hurtArea = NodePath("HurtArea")
+DamageAmount = 1.0
+_animationPlayer = NodePath("AnimationPlayer")
+_navAgent = NodePath("NavigationAgent3D")
+EyesRaycast = NodePath("Eyes")
+_waitTimer = NodePath("waitTimer")
+Health = NodePath("Health")
+_deadBody = ExtResource("2_ij0jx")
+SightRangeMax = 250.0
+SightRangeMin = 3.0
+MoveSpeed = 2.0
+
+[node name="Health" type="Node3D" parent="."]
+script = ExtResource("3_v6nay")
+InitialHealth = 150.0
+
+[node name="Model" type="Node3D" parent="."]
+transform = Transform3D(1.25, 0, 0, 0, 1.25, 0, 0, 0, 1.25, 0, -1.003, 0)
+
+[node name="Capsule" type="MeshInstance3D" parent="Model"]
+transform = Transform3D(-1, 0, -8.74228e-08, 0, 1, 0, 8.74228e-08, 0, -1, 1.21549e-08, 1.00251, 0.278071)
+mesh = SubResource("CapsuleMesh_uut2h")
+
+[node name="Glasses" type="MeshInstance3D" parent="Model"]
+transform = Transform3D(-1, 0, -8.74228e-08, 0, 1, 0, 8.74228e-08, 0, -1, -2.43098e-08, 1.50251, -0.139036)
+mesh = SubResource("BoxMesh_a7xgh")
+surface_material_override/0 = SubResource("StandardMaterial3D_tg3l8")
+
+[node name="Node3D" type="Node3D" parent="Model"]
+transform = Transform3D(-1, 0, -8.74228e-08, 0, 1, 0, 8.74228e-08, 0, -1, 1.21549e-08, 1.00251, 0.278071)
+
+[node name="Stick" type="Node3D" parent="Model/Node3D"]
+transform = Transform3D(0.97942, 0.125134, 0.158356, 0, 0.784603, -0.619997, -0.20183, 0.607239, 0.768456, -0.515498, 0.107843, 0.388321)
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Model/Node3D/Stick"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.4, 0)
+mesh = SubResource("BoxMesh_mrts3")
+surface_material_override/0 = SubResource("StandardMaterial3D_okj5b")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.250204, 0.344927)
+shape = SubResource("CapsuleShape3D_kw7mc")
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+libraries = {
+"": SubResource("AnimationLibrary_71cgx")
+}
+
+[node name="DamageArea" type="Area3D" parent="."]
+collision_layer = 32
+collision_mask = 32
+collision_priority = 16.0
+script = SubResource("GDScript_wjux4")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="DamageArea"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.00140375, 0.271423, 0.348483)
+shape = SubResource("BoxShape3D_5ocwy")
+
+[node name="HurtArea" type="Area3D" parent="."]
+transform = Transform3D(-1, 0, 8.74228e-08, 0, 1, 0, -8.74228e-08, 0, -1, 0, 0, 0)
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="HurtArea"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.228207, 0.649073)
+shape = SubResource("CylinderShape3D_vdyo7")
+disabled = true
+
+[node name="NavigationAgent3D" type="NavigationAgent3D" parent="."]
+avoidance_enabled = true
+height = 2.5
+radius = 0.75
+
+[node name="Eyes" type="RayCast3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.5, 0)
+target_position = Vector3(0, 0, -1)
+
+[node name="waitTimer" type="Timer" parent="."]
+wait_time = 2.0
+one_shot = true
+
+[connection signal="body_entered" from="DamageArea" to="DamageArea" method="_on_body_entered"]
