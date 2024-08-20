@@ -25,7 +25,7 @@ uv1_triplanar = true
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_12ry4"]
 
-[node name="cubik" type="RigidBody3D" groups=["Pickupable"]]
+[node name="cubik" type="RigidBody3D" groups=["Pickupable", "cube"]]
 collision_layer = 33
 collision_mask = 33
 mass = 2.0

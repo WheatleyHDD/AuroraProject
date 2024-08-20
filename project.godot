@@ -35,6 +35,7 @@ project/assembly_name="AuroraProject"
 Pickupable=""
 player=""
 LevelManager=""
+cube=""
 
 [input]
 

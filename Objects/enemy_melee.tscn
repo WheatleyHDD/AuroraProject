@@ -143,6 +143,8 @@ script/source = "extends Area3D
 
 
 func _on_body_entered(body: Node3D) -> void:
+	if not body.is_in_group(\"cube\"): return
+	
 	var rb: RigidBody3D = body
 	var speed = rb.linear_velocity.length()
 	if rb.throwed and speed > 5:
