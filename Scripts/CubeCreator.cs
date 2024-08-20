@@ -28,8 +28,11 @@ public partial class CubeCreator : RayCast3D
 		if (CubeCreating != null)
 		{
 			TimeUse = Mathf.Max(TimeUse-1, 0);
+
+			if (IsColliding())
+				GetNode<Marker3D>("Offset").Position = ToLocal(GetCollisionPoint()) - Vector3.Forward * 0.75f;
 			
-			CubeCreating.GlobalPosition = IsColliding() ? GetCollisionPoint() : ToGlobal(GetTargetPosition());
+			CubeCreating.GlobalPosition = IsColliding() ? GetNode<Marker3D>("Offset").GlobalPosition : ToGlobal(GetTargetPosition());
 			ChangeScale();
 			
 			CubeCreating.RotateX(0.01f);

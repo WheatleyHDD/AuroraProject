@@ -40,6 +40,8 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.671508, 0)
 
 [node name="CSGCombiner3D" type="CSGCombiner3D" parent="."]
 use_collision = true
+collision_layer = 3
+collision_mask = 3
 
 [node name="ElevatorRoomStart" parent="CSGCombiner3D" instance=ExtResource("1_kej8l")]
 
@@ -76,12 +78,16 @@ material = ExtResource("2_yki7r")
 [node name="room2" type="CSGBox3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2, -0.5, -11.7)
 use_collision = true
+collision_layer = 3
+collision_mask = 3
 size = Vector3(3, 3, 3)
 material = ExtResource("2_yki7r")
 
 [node name="room3" type="CSGBox3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1.5, -1.25446, -11.7)
 use_collision = true
+collision_layer = 3
+collision_mask = 3
 size = Vector3(4, 1.49109, 3)
 material = ExtResource("2_yki7r")
 

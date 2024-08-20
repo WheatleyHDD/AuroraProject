@@ -1,4 +1,4 @@
-[gd_scene load_steps=14 format=3 uid="uid://dvv74tehghny0"]
+[gd_scene load_steps=15 format=3 uid="uid://dvv74tehghny0"]
 
 [ext_resource type="PackedScene" uid="uid://yeaj74kycs2x" path="res://Objects/level_manager.tscn" id="1_q0mi7"]
 [ext_resource type="PackedScene" uid="uid://b5ebke27toq5i" path="res://Objects/elevator_room_start.tscn" id="1_r60sx"]
@@ -8,6 +8,7 @@
 [ext_resource type="PackedScene" uid="uid://c53drlaaxk863" path="res://Objects/door.tscn" id="4_btw0u"]
 [ext_resource type="PackedScene" uid="uid://dwxaiju8iop4k" path="res://Objects/elevator_room.tscn" id="6_jvu2i"]
 [ext_resource type="PackedScene" uid="uid://bm5yfhh6ewxl2" path="res://Objects/target.tscn" id="7_ekiu6"]
+[ext_resource type="PackedScene" uid="uid://oth0ljy7x137" path="res://Scenes/level_4.tscn" id="7_mrywk"]
 [ext_resource type="PackedScene" uid="uid://c3tehj3vo73bh" path="res://Objects/visual_mark.tscn" id="8_q8ult"]
 [ext_resource type="PackedScene" uid="uid://kklst46iuosr" path="res://Objects/lamp.tscn" id="9_moilb"]
 [ext_resource type="PackedScene" uid="uid://dl2m2i6l0s7lj" path="res://Objects/button.tscn" id="10_2dvik"]
@@ -41,6 +42,8 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0.32526)
 [node name="CSGCombiner3D" type="CSGCombiner3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2, 0)
 use_collision = true
+collision_layer = 3
+collision_mask = 3
 
 [node name="ElevatorRoomStart" parent="CSGCombiner3D" instance=ExtResource("1_r60sx")]
 
@@ -88,9 +91,12 @@ material = ExtResource("3_wtctu")
 
 [node name="ElevatorRoom" parent="CSGCombiner3D" instance=ExtResource("6_jvu2i")]
 transform = Transform3D(-1, 0, 8.9407e-08, 0, 1, 0, -8.9407e-08, 0, -1, 0, 5.71, -25.405)
+next_level = ExtResource("7_mrywk")
 
 [node name="CSGCombiner3D2" type="CSGCombiner3D" parent="."]
 use_collision = true
+collision_layer = 3
+collision_mask = 3
 
 [node name="CSGBox3D7" type="CSGBox3D" parent="CSGCombiner3D2"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 4.5, 2, -10.5)

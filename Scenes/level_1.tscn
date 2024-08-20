@@ -222,6 +222,21 @@ font_size = 24
 font = ExtResource("9_kcgiv")
 font_size = 32
 
+[sub_resource type="Animation" id="Animation_c8y7l"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:modulate")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Color(1, 1, 1, 0)]
+}
+
 [sub_resource type="Animation" id="Animation_7f0y2"]
 resource_name = "fade"
 length = 3.0
@@ -239,7 +254,19 @@ tracks/0/keys = {
 "values": [Color(1, 1, 1, 0), Color(1, 1, 1, 1), Color(1, 1, 1, 1), Color(1, 1, 1, 0)]
 }
 
-[sub_resource type="Animation" id="Animation_c8y7l"]
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_nole3"]
+_data = {
+"RESET": SubResource("Animation_c8y7l"),
+"fade": SubResource("Animation_7f0y2")
+}
+
+[sub_resource type="LabelSettings" id="LabelSettings_nq7xt"]
+font = ExtResource("9_kcgiv")
+shadow_size = 6
+shadow_color = Color(0, 0, 0, 0.682353)
+shadow_offset = Vector2(0, 0)
+
+[sub_resource type="Animation" id="Animation_nrng2"]
 length = 0.001
 tracks/0/type = "value"
 tracks/0/imported = false
@@ -253,18 +280,6 @@ tracks/0/keys = {
 "update": 0,
 "values": [Color(1, 1, 1, 0)]
 }
-
-[sub_resource type="AnimationLibrary" id="AnimationLibrary_nole3"]
-_data = {
-"RESET": SubResource("Animation_c8y7l"),
-"fade": SubResource("Animation_7f0y2")
-}
-
-[sub_resource type="LabelSettings" id="LabelSettings_nq7xt"]
-font = ExtResource("9_kcgiv")
-shadow_size = 6
-shadow_color = Color(0, 0, 0, 0.682353)
-shadow_offset = Vector2(0, 0)
 
 [sub_resource type="Animation" id="Animation_k35h2"]
 resource_name = "fade"
@@ -281,21 +296,6 @@ tracks/0/keys = {
 "transitions": PackedFloat32Array(1, 1, 1, 1),
 "update": 0,
 "values": [Color(1, 1, 1, 0), Color(1, 1, 1, 1), Color(1, 1, 1, 1), Color(1, 1, 1, 0)]
-}
-
-[sub_resource type="Animation" id="Animation_nrng2"]
-length = 0.001
-tracks/0/type = "value"
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/path = NodePath(".:modulate")
-tracks/0/interp = 1
-tracks/0/loop_wrap = true
-tracks/0/keys = {
-"times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(1),
-"update": 0,
-"values": [Color(1, 1, 1, 0)]
 }
 
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_yoqxf"]
@@ -315,6 +315,8 @@ transform = Transform3D(-4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, 0.005,
 
 [node name="CSGCombiner3D" type="CSGCombiner3D" parent="."]
 use_collision = true
+collision_layer = 3
+collision_mask = 3
 
 [node name="room" type="CSGBox3D" parent="CSGCombiner3D"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2.5, 1.5, 0)

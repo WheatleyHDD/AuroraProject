@@ -1,0 +1,10 @@
+[gd_scene load_steps=2 format=3 uid="uid://dplmo0lq5cp5m"]
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_pom00"]
+
+[node name="DeadBody" type="RigidBody3D"]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="."]
+shape = SubResource("BoxShape3D_pom00")
+
+[node name="Camera3D" type="Camera3D" parent="."]

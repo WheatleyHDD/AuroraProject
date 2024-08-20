@@ -11,6 +11,9 @@ public partial class Player : CharacterBody3D
 	[ExportGroup("Main Setups")]
 	[Export()] public Node3D Head;
 	[Export()] private RayCast3D _foot;
+	[Export] public HealthSystem Health;
+	[Export] public CameraInterpolate Camera;
+	[Export] private PackedScene _deadBody;
 	
 	[ExportGroup("Sounds")]
 	[Export()] private AudioStreamPlayer3D _footstep;
@@ -29,6 +32,19 @@ public partial class Player : CharacterBody3D
 	public override void _Ready()
 	{
 		Input.MouseMode = Input.MouseModeEnum.Captured;
+		
+		Health.Connect(HealthSystem.SignalName.OnDamage, Callable.From<int>(dmg =>
+		{
+			Camera.Shake(0.1f, 0.3f);
+		}));
+		Health.Connect(HealthSystem.SignalName.Die, Callable.From<Vector3>((_) =>
+		{
+			var dead = _deadBody.Instantiate<Node3D>();
+			GetParent().AddChild(dead);
+			dead.GlobalPosition = GlobalPosition + Vector3.Down * 0.9f;
+			dead.Rotation = GlobalRotation;
+			QueueFree();
+		}));
 	}
 
 	public override void _PhysicsProcess(double delta)
@@ -87,6 +103,11 @@ public partial class Player : CharacterBody3D
 			rotDeg.X = Mathf.Clamp(rotDeg.X, -89f, 89f);
 			Head.RotationDegrees = rotDeg;
 		}
+	}
+
+	public void Hurt()
+	{
+		Health.Damage(1, Vector3.Zero);
 	}
 	
 	/*

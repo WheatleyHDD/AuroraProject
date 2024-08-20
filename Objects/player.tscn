@@ -1,7 +1,9 @@
-[gd_scene load_steps=35 format=3 uid="uid://dyxwr4jja75ty"]
+[gd_scene load_steps=37 format=3 uid="uid://dyxwr4jja75ty"]
 
 [ext_resource type="Script" path="res://Scripts/Player.cs" id="1_pb5qk"]
+[ext_resource type="PackedScene" uid="uid://dplmo0lq5cp5m" path="res://Objects/dead_body.tscn" id="2_2ei67"]
 [ext_resource type="Script" path="res://Scripts/CameraInterpolate.cs" id="2_3s1gh"]
+[ext_resource type="Script" path="res://Scripts/HealthSystem.cs" id="2_pfdki"]
 [ext_resource type="Script" path="res://Scripts/CubeCreator.cs" id="3_dkdx3"]
 [ext_resource type="PackedScene" uid="uid://bno7bhmcmbdae" path="res://Objects/cubik.tscn" id="4_rl2yq"]
 [ext_resource type="Script" path="res://Scripts/debug_log.gd" id="5_clq1d"]
@@ -239,13 +241,16 @@ func _process(delta: float) -> void:
 		text = str(lvl_mngr.CubesPossible)
 "
 
-[node name="Player" type="CharacterBody3D" node_paths=PackedStringArray("Head", "_foot", "_footstep", "_jump", "_land", "_footstepDelay") groups=["player"]]
+[node name="Player" type="CharacterBody3D" node_paths=PackedStringArray("Head", "_foot", "Health", "Camera", "_footstep", "_jump", "_land", "_footstepDelay") groups=["player"]]
 collision_layer = 529
 collision_mask = 529
 platform_floor_layers = 0
 script = ExtResource("1_pb5qk")
 Head = NodePath("Head")
 _foot = NodePath("RayCast3D")
+Health = NodePath("HealthSystem")
+Camera = NodePath("Head/CameraContainer/Camera3D")
+_deadBody = ExtResource("2_2ei67")
 _footstep = NodePath("Footstep")
 _jump = NodePath("Jump")
 _land = NodePath("Land")
@@ -257,6 +262,10 @@ shape = SubResource("CapsuleShape3D_vhp7r")
 [node name="RayCast3D" type="RayCast3D" parent="."]
 target_position = Vector3(0, -1.03, 0)
 
+[node name="HealthSystem" type="Node3D" parent="."]
+script = ExtResource("2_pfdki")
+InitialHealth = 3.0
+
 [node name="Head" type="Node3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.5, 0)
 
@@ -267,7 +276,7 @@ script = ExtResource("2_3s1gh")
 
 [node name="CubeCreator" type="RayCast3D" parent="Head" node_paths=PackedStringArray("_startSound", "_endSound")]
 target_position = Vector3(0, 0, -2)
-collision_mask = 2
+collision_mask = 34
 script = ExtResource("3_dkdx3")
 _cubeResource = ExtResource("4_rl2yq")
 _startSound = NodePath("Start")
@@ -282,6 +291,9 @@ bus = &"Sounds"
 stream = ExtResource("5_dsktc")
 volume_db = -6.0
 bus = &"Sounds"
+
+[node name="Offset" type="Marker3D" parent="Head/CubeCreator"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -1.5)
 
 [node name="CubePickup" type="Node3D" parent="Head" node_paths=PackedStringArray("_pickuper", "_joint")]
 script = ExtResource("5_rro7c")
