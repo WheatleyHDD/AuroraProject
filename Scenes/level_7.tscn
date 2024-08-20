@@ -1,0 +1,41 @@
+[gd_scene load_steps=6 format=3 uid="uid://bh4jqmloi577t"]
+
+[ext_resource type="PackedScene" uid="uid://b5ebke27toq5i" path="res://Objects/elevator_room_start.tscn" id="1_pwr5p"]
+[ext_resource type="PackedScene" uid="uid://chpdh7i6wuq76" path="res://Objects/door_hole.tscn" id="2_j2oyc"]
+[ext_resource type="Material" uid="uid://cgx0vkhfondcs" path="res://Materials/levelwall.tres" id="3_ittpi"]
+
+[sub_resource type="Environment" id="Environment_8jxaf"]
+background_mode = 1
+background_color = Color(0.625597, 0.625597, 0.625597, 1)
+background_energy_multiplier = 0.5
+
+[sub_resource type="NavigationMesh" id="NavigationMesh_lhskr"]
+
+[node name="Level7" type="Node3D"]
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="."]
+environment = SubResource("Environment_8jxaf")
+
+[node name="NavigationRegion3D" type="NavigationRegion3D" parent="."]
+navigation_mesh = SubResource("NavigationMesh_lhskr")
+
+[node name="CSGCombiner3D" type="CSGCombiner3D" parent="NavigationRegion3D"]
+use_collision = true
+collision_layer = 3
+collision_mask = 3
+
+[node name="ElevatorRoomStart" parent="NavigationRegion3D/CSGCombiner3D" instance=ExtResource("1_pwr5p")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2, 0)
+
+[node name="door1" parent="NavigationRegion3D/CSGCombiner3D" instance=ExtResource("2_j2oyc")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.006495, 1.03979, -26.4885)
+size = Vector3(1.2, 2.1, 47)
+
+[node name="CSGBox3D" type="CSGBox3D" parent="NavigationRegion3D/CSGCombiner3D"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 3, -22.4555)
+flip_faces = true
+size = Vector3(17, 6, 23)
+material = ExtResource("3_ittpi")
+
+[node name="OmniLight3D" type="OmniLight3D" parent="NavigationRegion3D/CSGCombiner3D/CSGBox3D"]
+omni_range = 59.3059

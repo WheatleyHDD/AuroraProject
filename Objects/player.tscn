@@ -457,7 +457,7 @@ offset_left = 0.16
 offset_top = -0.16
 offset_right = 0.23999
 offset_bottom = 0.16
-text = "2
+text = "Inf
 "
 label_settings = SubResource("LabelSettings_af36f")
 script = SubResource("GDScript_rsay8")

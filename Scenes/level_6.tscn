@@ -1,4 +1,4 @@
-[gd_scene load_steps=16 format=3 uid="uid://di1qrdrguu8q0"]
+[gd_scene load_steps=17 format=3 uid="uid://di1qrdrguu8q0"]
 
 [ext_resource type="PackedScene" uid="uid://yeaj74kycs2x" path="res://Objects/level_manager.tscn" id="1_olj5q"]
 [ext_resource type="PackedScene" uid="uid://dyxwr4jja75ty" path="res://Objects/player.tscn" id="1_r1h0g"]
@@ -9,6 +9,7 @@
 [ext_resource type="Material" uid="uid://cgx0vkhfondcs" path="res://Materials/levelwall.tres" id="4_h76qy"]
 [ext_resource type="PackedScene" uid="uid://dl2m2i6l0s7lj" path="res://Objects/button.tscn" id="4_racgy"]
 [ext_resource type="PackedScene" uid="uid://kklst46iuosr" path="res://Objects/lamp.tscn" id="5_1aul7"]
+[ext_resource type="PackedScene" uid="uid://bh4jqmloi577t" path="res://Scenes/level_7.tscn" id="5_beiw7"]
 [ext_resource type="PackedScene" uid="uid://c3tehj3vo73bh" path="res://Objects/visual_mark.tscn" id="7_alevc"]
 [ext_resource type="PackedScene" uid="uid://nune2ddagegj" path="res://Objects/enemy_melee.tscn" id="10_onxcn"]
 
@@ -52,6 +53,7 @@ navigation_mesh = SubResource("NavigationMesh_c686j")
 
 [node name="CSGCombiner3D" type="CSGCombiner3D" parent="NavigationRegion3D"]
 use_collision = true
+collision_layer = 3
 collision_mask = 3
 
 [node name="ElevatorRoomStart" parent="NavigationRegion3D/CSGCombiner3D" instance=ExtResource("1_sfwxp")]
@@ -59,6 +61,7 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2, 0)
 
 [node name="ElevatorRoom" parent="NavigationRegion3D/CSGCombiner3D" instance=ExtResource("3_p0r0f")]
 transform = Transform3D(-1, 0, 8.74228e-08, 0, 1, 0, -8.74228e-08, 0, -1, -1.807, 15, -43.1)
+next_level = ExtResource("5_beiw7")
 
 [node name="door1" parent="NavigationRegion3D/CSGCombiner3D" instance=ExtResource("2_dxgb3")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.006, 1.05, -15.6068)
@@ -101,6 +104,8 @@ material = ExtResource("4_h76qy")
 [node name="CSGCombiner3D2" type="CSGCombiner3D" parent="NavigationRegion3D"]
 layers = 3
 use_collision = true
+collision_layer = 3
+collision_mask = 3
 
 [node name="CSGBox3D" type="CSGBox3D" parent="NavigationRegion3D/CSGCombiner3D2"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2, 1, -35.2114)

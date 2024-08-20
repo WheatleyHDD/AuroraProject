@@ -18,8 +18,10 @@ public partial class CubePickup : Node3D
 		{
 			if (!_pickuper.IsColliding()) return;
 			if (!((Node3D)_pickuper.GetCollider()).IsInGroup("Pickupable")) return;
-			
-			_joint.Set("node_b", (_pickuper.GetCollider() as RigidBody3D)?.GetPath());
+
+			var collider = _pickuper.GetCollider() as RigidBody3D;
+			if (collider != null) collider.Freeze = false;
+			_joint.Set("node_b", collider?.GetPath());
 		}
 
 		if (Input.IsActionJustReleased("pickup"))
