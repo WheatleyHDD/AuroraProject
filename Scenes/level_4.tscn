@@ -1,4 +1,4 @@
-[gd_scene load_steps=16 format=3 uid="uid://oth0ljy7x137"]
+[gd_scene load_steps=17 format=3 uid="uid://oth0ljy7x137"]
 
 [ext_resource type="PackedScene" uid="uid://yeaj74kycs2x" path="res://Objects/level_manager.tscn" id="1_kdp2q"]
 [ext_resource type="PackedScene" uid="uid://b5ebke27toq5i" path="res://Objects/elevator_room_start.tscn" id="2_7leln"]
@@ -7,6 +7,7 @@
 [ext_resource type="Material" uid="uid://cgx0vkhfondcs" path="res://Materials/levelwall.tres" id="4_h4rog"]
 [ext_resource type="PackedScene" uid="uid://dwxaiju8iop4k" path="res://Objects/elevator_room.tscn" id="4_q665a"]
 [ext_resource type="PackedScene" uid="uid://kklst46iuosr" path="res://Objects/lamp.tscn" id="5_28tnh"]
+[ext_resource type="PackedScene" uid="uid://41et8ebbihpu" path="res://Scenes/level_5.tscn" id="5_qtkk4"]
 [ext_resource type="PackedScene" uid="uid://nune2ddagegj" path="res://Objects/enemy_melee.tscn" id="6_ecwcw"]
 [ext_resource type="PackedScene" uid="uid://c53drlaaxk863" path="res://Objects/door.tscn" id="6_vnlgr"]
 [ext_resource type="PackedScene" uid="uid://dl2m2i6l0s7lj" path="res://Objects/button.tscn" id="9_vu3x3"]
@@ -55,6 +56,7 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2, 0)
 
 [node name="ElevatorRoom" parent="NavigationRegion3D/CSGCombiner3D" instance=ExtResource("4_q665a")]
 transform = Transform3D(-1, 0, 8.74228e-08, 0, 1, 0, -8.74228e-08, 0, -1, 0.193, 2, -63.1)
+next_level = ExtResource("5_qtkk4")
 
 [node name="door1" parent="NavigationRegion3D/CSGCombiner3D" instance=ExtResource("3_jv217")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.006, 1.05, -11.1187)

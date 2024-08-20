@@ -1,0 +1,259 @@
+[gd_scene load_steps=16 format=3 uid="uid://41et8ebbihpu"]
+
+[ext_resource type="PackedScene" uid="uid://b5ebke27toq5i" path="res://Objects/elevator_room_start.tscn" id="1_61a6f"]
+[ext_resource type="PackedScene" uid="uid://yeaj74kycs2x" path="res://Objects/level_manager.tscn" id="1_64fge"]
+[ext_resource type="PackedScene" uid="uid://dyxwr4jja75ty" path="res://Objects/player.tscn" id="2_jyj8i"]
+[ext_resource type="PackedScene" uid="uid://chpdh7i6wuq76" path="res://Objects/door_hole.tscn" id="2_xw8p8"]
+[ext_resource type="Material" uid="uid://cgx0vkhfondcs" path="res://Materials/levelwall.tres" id="3_1u52e"]
+[ext_resource type="PackedScene" uid="uid://kklst46iuosr" path="res://Objects/lamp.tscn" id="4_o2hct"]
+[ext_resource type="PackedScene" uid="uid://c53drlaaxk863" path="res://Objects/door.tscn" id="5_tb67e"]
+[ext_resource type="PackedScene" uid="uid://dl2m2i6l0s7lj" path="res://Objects/button.tscn" id="6_f2j0v"]
+[ext_resource type="PackedScene" uid="uid://dwxaiju8iop4k" path="res://Objects/elevator_room.tscn" id="6_tsdoi"]
+[ext_resource type="PackedScene" uid="uid://c3tehj3vo73bh" path="res://Objects/visual_mark.tscn" id="7_j5378"]
+[ext_resource type="PackedScene" uid="uid://bm5yfhh6ewxl2" path="res://Objects/target.tscn" id="8_r1k23"]
+[ext_resource type="PackedScene" uid="uid://nune2ddagegj" path="res://Objects/enemy_melee.tscn" id="9_y4api"]
+
+[sub_resource type="GDScript" id="GDScript_eaxdh"]
+script/source = "extends Node3D
+
+
+func _on_trigger_1_body_entered(body: Node3D) -> void:
+	$\"/root/VoiceOver\".play_voice(\"melissa_1\")
+	$Trigger1.queue_free()
+
+
+func _on_trigger_2_body_entered(body: Node3D) -> void:
+	$\"/root/VoiceOver\".play_voice(\"melissa_2\")
+	$Trigger2.queue_free()
+
+
+func _on_trigger_3_body_entered(body: Node3D) -> void:
+	$\"/root/VoiceOver\".play_voice(\"melissa_3\")
+	$Trigger3.queue_free()
+"
+
+[sub_resource type="NavigationMesh" id="NavigationMesh_f0f6k"]
+vertices = PackedVector3Array(5.25, 0.5, -28.3825, 5, 0.5, -24.3825, 5.25, 0.5, -19.6325, 15, 0.5, -19.6325, 15, 0.5, -28.3825, -4, 0.5, -16.8825, -4, 0.5, -14.1325, -1.75, 0.5, -14.1325, -1.75, 0.5, -16.8825, 2, 0.5, -16.8825, 2, 0.5, -14.1325, 4.25, 0.5, -14.1325, 4.25, 0.5, -16.8825, -3.75, 0.5, -12.6325, -3.75, 0.5, -3.88254, 4, 0.5, -3.88254, 4, 0.5, -12.6325, 2.25, 0.5, -0.88254, 1.75, 0.5, -0.63254, 1.5, 0.5, 2.11746, 2.5, 0.5, 2.36746, -1.75, 0.5, -1.63254, -2.25, 0.5, -2.38254, -2.25, 0.5, 2.36746, -1.5, 0.5, 2.11746, 2, 0.5, -1.88254, 2.5, 0.5, -2.38254, -0.75, -5.5, -0.88254, -0.75, -5.5, 1.11746, 0.75, -5.5, 1.11746, 0.75, -5.5, -0.88254, -0.25, 0.25, -0.88254, -0.25, 0.25, 0.61746, 0.25, 0.25, 0.61746, 0.25, 0.25, -0.88254)
+polygons = [PackedInt32Array(1, 0, 2), PackedInt32Array(2, 0, 4), PackedInt32Array(2, 4, 3), PackedInt32Array(8, 7, 5), PackedInt32Array(5, 7, 6), PackedInt32Array(12, 11, 9), PackedInt32Array(9, 11, 10), PackedInt32Array(16, 15, 13), PackedInt32Array(13, 15, 14), PackedInt32Array(18, 17, 19), PackedInt32Array(19, 17, 20), PackedInt32Array(24, 23, 21), PackedInt32Array(21, 23, 22), PackedInt32Array(25, 21, 26), PackedInt32Array(26, 21, 22), PackedInt32Array(24, 19, 23), PackedInt32Array(23, 19, 20), PackedInt32Array(25, 26, 17), PackedInt32Array(17, 26, 20), PackedInt32Array(30, 29, 27), PackedInt32Array(27, 29, 28), PackedInt32Array(34, 33, 31), PackedInt32Array(31, 33, 32)]
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_4jwj4"]
+size = Vector3(3, 3, 1)
+
+[node name="Level5" type="Node3D"]
+script = SubResource("GDScript_eaxdh")
+
+[node name="LevelManager" parent="." instance=ExtResource("1_64fge")]
+CubesPossible = 22
+
+[node name="Player" parent="." instance=ExtResource("2_jyj8i")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.991514, 0)
+
+[node name="NavigationRegion3D" type="NavigationRegion3D" parent="."]
+navigation_mesh = SubResource("NavigationMesh_f0f6k")
+
+[node name="CSGCombiner3D" type="CSGCombiner3D" parent="NavigationRegion3D"]
+use_collision = true
+
+[node name="ElevatorRoomStart" parent="NavigationRegion3D/CSGCombiner3D" instance=ExtResource("1_61a6f")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2, 0)
+
+[node name="door1" parent="NavigationRegion3D/CSGCombiner3D" instance=ExtResource("2_xw8p8")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.006, 1.05, -3.101)
+
+[node name="door2" parent="NavigationRegion3D/CSGCombiner3D" instance=ExtResource("2_xw8p8")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.006, 1.05, -18.6754)
+size = Vector3(1.2, 2.1, 11)
+
+[node name="door3" parent="NavigationRegion3D/CSGCombiner3D" instance=ExtResource("2_xw8p8")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2.994, 1.05, -13.2879)
+
+[node name="door4" parent="NavigationRegion3D/CSGCombiner3D" instance=ExtResource("2_xw8p8")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 3.006, 1.05, -13.2879)
+
+[node name="door6" parent="NavigationRegion3D/CSGCombiner3D" instance=ExtResource("2_xw8p8")]
+transform = Transform3D(-4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, 15.601, 1.05, -24.055)
+
+[node name="door5" parent="NavigationRegion3D/CSGCombiner3D" instance=ExtResource("2_xw8p8")]
+transform = Transform3D(-4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, 2.00779, 1.05, -24.0524)
+size = Vector3(1.2, 2.1, 5.2)
+
+[node name="CSGBox3D" type="CSGBox3D" parent="NavigationRegion3D/CSGCombiner3D"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2.5, -8.18502)
+flip_faces = true
+size = Vector3(9, 5, 10)
+material = ExtResource("3_1u52e")
+
+[node name="CSGBox3D4" type="CSGBox3D" parent="NavigationRegion3D/CSGCombiner3D"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 10, 2.5, -24.1325)
+flip_faces = true
+size = Vector3(11, 5, 10)
+material = ExtResource("3_1u52e")
+
+[node name="CSGBox3D2" type="CSGBox3D" parent="NavigationRegion3D/CSGCombiner3D"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 3, 1.5, -15.387)
+flip_faces = true
+size = Vector3(3.5, 3, 4)
+material = ExtResource("3_1u52e")
+
+[node name="CSGBox3D3" type="CSGBox3D" parent="NavigationRegion3D/CSGCombiner3D"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -3, 1.5, -15.387)
+flip_faces = true
+size = Vector3(3.5, 3, 4)
+material = ExtResource("3_1u52e")
+
+[node name="ElevatorRoom" parent="NavigationRegion3D/CSGCombiner3D" instance=ExtResource("6_tsdoi")]
+transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, 18.6888, 2, -24.1)
+
+[node name="Lamp" parent="." instance=ExtResource("4_o2hct")]
+transform = Transform3D(-4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, 0, 2.391, -13.19)
+
+[node name="Lamp7" parent="." instance=ExtResource("4_o2hct")]
+transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, 0, 2.59702, -3.19)
+
+[node name="Lamp2" parent="." instance=ExtResource("4_o2hct")]
+transform = Transform3D(-4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, 3, 2.391, -13.19)
+
+[node name="Lamp3" parent="." instance=ExtResource("4_o2hct")]
+transform = Transform3D(-4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, -3, 2.391, -13.19)
+
+[node name="Lamp4" parent="." instance=ExtResource("4_o2hct")]
+transform = Transform3D(-4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, -3, 2.391, -17.19)
+
+[node name="Lamp5" parent="." instance=ExtResource("4_o2hct")]
+transform = Transform3D(-4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, 3, 2.391, -17.19)
+
+[node name="Lamp6" parent="." instance=ExtResource("4_o2hct")]
+transform = Transform3D(-4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, 0, 1.70902, -24.6585)
+
+[node name="Lamp8" parent="." instance=ExtResource("4_o2hct")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 4.50043, 2.5202, -24.0601)
+
+[node name="Lamp12" parent="." instance=ExtResource("4_o2hct")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 4.50043, 2.5202, -28.0601)
+
+[node name="Lamp13" parent="." instance=ExtResource("4_o2hct")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 4.50043, 2.5202, -20.0601)
+
+[node name="Lamp9" parent="." instance=ExtResource("4_o2hct")]
+transform = Transform3D(-1, 0, -8.9407e-08, 0, 1, 0, 8.9407e-08, 0, -1, 15.5004, 3.26167, -24.0601)
+
+[node name="Lamp10" parent="." instance=ExtResource("4_o2hct")]
+transform = Transform3D(-1, 0, -8.9407e-08, 0, 1, 0, 8.9407e-08, 0, -1, 15.5004, 2.5202, -20.0601)
+
+[node name="Lamp11" parent="." instance=ExtResource("4_o2hct")]
+transform = Transform3D(-1, 0, -8.9407e-08, 0, 1, 0, 8.9407e-08, 0, -1, 15.5004, 2.5202, -28.0601)
+
+[node name="Door" parent="." instance=ExtResource("5_tb67e")]
+transform = Transform3D(-4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, 0, 0, -3.09074)
+
+[node name="Door2" parent="." instance=ExtResource("5_tb67e")]
+transform = Transform3D(-4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, 0, 0, -13.2949)
+door_type = 1
+
+[node name="Door3" parent="." instance=ExtResource("5_tb67e")]
+transform = Transform3D(-4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, 3, 0, -13.2949)
+door_type = 1
+
+[node name="Door4" parent="." node_paths=PackedStringArray("waiting_for") instance=ExtResource("5_tb67e")]
+transform = Transform3D(-4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, -3, 0, -13.2949)
+door_type = 3
+waiting_for = [NodePath("../visual_mark"), NodePath("../visual_mark2")]
+
+[node name="Door5" parent="." instance=ExtResource("5_tb67e")]
+transform = Transform3D(-1, 0, 8.74228e-08, 0, 1, 0, -8.74228e-08, 0, -1, 4.39, 0, -24.055)
+
+[node name="Door6" parent="." node_paths=PackedStringArray("waiting_for") instance=ExtResource("5_tb67e")]
+transform = Transform3D(-1, 0, 8.74228e-08, 0, 1, 0, -8.74228e-08, 0, -1, 15.5998, 0, -24.055)
+door_type = 3
+waiting_for = [NodePath("../visual_mark3"), NodePath("../visual_mark4"), NodePath("../visual_mark5"), NodePath("../visual_mark6"), NodePath("../visual_mark7")]
+
+[node name="Button" parent="." node_paths=PackedStringArray("door") instance=ExtResource("6_f2j0v")]
+transform = Transform3D(1.75, 0, 0, 0, 1.75, 0, 0, 0, 1.75, 3, 0, -9)
+door = NodePath("../visual_mark2")
+
+[node name="Button2" parent="." node_paths=PackedStringArray("door") instance=ExtResource("6_f2j0v")]
+transform = Transform3D(0.4, 0, 0, 0, 0.4, 0, 0, 0, 0.4, -4, 0, -9)
+door = NodePath("../visual_mark")
+
+[node name="Button3" parent="." node_paths=PackedStringArray("door") instance=ExtResource("6_f2j0v")]
+transform = Transform3D(1.5, 0, 0, 0, 1.5, 0, 0, 0, 1.5, -3, 0, -16)
+door = NodePath("../Door3")
+
+[node name="Button4" parent="." node_paths=PackedStringArray("door") instance=ExtResource("6_f2j0v")]
+transform = Transform3D(0.9, 0, 0, 0, 0.9, 0, 0, 0, 0.9, 3, 0, -16)
+door = NodePath("../Door2")
+
+[node name="visual_mark" parent="." instance=ExtResource("7_j5378")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -3.99821, 2, -13.1834)
+
+[node name="visual_mark2" parent="." instance=ExtResource("7_j5378")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1.99821, 2, -13.1834)
+
+[node name="Target" parent="." node_paths=PackedStringArray("door") instance=ExtResource("8_r1k23")]
+transform = Transform3D(-1, 0, 8.9407e-08, 0, 1, 0, -8.9407e-08, 0, -1, 15.4968, 4, -27)
+door = NodePath("../visual_mark3")
+
+[node name="Target2" parent="." node_paths=PackedStringArray("door") instance=ExtResource("8_r1k23")]
+transform = Transform3D(-1, 0, 8.9407e-08, 0, 1, 0, -8.9407e-08, 0, -1, 15.4968, 4, -24)
+door = NodePath("../visual_mark4")
+
+[node name="Target3" parent="." node_paths=PackedStringArray("door") instance=ExtResource("8_r1k23")]
+transform = Transform3D(-1, 0, 8.9407e-08, 0, 1, 0, -8.9407e-08, 0, -1, 15.4968, 4, -21)
+door = NodePath("../visual_mark5")
+
+[node name="Target4" parent="." node_paths=PackedStringArray("door") instance=ExtResource("8_r1k23")]
+transform = Transform3D(1, 0, -1.98419e-09, 0, 1, 0, 1.98419e-09, 0, 1, 4.49683, 4, -21)
+door = NodePath("../visual_mark6")
+
+[node name="Target5" parent="." node_paths=PackedStringArray("door") instance=ExtResource("8_r1k23")]
+transform = Transform3D(1, 0, -1.98419e-09, 0, 1, 0, 1.98419e-09, 0, 1, 4.49683, 4, -27)
+door = NodePath("../visual_mark7")
+
+[node name="visual_mark3" parent="." instance=ExtResource("7_j5378")]
+transform = Transform3D(-4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, 15.494, 1.5, -25)
+
+[node name="visual_mark4" parent="." instance=ExtResource("7_j5378")]
+transform = Transform3D(-4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, 15.494, 2.5, -25)
+
+[node name="visual_mark5" parent="." instance=ExtResource("7_j5378")]
+transform = Transform3D(-4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, 15.494, 2.5, -24.0627)
+
+[node name="visual_mark6" parent="." instance=ExtResource("7_j5378")]
+transform = Transform3D(-4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, 15.494, 1.5, -23.0978)
+
+[node name="visual_mark7" parent="." instance=ExtResource("7_j5378")]
+transform = Transform3D(-4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, 15.494, 2.5, -23.0978)
+
+[node name="EnemyMelee" parent="." instance=ExtResource("9_y4api")]
+transform = Transform3D(-0.5, 0, 0.866025, 0, 1, 0, -0.866025, 0, -0.5, 13, 1, -27)
+
+[node name="EnemyMelee2" parent="." instance=ExtResource("9_y4api")]
+transform = Transform3D(0.258819, 0, 0.965926, 0, 1, 0, -0.965926, 0, 0.258819, 13, 1, -21)
+
+[node name="Trigger1" type="Area3D" parent="."]
+collision_layer = 512
+collision_mask = 512
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Trigger1"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, -4)
+shape = SubResource("BoxShape3D_4jwj4")
+
+[node name="Trigger2" type="Area3D" parent="."]
+collision_layer = 512
+collision_mask = 512
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Trigger2"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -3, 1, -14)
+shape = SubResource("BoxShape3D_4jwj4")
+
+[node name="Trigger3" type="Area3D" parent="."]
+collision_layer = 512
+collision_mask = 512
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Trigger3"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, -19)
+shape = SubResource("BoxShape3D_4jwj4")
+
+[connection signal="body_entered" from="Trigger1" to="." method="_on_trigger_1_body_entered"]
+[connection signal="body_entered" from="Trigger2" to="." method="_on_trigger_2_body_entered"]
+[connection signal="body_entered" from="Trigger3" to="." method="_on_trigger_3_body_entered"]

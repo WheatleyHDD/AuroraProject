@@ -6,7 +6,7 @@ public partial class Player : CharacterBody3D
 	[Export()] public float Speed = 5.0f;
 	[Export()] public float Acceleration = 15f;
 	[Export()] public float JumpVelocity = 4.5f;
-	[Export()] public float Sensivity = 0.15f;
+	[Export()] public float Sensivity = 0.3f;
 
 	[ExportGroup("Main Setups")]
 	[Export()] public Node3D Head;
