@@ -104,9 +104,10 @@ transform = Transform3D(-4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, 0, 0, 
 transform = Transform3D(-4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, 0, 0, -31.3231)
 door_type = 1
 
-[node name="Door4" parent="." instance=ExtResource("6_vnlgr")]
+[node name="Door4" parent="." node_paths=PackedStringArray("waiting_for") instance=ExtResource("6_vnlgr")]
 transform = Transform3D(-4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, 0, 0, -57.5176)
-door_type = 1
+door_type = 3
+waiting_for = [NodePath("../visual_mark"), NodePath("../visual_mark2"), NodePath("../visual_mark3"), NodePath("../visual_mark4")]
 
 [node name="Lamp" parent="." instance=ExtResource("5_28tnh")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -5.50514, 3, -25)
