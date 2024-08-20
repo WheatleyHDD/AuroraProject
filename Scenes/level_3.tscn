@@ -1,4 +1,4 @@
-[gd_scene load_steps=15 format=3 uid="uid://dvv74tehghny0"]
+[gd_scene load_steps=16 format=3 uid="uid://dvv74tehghny0"]
 
 [ext_resource type="PackedScene" uid="uid://yeaj74kycs2x" path="res://Objects/level_manager.tscn" id="1_q0mi7"]
 [ext_resource type="PackedScene" uid="uid://b5ebke27toq5i" path="res://Objects/elevator_room_start.tscn" id="1_r60sx"]
@@ -29,6 +29,11 @@ func _on_trigger_2_body_entered(body: Node3D) -> void:
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_qtxy8"]
 size = Vector3(3, 3, 2)
+
+[sub_resource type="Environment" id="Environment_s8pr7"]
+background_mode = 1
+background_color = Color(0.625597, 0.625597, 0.625597, 1)
+background_energy_multiplier = 0.5
 
 [node name="Level3" type="Node3D"]
 script = SubResource("GDScript_fcjpm")
@@ -213,6 +218,9 @@ collision_mask = 512
 [node name="CollisionShape3D" type="CollisionShape3D" parent="Trigger2"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, -7.5)
 shape = SubResource("BoxShape3D_qtxy8")
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="."]
+environment = SubResource("Environment_s8pr7")
 
 [connection signal="body_entered" from="Trigger1" to="." method="_on_trigger_1_body_entered"]
 [connection signal="body_entered" from="Trigger2" to="." method="_on_trigger_2_body_entered"]

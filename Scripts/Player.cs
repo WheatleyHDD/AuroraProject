@@ -41,7 +41,7 @@ public partial class Player : CharacterBody3D
 		{
 			var dead = _deadBody.Instantiate<Node3D>();
 			GetParent().AddChild(dead);
-			dead.GlobalPosition = GlobalPosition + Vector3.Down * 0.9f;
+			dead.GlobalPosition = GlobalPosition + Vector3.Up * 0.4f;
 			dead.Rotation = GlobalRotation;
 			QueueFree();
 		}));

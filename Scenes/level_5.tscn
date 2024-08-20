@@ -1,4 +1,4 @@
-[gd_scene load_steps=16 format=3 uid="uid://41et8ebbihpu"]
+[gd_scene load_steps=18 format=3 uid="uid://41et8ebbihpu"]
 
 [ext_resource type="PackedScene" uid="uid://b5ebke27toq5i" path="res://Objects/elevator_room_start.tscn" id="1_61a6f"]
 [ext_resource type="PackedScene" uid="uid://yeaj74kycs2x" path="res://Objects/level_manager.tscn" id="1_64fge"]
@@ -10,6 +10,7 @@
 [ext_resource type="PackedScene" uid="uid://dl2m2i6l0s7lj" path="res://Objects/button.tscn" id="6_f2j0v"]
 [ext_resource type="PackedScene" uid="uid://dwxaiju8iop4k" path="res://Objects/elevator_room.tscn" id="6_tsdoi"]
 [ext_resource type="PackedScene" uid="uid://c3tehj3vo73bh" path="res://Objects/visual_mark.tscn" id="7_j5378"]
+[ext_resource type="PackedScene" uid="uid://di1qrdrguu8q0" path="res://Scenes/level_6.tscn" id="7_oxsmv"]
 [ext_resource type="PackedScene" uid="uid://bm5yfhh6ewxl2" path="res://Objects/target.tscn" id="8_r1k23"]
 [ext_resource type="PackedScene" uid="uid://nune2ddagegj" path="res://Objects/enemy_melee.tscn" id="9_y4api"]
 
@@ -39,6 +40,11 @@ polygons = [PackedInt32Array(1, 0, 2), PackedInt32Array(2, 0, 4), PackedInt32Arr
 [sub_resource type="BoxShape3D" id="BoxShape3D_4jwj4"]
 size = Vector3(3, 3, 1)
 
+[sub_resource type="Environment" id="Environment_mpg7g"]
+background_mode = 1
+background_color = Color(0.625597, 0.625597, 0.625597, 1)
+background_energy_multiplier = 0.5
+
 [node name="Level5" type="Node3D"]
 script = SubResource("GDScript_eaxdh")
 
@@ -53,6 +59,8 @@ navigation_mesh = SubResource("NavigationMesh_f0f6k")
 
 [node name="CSGCombiner3D" type="CSGCombiner3D" parent="NavigationRegion3D"]
 use_collision = true
+collision_layer = 3
+collision_mask = 3
 
 [node name="ElevatorRoomStart" parent="NavigationRegion3D/CSGCombiner3D" instance=ExtResource("1_61a6f")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2, 0)
@@ -103,6 +111,7 @@ material = ExtResource("3_1u52e")
 
 [node name="ElevatorRoom" parent="NavigationRegion3D/CSGCombiner3D" instance=ExtResource("6_tsdoi")]
 transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, 18.6888, 2, -24.1)
+next_level = ExtResource("7_oxsmv")
 
 [node name="Lamp" parent="." instance=ExtResource("4_o2hct")]
 transform = Transform3D(-4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, 0, 2.391, -13.19)
@@ -253,6 +262,9 @@ collision_mask = 512
 [node name="CollisionShape3D" type="CollisionShape3D" parent="Trigger3"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, -19)
 shape = SubResource("BoxShape3D_4jwj4")
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="."]
+environment = SubResource("Environment_mpg7g")
 
 [connection signal="body_entered" from="Trigger1" to="." method="_on_trigger_1_body_entered"]
 [connection signal="body_entered" from="Trigger2" to="." method="_on_trigger_2_body_entered"]
