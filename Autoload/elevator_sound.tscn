@@ -1,0 +1,8 @@
+[gd_scene load_steps=2 format=3 uid="uid://cdri5qfcn1fks"]
+
+[ext_resource type="AudioStream" uid="uid://euf3s81sxuid" path="res://Sounds/elevator.ogg" id="1_uuj24"]
+
+[node name="ElevatorSound" type="AudioStreamPlayer"]
+stream = ExtResource("1_uuj24")
+volume_db = 12.0
+bus = &"Sounds"

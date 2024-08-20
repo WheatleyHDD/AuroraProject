@@ -1,10 +1,11 @@
-[gd_scene load_steps=16 format=3 uid="uid://b5ebke27toq5i"]
+[gd_scene load_steps=17 format=3 uid="uid://b5ebke27toq5i"]
 
 [ext_resource type="Texture2D" uid="uid://c60wskyqya8fp" path="res://Textures/prototype_textures/Light/texture_12.png" id="1_2ubsk"]
 [ext_resource type="Script" path="res://Scripts/elevator_room_start.gd" id="2_bf527"]
 [ext_resource type="PackedScene" uid="uid://kklst46iuosr" path="res://Objects/lamp.tscn" id="3_bn2nn"]
 [ext_resource type="PackedScene" uid="uid://bv55yrxwxqabf" path="res://Models/Elevator/Elevator.gltf" id="4_ss3ek"]
 [ext_resource type="Texture2D" uid="uid://ct0xkkr6ntdjv" path="res://Textures/prototype_textures/Dark/texture_02.png" id="5_16krv"]
+[ext_resource type="AudioStream" uid="uid://dfbjy5v6cagjl" path="res://Sounds/elevator_door.wav" id="6_ddmqf"]
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_vj0d7"]
 albedo_texture = ExtResource("1_2ubsk")
@@ -175,6 +176,14 @@ color = Color(0, 0, 0, 1)
 libraries = {
 "": SubResource("AnimationLibrary_ne8dy")
 }
+
+[node name="DoorOpen" type="AudioStreamPlayer3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.736407, -1.28823)
+stream = ExtResource("6_ddmqf")
+pitch_scale = 2.0
+max_polyphony = 4
+bus = &"Sounds"
+attenuation_filter_cutoff_hz = 20500.0
 
 [connection signal="timeout" from="Timer" to="." method="_on_timer_timeout"]
 
