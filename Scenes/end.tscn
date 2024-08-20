@@ -1,6 +1,8 @@
-[gd_scene load_steps=4 format=3 uid="uid://bgkvfc4p8i87i"]
+[gd_scene load_steps=6 format=3 uid="uid://bgkvfc4p8i87i"]
 
 [ext_resource type="FontFile" uid="uid://bbbco1t2dr1km" path="res://Fonts/PerfectDOSVGA437.ttf" id="1_6i5rs"]
+[ext_resource type="AudioStream" uid="uid://de5pxpoch1mf6" path="res://Sounds/human_vel-005.wav" id="2_530pb"]
+[ext_resource type="AudioStream" uid="uid://bjjugxy1gf4th" path="res://Sounds/electro_exp.ogg" id="3_5gaxm"]
 
 [sub_resource type="GDScript" id="GDScript_gswxj"]
 script/source = "extends Control
@@ -19,6 +21,7 @@ func _process(delta: float) -> void:
 	if not titled_started1:
 		if $\"/root/VoiceOver/Label\".text == \"\":
 			titled_started1 = true
+			$typing.play()
 	
 	if titled_started1 and $Timer.is_stopped():
 		time+=delta
@@ -73,5 +76,14 @@ visible_ratio = 0.0
 [node name="Timer" type="Timer" parent="."]
 wait_time = 2.0
 one_shot = true
+
+[node name="typing" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("2_530pb")
+bus = &"Sounds"
+
+[node name="electro" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("3_5gaxm")
+autoplay = true
+bus = &"Sounds"
 
 [connection signal="timeout" from="Timer" to="." method="_on_timer_timeout"]

@@ -1,0 +1,36 @@
+[gd_scene load_steps=2 format=3 uid="uid://daje5j1bcoxrq"]
+
+[sub_resource type="GDScript" id="GDScript_pccdn"]
+script/source = "extends Control
+
+
+# Called when the node enters the scene tree for the first time.
+func _ready() -> void:
+	AudioServer.set_bus_effect_enabled(AudioServer.get_bus_index(\"Voice\"), 0, false)
+	$\"/root/VoiceOver\".play_voice(\"male\")
+
+
+# Called every frame. 'delta' is the elapsed time since the previous frame.
+func _process(delta: float) -> void:
+	if $\"/root/VoiceOver/Label\".text == \"\":
+		AudioServer.set_bus_effect_enabled(AudioServer.get_bus_index(\"Voice\"), 0, true)
+		get_tree().change_scene_to_file(\"res://Scenes/level_1.tscn\")
+"
+
+[node name="start" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = SubResource("GDScript_pccdn")
+
+[node name="ColorRect" type="ColorRect" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0, 0, 0, 1)

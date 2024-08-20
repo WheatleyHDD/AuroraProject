@@ -6,7 +6,6 @@ public partial class Player : CharacterBody3D
 	[Export()] public float Speed = 5.0f;
 	[Export()] public float Acceleration = 15f;
 	[Export()] public float JumpVelocity = 4.5f;
-	[Export()] public float Sensivity = 0.3f;
 
 	[ExportGroup("Main Setups")]
 	[Export()] public Node3D Head;
@@ -97,8 +96,8 @@ public partial class Player : CharacterBody3D
 	{
 		if (@event is InputEventMouseMotion mouseMotion)
 		{
-			RotateY(Mathf.DegToRad(-mouseMotion.Relative.X * Sensivity));
-			Head.RotateX(Mathf.DegToRad(-mouseMotion.Relative.Y * Sensivity));
+			RotateY(Mathf.DegToRad(-mouseMotion.Relative.X * GetNode<CanvasLayer>("/root/Overlays/Settings").Get("sensitivity").AsSingle()));
+			Head.RotateX(Mathf.DegToRad(-mouseMotion.Relative.Y * GetNode<CanvasLayer>("/root/Overlays/Settings").Get("sensitivity").AsSingle()));
 			Vector3 rotDeg = Head.RotationDegrees;
 			rotDeg.X = Mathf.Clamp(rotDeg.X, -89f, 89f);
 			Head.RotationDegrees = rotDeg;

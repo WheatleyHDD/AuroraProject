@@ -1,4 +1,4 @@
-[gd_scene load_steps=39 format=3 uid="uid://dn4fxk03w37id"]
+[gd_scene load_steps=41 format=3 uid="uid://dn4fxk03w37id"]
 
 [ext_resource type="FontFile" uid="uid://bbbco1t2dr1km" path="res://Fonts/PerfectDOSVGA437.ttf" id="1_cjqm3"]
 [ext_resource type="Script" path="res://Scripts/voice_over.gd" id="1_mxvl0"]
@@ -20,6 +20,7 @@
 [ext_resource type="AudioStream" uid="uid://c5tu08jhwsnat" path="res://Sounds/VO/melissa/melissa_4.wav" id="17_eqtwa"]
 [ext_resource type="AudioStream" uid="uid://dicao6yo3l2lv" path="res://Sounds/VO/melissa/melissa_5.wav" id="18_oeqaw"]
 [ext_resource type="AudioStream" uid="uid://dndml2qj3pgr8" path="res://Sounds/VO/melissa/melissa_6.wav" id="19_wcbuc"]
+[ext_resource type="AudioStream" uid="uid://brkvplfmoisys" path="res://Sounds/VO/male.wav" id="20_i3uol"]
 
 [sub_resource type="Resource" id="Resource_1o4jc"]
 script = ExtResource("2_7vn10")
@@ -123,6 +124,12 @@ voice_name = "melissa_6"
 voice = ExtResource("19_wcbuc")
 subtitle = "If I understand correctly, you're Aurora. According to those files, you were created to... destroy... Servant4You..."
 
+[sub_resource type="Resource" id="Resource_acfu0"]
+script = ExtResource("2_7vn10")
+voice_name = "male"
+voice = ExtResource("20_i3uol")
+subtitle = "A recent attack by an unknown virus severely shook our company's devices. We need to create a maid, which will be ready for any situation"
+
 [sub_resource type="LabelSettings" id="LabelSettings_2jxps"]
 font = ExtResource("1_cjqm3")
 shadow_size = 5
@@ -131,7 +138,7 @@ shadow_offset = Vector2(0, 0)
 
 [node name="VoiceOver" type="CanvasLayer"]
 script = ExtResource("1_mxvl0")
-voices = Array[ExtResource("2_7vn10")]([SubResource("Resource_1o4jc"), SubResource("Resource_7wehe"), SubResource("Resource_gvaaj"), SubResource("Resource_oecm4"), SubResource("Resource_1ykq8"), SubResource("Resource_oyhxf"), SubResource("Resource_bgdsg"), SubResource("Resource_7egis"), SubResource("Resource_moij4"), SubResource("Resource_cfa13"), SubResource("Resource_5l7mn"), SubResource("Resource_u3dng"), SubResource("Resource_xxpy0"), SubResource("Resource_dp0br"), SubResource("Resource_3r506"), SubResource("Resource_pfmbl"), SubResource("Resource_5f00d")])
+voices = Array[ExtResource("2_7vn10")]([SubResource("Resource_1o4jc"), SubResource("Resource_7wehe"), SubResource("Resource_gvaaj"), SubResource("Resource_oecm4"), SubResource("Resource_1ykq8"), SubResource("Resource_oyhxf"), SubResource("Resource_bgdsg"), SubResource("Resource_7egis"), SubResource("Resource_moij4"), SubResource("Resource_cfa13"), SubResource("Resource_5l7mn"), SubResource("Resource_u3dng"), SubResource("Resource_xxpy0"), SubResource("Resource_dp0br"), SubResource("Resource_3r506"), SubResource("Resource_pfmbl"), SubResource("Resource_5f00d"), SubResource("Resource_acfu0")])
 
 [node name="Label" type="Label" parent="."]
 anchors_preset = -1
@@ -152,5 +159,4 @@ autowrap_mode = 3
 
 [node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="."]
 stream = ExtResource("2_c60xf")
-volume_db = -12.0
 bus = &"Voice"
