@@ -15,6 +15,9 @@
 [sub_resource type="GDScript" id="GDScript_kdawt"]
 script/source = "extends Node3D
 
+func _ready() -> void:
+	var mp: AudioStreamPlayer = $\"/root/MusicPlayer\"
+	mp.get_stream_playback().switch_to_clip_by_name(\"level7\")
 
 func _on_trigger_1_body_entered(body: Node3D) -> void:
 	$\"/root/VoiceOver\".play_voice(\"melissa_6\")
@@ -22,8 +25,9 @@ func _on_trigger_1_body_entered(body: Node3D) -> void:
 
 
 func _on_trigger_2_body_entered(body: Node3D) -> void:
+	$Trigger2.queue_free()
 	$\"/root/VoiceOver\".play_voice(\"speaker_10\")
-	get_tree().change_scene_to_file(\"res://Scenes/end.tscn\")
+	get_tree().call_deferred(\"change_scene_to_file\", \"res://Scenes/end.tscn\")
 "
 
 [sub_resource type="Environment" id="Environment_8jxaf"]

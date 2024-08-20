@@ -21,7 +21,9 @@
 [sub_resource type="GDScript" id="GDScript_5ehtb"]
 script/source = "extends Node3D
 
-
+func _ready() -> void:
+	var mp: AudioStreamPlayer = $\"/root/MusicPlayer\"
+	mp.get_stream_playback().switch_to_clip_by_name(\"level1\")
 
 func _on_animation_player_animation_finished(anim_name: StringName) -> void:
 	$\"/root/VoiceOver\".play_voice(\"speaker_0\")

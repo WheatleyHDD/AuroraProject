@@ -169,7 +169,7 @@ EyesRaycast = NodePath("Eyes")
 _waitTimer = NodePath("waitTimer")
 Health = NodePath("Health")
 _deadBody = ExtResource("2_ij0jx")
-SightRangeMax = 250.0
+SightRangeMax = 300.0
 SightRangeMin = 3.0
 MoveSpeed = 2.0
 

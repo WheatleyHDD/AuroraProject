@@ -1,0 +1,117 @@
+[gd_scene load_steps=3 format=3 uid="uid://k3jx6mh07a4l"]
+
+[ext_resource type="Theme" uid="uid://cm2rt1oak5f5a" path="res://theme.tres" id="1_hilwx"]
+
+[sub_resource type="GDScript" id="GDScript_dbo13"]
+script/source = "extends Control
+
+
+# Called when the node enters the scene tree for the first time.
+func _ready() -> void:
+	var mp: AudioStreamPlayer = $\"/root/MusicPlayer\"
+	mp.get_stream_playback().switch_to_clip_by_name(\"menu\")
+	Input.mouse_mode = Input.MOUSE_MODE_VISIBLE
+
+
+# Called every frame. 'delta' is the elapsed time since the previous frame.
+func _process(delta: float) -> void:
+	pass
+
+
+func _on_return_pressed() -> void:
+	get_tree().change_scene_to_file(\"res://Scenes/menu.tscn\")
+"
+
+[node name="readme" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = SubResource("GDScript_dbo13")
+
+[node name="ColorRect" type="ColorRect" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0, 0, 0, 1)
+
+[node name="HBoxContainer" type="HBoxContainer" parent="."]
+layout_mode = 1
+anchors_preset = 14
+anchor_top = 0.5
+anchor_right = 1.0
+anchor_bottom = 0.5
+offset_top = -127.5
+offset_bottom = 127.5
+grow_horizontal = 2
+grow_vertical = 2
+alignment = 1
+
+[node name="Label" type="RichTextLabel" parent="HBoxContainer"]
+custom_minimum_size = Vector2(320, 0)
+layout_mode = 2
+theme_override_font_sizes/normal_font_size = 10
+theme_override_font_sizes/bold_font_size = 10
+bbcode_enabled = true
+text = "[center]Game [b]Aurora Project: Training[/b]
+Created by [b]ThatMaidGuy[/b]
+For [b]GMTK Jam 2024[/b] in [b]96 hours[/b]
+
+Used Resources:
+[b]Models:[/b]
+Thumb Tack 2.0 by Blender3D
+Pinboard by Dybo
+Elevator and door Low-poly 3D model by TheFamousRat
+
+[b]Sounds:[/b]
+Door open sound from game Rochard
+Slow-mo start/end from game Fractal Space
+Maybe more but it's too old
+
+[b]Sprites/Textures:[/b]
+Aurora portrait by Stable Diffusion
+Prototype Textures by Kenney
+Keys and Mouses by Brett Post Script"
+fit_content = true
+
+[node name="Label2" type="RichTextLabel" parent="HBoxContainer"]
+custom_minimum_size = Vector2(320, 0)
+layout_mode = 2
+theme_override_font_sizes/normal_font_size = 10
+theme_override_font_sizes/bold_font_size = 10
+bbcode_enabled = true
+text = "[center][b]Music:[/b]
+Music Loop Bundle by Tallbeard Studios
+
+[b]Special thanks to:[/b]
+Subscribers of my YouTube channel
+My favorite friends who support me always
+My director, who allowed me to dedicate my work time for personal fun
+My mom, dad, brothers....
+
+And to you, Player :3
+
+[b]Spread the Mushroom Tea!!![/b]"
+fit_content = true
+
+[node name="Return" type="Button" parent="."]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.825
+anchor_top = 0.908
+anchor_right = 0.984
+anchor_bottom = 0.978
+offset_top = 0.119995
+offset_right = 0.23999
+offset_bottom = -0.0800171
+grow_horizontal = 0
+grow_vertical = 0
+theme = ExtResource("1_hilwx")
+text = "Return To Menu"
+
+[connection signal="pressed" from="Return" to="." method="_on_return_pressed"]

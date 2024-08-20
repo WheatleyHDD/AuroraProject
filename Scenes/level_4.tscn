@@ -17,6 +17,10 @@
 [sub_resource type="GDScript" id="GDScript_fnboy"]
 script/source = "extends Node3D
 
+func _ready() -> void:
+	var mp: AudioStreamPlayer = $\"/root/MusicPlayer\"
+	mp.get_stream_playback().switch_to_clip_by_name(\"level4\")
+
 
 func _on_trigger_1_body_entered(body: Node3D) -> void:
 	$\"/root/VoiceOver\".play_voice(\"speaker_8\")

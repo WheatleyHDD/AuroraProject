@@ -74,7 +74,7 @@ tracks/0/keys = {
 "times": PackedFloat32Array(0, 0.3),
 "transitions": PackedFloat32Array(1, 1),
 "update": 0,
-"values": [Vector2(28, 378), Vector2(28, 166)]
+"values": [Vector2(28, 378), Vector2(28, 220)]
 }
 
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_g0oqj"]
@@ -145,21 +145,17 @@ autoplay = "fading"
 layout_mode = 1
 anchors_preset = -1
 anchor_left = 0.044
-anchor_top = 0.461
-anchor_right = 0.303
-anchor_bottom = 0.936
-offset_left = -0.16
-offset_top = 212.04
-offset_right = 0.0800018
-offset_bottom = 212.04
+anchor_top = 0.611
+anchor_right = 0.241
+anchor_bottom = 0.922
+offset_left = -0.160002
+offset_top = 158.04
+offset_right = -0.240005
+offset_bottom = 158.08
 
 [node name="NewGame" type="Button" parent="Buttons"]
 layout_mode = 2
-text = "New Game"
-
-[node name="Continue" type="Button" parent="Buttons"]
-layout_mode = 2
-text = "Continue"
+text = "Start Training"
 
 [node name="Settings" type="Button" parent="Buttons"]
 layout_mode = 2
@@ -180,4 +176,6 @@ libraries = {
 autoplay = "start"
 
 [connection signal="pressed" from="Buttons/NewGame" to="." method="_on_new_game_pressed"]
+[connection signal="pressed" from="Buttons/Settings" to="." method="_on_settings_pressed"]
+[connection signal="pressed" from="Buttons/About" to="." method="_on_about_pressed"]
 [connection signal="pressed" from="Buttons/Exit" to="." method="_on_exit_pressed"]

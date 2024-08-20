@@ -1,4 +1,41 @@
-[gd_scene format=3 uid="uid://bgkvfc4p8i87i"]
+[gd_scene load_steps=4 format=3 uid="uid://bgkvfc4p8i87i"]
+
+[ext_resource type="FontFile" uid="uid://bbbco1t2dr1km" path="res://Fonts/PerfectDOSVGA437.ttf" id="1_6i5rs"]
+
+[sub_resource type="GDScript" id="GDScript_gswxj"]
+script/source = "extends Control
+
+var titled_started1 = false
+var time: float = 0
+
+# Called when the node enters the scene tree for the first time.
+func _ready() -> void:
+	var mp: AudioStreamPlayer = $\"/root/MusicPlayer\"
+	mp.get_stream_playback().switch_to_clip_by_name(\"silence\")
+
+
+# Called every frame. 'delta' is the elapsed time since the previous frame.
+func _process(delta: float) -> void:
+	if not titled_started1:
+		if $\"/root/VoiceOver/Label\".text == \"\":
+			titled_started1 = true
+	
+	if titled_started1 and $Timer.is_stopped():
+		time+=delta
+		if time > 0.1:
+			# печатаем букаву
+			$Label.visible_characters += 1
+			time = 0
+			if $Label.visible_ratio == 1:
+				$Timer.start()
+
+func _on_timer_timeout() -> void:
+	get_tree().change_scene_to_file(\"res://Scenes/readme.tscn\")
+"
+
+[sub_resource type="LabelSettings" id="LabelSettings_hgxgt"]
+font = ExtResource("1_6i5rs")
+font_size = 28
 
 [node name="End" type="Control"]
 layout_mode = 3
@@ -7,6 +44,7 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
+script = SubResource("GDScript_gswxj")
 
 [node name="ColorRect" type="ColorRect" parent="."]
 layout_mode = 1
@@ -16,3 +54,24 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 color = Color(0, 0, 0, 1)
+
+[node name="Label" type="Label" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+text = "The simulator has been damaged and further testing has been halted."
+label_settings = SubResource("LabelSettings_hgxgt")
+horizontal_alignment = 1
+vertical_alignment = 1
+autowrap_mode = 3
+visible_characters = 0
+visible_ratio = 0.0
+
+[node name="Timer" type="Timer" parent="."]
+wait_time = 2.0
+one_shot = true
+
+[connection signal="timeout" from="Timer" to="." method="_on_timer_timeout"]

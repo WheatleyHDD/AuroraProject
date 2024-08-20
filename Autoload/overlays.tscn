@@ -1,0 +1,266 @@
+[gd_scene load_steps=5 format=3 uid="uid://boso6b58ehg5q"]
+
+[ext_resource type="Theme" uid="uid://cm2rt1oak5f5a" path="res://theme.tres" id="1_twx4g"]
+
+[sub_resource type="GDScript" id="GDScript_mso6p"]
+script/source = "extends CanvasLayer
+
+
+func _process(delta: float) -> void:
+	if Input.is_action_just_pressed(\"pause\") and get_tree().current_scene.name.find(\"Level\") != -1:
+		visible = not visible
+		get_tree().paused = not get_tree().paused
+		if Input.mouse_mode == Input.MOUSE_MODE_CAPTURED:
+			Input.mouse_mode = Input.MOUSE_MODE_VISIBLE
+		else:
+			Input.mouse_mode = Input.MOUSE_MODE_CAPTURED
+
+
+func _on_resume_pressed() -> void:
+	visible = false
+	get_tree().paused = false
+	Input.mouse_mode = Input.MOUSE_MODE_CAPTURED
+
+
+func _on_restart_pressed() -> void:
+	visible = false
+	get_tree().paused = false
+	Input.mouse_mode = Input.MOUSE_MODE_CAPTURED
+	get_tree().reload_current_scene()
+	Engine.time_scale = 1.0
+
+
+func _on_quit_pressed() -> void:
+	visible = false
+	get_tree().paused = false
+	Input.mouse_mode = Input.MOUSE_MODE_VISIBLE
+	get_tree().change_scene_to_file(\"res://Scenes/menu.tscn\")
+	Engine.time_scale = 1.0
+
+
+func _on_settings_pressed() -> void:
+	$\"../Settings\".show()
+"
+
+[sub_resource type="GDScript" id="GDScript_xamje"]
+script/source = "extends CanvasLayer
+
+var sensitivity: float = 0.3
+
+
+func _ready() -> void:
+	AudioServer.set_bus_volume_db(
+		AudioServer.get_bus_index(\"Music\"),
+		linear_to_db($Panel/VBoxContainer/music_vol.value/100)
+	)
+	
+	AudioServer.set_bus_volume_db(
+		AudioServer.get_bus_index(\"Sounds\"),
+		linear_to_db($Panel/VBoxContainer/sound_vol.value/100)
+	)
+	
+	AudioServer.set_bus_volume_db(
+		AudioServer.get_bus_index(\"Voice\"),
+		linear_to_db($Panel/VBoxContainer/voice_vol.value/100)
+	)
+
+
+func _on_texture_button_pressed() -> void:
+	hide()
+
+
+func _on_music_vol_drag_ended(value_changed: bool) -> void:
+	if value_changed:
+		AudioServer.set_bus_volume_db(
+			AudioServer.get_bus_index(\"Music\"),
+			linear_to_db($Panel/VBoxContainer/music_vol.value/100)
+		)
+
+
+func _on_sound_vol_drag_ended(value_changed: bool) -> void:
+	if value_changed:
+		AudioServer.set_bus_volume_db(
+			AudioServer.get_bus_index(\"Sounds\"),
+			linear_to_db($Panel/VBoxContainer/sound_vol.value/100)
+		)
+
+
+func _on_voice_vol_drag_ended(value_changed: bool) -> void:
+	if value_changed:
+		AudioServer.set_bus_volume_db(
+			AudioServer.get_bus_index(\"Voice\"),
+			linear_to_db($Panel/VBoxContainer/voice_vol.value/100)
+		)
+
+
+func _on_sens_drag_ended(value_changed: bool) -> void:
+	if value_changed:
+		sensitivity = $Panel/VBoxContainer/sens.value
+"
+
+[sub_resource type="LabelSettings" id="LabelSettings_dnghk"]
+font_size = 18
+
+[node name="Overlays" type="Node"]
+process_mode = 3
+
+[node name="Pause" type="CanvasLayer" parent="."]
+layer = 2
+visible = false
+script = SubResource("GDScript_mso6p")
+
+[node name="Panel" type="Panel" parent="Pause"]
+custom_minimum_size = Vector2(275, 180)
+anchors_preset = -1
+anchor_left = 0.285
+anchor_top = 0.25
+anchor_right = 0.715
+anchor_bottom = 0.75
+offset_left = 0.0999756
+offset_right = -0.100037
+offset_bottom = -3.05176e-05
+grow_horizontal = 2
+grow_vertical = 2
+theme = ExtResource("1_twx4g")
+metadata/_edit_group_ = true
+
+[node name="VBoxContainer" type="VBoxContainer" parent="Pause/Panel"]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.193
+anchor_right = 0.782
+anchor_bottom = 1.0
+offset_left = -0.0750008
+offset_right = -0.0500183
+grow_horizontal = 2
+grow_vertical = 2
+alignment = 1
+
+[node name="Label" type="Label" parent="Pause/Panel/VBoxContainer"]
+layout_mode = 2
+text = "Pause"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="Resume" type="Button" parent="Pause/Panel/VBoxContainer"]
+layout_mode = 2
+text = "Resume"
+
+[node name="Restart" type="Button" parent="Pause/Panel/VBoxContainer"]
+layout_mode = 2
+text = "Restart Level"
+
+[node name="Settings" type="Button" parent="Pause/Panel/VBoxContainer"]
+layout_mode = 2
+text = "Settings"
+
+[node name="Quit" type="Button" parent="Pause/Panel/VBoxContainer"]
+layout_mode = 2
+text = "Quit To Menu
+(progress loss)"
+
+[node name="Settings" type="CanvasLayer" parent="."]
+layer = 3
+visible = false
+script = SubResource("GDScript_xamje")
+
+[node name="TextureButton" type="TextureButton" parent="Settings"]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="Panel" type="Panel" parent="Settings"]
+custom_minimum_size = Vector2(347, 252)
+anchors_preset = -1
+anchor_left = 0.229
+anchor_top = 0.15
+anchor_right = 0.771
+anchor_bottom = 0.85
+offset_left = -0.0600128
+offset_right = 0.0599976
+grow_horizontal = 2
+grow_vertical = 2
+theme = ExtResource("1_twx4g")
+metadata/_edit_group_ = true
+
+[node name="VBoxContainer" type="VBoxContainer" parent="Settings/Panel"]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.239
+anchor_right = 0.756
+anchor_bottom = 1.0
+offset_left = 0.0399933
+offset_right = 0.159973
+grow_horizontal = 2
+grow_vertical = 2
+alignment = 1
+
+[node name="Label" type="Label" parent="Settings/Panel/VBoxContainer"]
+layout_mode = 2
+text = "Settings"
+label_settings = SubResource("LabelSettings_dnghk")
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="Label2" type="Label" parent="Settings/Panel/VBoxContainer"]
+layout_mode = 2
+text = "Music volume"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="music_vol" type="HSlider" parent="Settings/Panel/VBoxContainer"]
+custom_minimum_size = Vector2(120, 0)
+layout_mode = 2
+value = 50.0
+
+[node name="Label3" type="Label" parent="Settings/Panel/VBoxContainer"]
+layout_mode = 2
+text = "Sound volume"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="sound_vol" type="HSlider" parent="Settings/Panel/VBoxContainer"]
+custom_minimum_size = Vector2(120, 0)
+layout_mode = 2
+value = 50.0
+
+[node name="Label4" type="Label" parent="Settings/Panel/VBoxContainer"]
+layout_mode = 2
+text = "Voice volume"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="voice_vol" type="HSlider" parent="Settings/Panel/VBoxContainer"]
+custom_minimum_size = Vector2(120, 0)
+layout_mode = 2
+value = 50.0
+
+[node name="Label5" type="Label" parent="Settings/Panel/VBoxContainer"]
+layout_mode = 2
+text = "Mouse sensitivity"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="sens" type="HSlider" parent="Settings/Panel/VBoxContainer"]
+custom_minimum_size = Vector2(120, 0)
+layout_mode = 2
+max_value = 1.0
+step = 0.05
+value = 0.3
+
+[node name="Button" type="Button" parent="Settings/Panel/VBoxContainer"]
+layout_mode = 2
+text = "Return"
+
+[connection signal="pressed" from="Pause/Panel/VBoxContainer/Resume" to="Pause" method="_on_resume_pressed"]
+[connection signal="pressed" from="Pause/Panel/VBoxContainer/Restart" to="Pause" method="_on_restart_pressed"]
+[connection signal="pressed" from="Pause/Panel/VBoxContainer/Settings" to="Pause" method="_on_settings_pressed"]
+[connection signal="pressed" from="Pause/Panel/VBoxContainer/Quit" to="Pause" method="_on_quit_pressed"]
+[connection signal="pressed" from="Settings/TextureButton" to="Settings" method="_on_texture_button_pressed"]
+[connection signal="drag_ended" from="Settings/Panel/VBoxContainer/music_vol" to="Settings" method="_on_music_vol_drag_ended"]
+[connection signal="drag_ended" from="Settings/Panel/VBoxContainer/sound_vol" to="Settings" method="_on_sound_vol_drag_ended"]
+[connection signal="drag_ended" from="Settings/Panel/VBoxContainer/voice_vol" to="Settings" method="_on_voice_vol_drag_ended"]
+[connection signal="drag_ended" from="Settings/Panel/VBoxContainer/sens" to="Settings" method="_on_sens_drag_ended"]
+[connection signal="pressed" from="Settings/Panel/VBoxContainer/Button" to="Settings" method="_on_texture_button_pressed"]

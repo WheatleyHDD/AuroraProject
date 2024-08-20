@@ -1,0 +1,78 @@
+[gd_scene load_steps=8 format=3 uid="uid://b1xwx35ofaajd"]
+
+[ext_resource type="AudioStream" uid="uid://clogl5ccqpboe" path="res://Music/menu.ogg" id="1_hdpy5"]
+[ext_resource type="AudioStream" uid="uid://dwiaj24kse4fx" path="res://Music/Stream Loops 2024-05-01_01.ogg" id="1_humo7"]
+[ext_resource type="AudioStream" uid="uid://u5xj2chu8pj8" path="res://Music/silence.ogg" id="1_wof74"]
+[ext_resource type="AudioStream" uid="uid://cmpk2fqpi4bl2" path="res://Music/Stream Loops 2024-03-20_02.ogg" id="2_v60xs"]
+[ext_resource type="AudioStream" uid="uid://c83dy2ge8lkha" path="res://Music/Stream Loops 2024-02-14_L03.ogg" id="3_ulamw"]
+
+[sub_resource type="AudioStreamInteractive" id="AudioStreamInteractive_vegad"]
+clip_count = 5
+clip_0/name = &"silence"
+clip_0/stream = ExtResource("1_wof74")
+clip_0/auto_advance = 0
+clip_1/name = &"menu"
+clip_1/stream = ExtResource("1_hdpy5")
+clip_1/auto_advance = 0
+clip_2/name = &"level1"
+clip_2/stream = ExtResource("1_humo7")
+clip_2/auto_advance = 0
+clip_3/name = &"level4"
+clip_3/stream = ExtResource("2_v60xs")
+clip_3/auto_advance = 0
+clip_4/name = &"level7"
+clip_4/stream = ExtResource("3_ulamw")
+clip_4/auto_advance = 0
+_transitions = {
+Vector2i(-1, -1): {
+"fade_beats": 1,
+"fade_mode": 3,
+"from_time": 0,
+"to_time": 0
+},
+Vector2i(-1, 1): {
+"fade_beats": 1,
+"fade_mode": 3,
+"from_time": 0,
+"to_time": 0
+},
+Vector2i(-1, 2): {
+"fade_beats": 1,
+"fade_mode": 3,
+"from_time": 0,
+"to_time": 0
+},
+Vector2i(-1, 3): {
+"fade_beats": 1,
+"fade_mode": 3,
+"from_time": 0,
+"to_time": 0
+},
+Vector2i(-1, 4): {
+"fade_beats": 1,
+"fade_mode": 3,
+"from_time": 0,
+"to_time": 0
+},
+Vector2i(1, 1): {
+"fade_beats": 1,
+"fade_mode": 0,
+"from_time": 0,
+"to_time": 0
+}
+}
+
+[sub_resource type="GDScript" id="GDScript_ut3sa"]
+script/source = "extends AudioStreamPlayer
+
+
+# Called every frame. 'delta' is the elapsed time since the previous frame.
+func _process(delta: float) -> void:
+	pitch_scale = Engine.time_scale
+"
+
+[node name="MusicPlayer" type="AudioStreamPlayer"]
+stream = SubResource("AudioStreamInteractive_vegad")
+autoplay = true
+bus = &"Music"
+script = SubResource("GDScript_ut3sa")
